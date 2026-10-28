@@ -1,12 +1,30 @@
 # Plan: calliope-ui (Entwurf zur Diskussion)
 
-Ziel: eine Svelte-5-Komponentenbibliothek mit Storybook, die Campus (inkl. IoT), das
+## Ziel
+
+Eine Svelte-5-Komponentenbibliothek mit Storybook, die Campus (inkl. IoT), das
 Verbindungs-Widget und weitere Svelte-Apps (calliope-docs, ML/Teachable) auf einen gemeinsamen
 Stand bringt. PXT nutzt sie nicht. React-Apps sind optionale Konsumenten, die
 Svelte-Komponenten als Custom Elements einbinden können. Umgekehrt kommen keine React-Komponenten
 in die Bibliothek.
 
-Grundlage: [01-bestandsaufnahme.md](01-bestandsaufnahme.md).
+Grundlage: [01-bestandsaufnahme.md](../01-bestandsaufnahme.md).
+
+## Arbeitspakete
+
+Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
+
+- [ ] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
+- [ ] **W1:** Fundament. Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI,
+  Verteilung per gepinntem SHA. Campus bindet `tokens.css` ein, ohne visuelle Änderung
+- [ ] **W2:** Welle 1. Primitives inkl. Stories und Tests. Pilot: Campus ersetzt `ui/Button` und
+  die `.btn`-Klassen
+- [ ] **W3:** Welle 2. Overlays/Navigation auf bits-ui. Pilot: Campus-Modals und Dropdown,
+  IoT-Dashboard komplett auf Tokens und Bibliothekskomponenten
+- [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
+- [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
+- [ ] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
+  Chakra/LESS, nur bei konkretem Bedarf
 
 ---
 
@@ -165,7 +183,7 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 
 | Phase | Inhalt | Ergebnis |
 |---|---|---|
-| **0 Entscheiden** | Offene Fragen (Abschnitt 6) klären. Design-Audit von Campus + IoT. Token-Entwurf | Abgestimmte Liste der Design-Entscheidungen, `DESIGN.md` für calliope-ui |
+| **0 Entscheiden** | Offene Fragen (Abschnitt 7) klären. Design-Audit von Campus + IoT. Token-Entwurf | Abgestimmte Liste der Design-Entscheidungen, `DESIGN.md` für calliope-ui |
 | **1 Fundament** | Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI (lint, check, test, Storybook-Build), Verteilung per gepinntem SHA | Campus kann `tokens.css` einbinden. `colors.scss` wird auf die neuen Tokens gemappt, ohne visuelle Änderung |
 | **2 Welle 1** | Primitives inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button` und die `.btn`-Klassen |
 | **3 Welle 2** | Overlays/Navigation auf bits-ui | Pilot: Campus-Modals und Dropdown migriert, **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
