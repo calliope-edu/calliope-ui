@@ -52,7 +52,7 @@ Exports: `@calliope-edu/ui` (Komponenten), `/tokens.css`, `/tokens` (TS-Werte), 
 - Storybook 9, `@storybook/sveltekit`, `addon-svelte-csf` v5 ohne Legacy-Modus, `addon-docs` (autodocs), `addon-a11y`, `addon-themes` (hell/dunkel).
 - Gliederung: **Foundations** (Farben, Typo, Abstände, Radien, Schatten, Icons, Motion) → **Primitives** → **Overlays** → **Patterns** (EmptyState, Banner, Formularzeilen) → **Rezepte** (Beispiele aus Campus/IoT).
 - Jede Komponenten-Story enthält alle Zustände (default, hover, focus, disabled, loading, error), einen Do/Don't-Abschnitt und den Hinweis, wann man sie nicht verwendet.
-- Deployment als statische Seite (Cloudflare Pages wie Campus oder GitHub Pages), PR-Previews.
+- Deployment als statische, öffentliche Seite auf Cloudflare Pages (wie Campus), mit PR-Previews.
 - Optional Chromatic für visuelle Regressionstests. Ist in Campus schon als Abhängigkeit vorhanden.
 
 ---
@@ -218,11 +218,9 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | Roboto Condensed | wird in Storybook getestet (H1/H2, Typ-A-Buttons, auch auf Beamer) |
 | Verteilung | GitHub-Dependency auf gepinnten SHA + Vite-Alias im Dev, wie beim Widget. GitHub Packages später |
 | Repo-Einbindung | Submodul `lib/calliope-ui` in `calliope-dev` |
-| Storybook-Hosting | öffentlich |
+| Storybook-Hosting | öffentlich auf **Cloudflare Pages** (mit PR-Previews). Das Repo bleibt privat |
 | Pilot | Buttons + Dialoge in ganz Campus. Danach das IoT-Dashboard als erster kompletter Bereich |
 
 ## 7. Offene Fragen
 
-1. **Storybook-Hosting:** gewünscht ist GitHub Pages. Die Organisation `calliope-edu` hat aber
-   den **Free-Plan**, und dort funktioniert Pages nur für öffentliche Repos. Entweder wird
-   `calliope-ui` öffentlich, oder wir nehmen Cloudflare Pages.
+Derzeit keine. Neue Fragen kommen aus Phase 0 (Design-Audit, Token-Entwurf).
