@@ -11,6 +11,14 @@ const config: StorybookConfig = {
 	framework: {
 		name: '@storybook/sveltekit',
 		options: {}
+	},
+	core: {
+		disableTelemetry: true,
+		disableWhatsNewNotifications: true
+	},
+	features: {
+		sidebarOnboardingChecklist: false,
+		menuOnboardingChecklist: false
 	}
 };
 
