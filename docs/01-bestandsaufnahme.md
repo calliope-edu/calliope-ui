@@ -5,7 +5,8 @@ den Editoren unter `calliope-dev/editors/*`, dem Vorgänger `D:\GIT\svelte\calli
 Repos in `github.com/calliope-edu`. Die Dateien in `docs/input/` sind als **Entwurf/Notizen** gelesen,
 nicht als Entscheidung.
 
-`C:\GIT\calliope-stack` bzw. `D:\GIT\calliope-stack` ist leer. Teachable ist lokal und in der
+`C:\GIT\calliope-stack` bzw. `D:\GIT\calliope-stack` ist leer. ML Trainer und Teachable sind
+dieselbe App: `ml-machine` (Svelte 4, nur auf GitHub, nicht lokal geprüft).
 
 ## 1. Wer kommt als Konsument in Frage?
 
