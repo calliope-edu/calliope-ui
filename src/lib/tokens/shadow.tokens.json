@@ -1,0 +1,50 @@
+{
+  "$description": "Shadow only for things that float (menu, popover, toast, dialog). Resting surfaces are flat and use border.subtle.",
+  "shadow": {
+    "$type": "shadow",
+    "menu": {
+      "$value": {
+        "color": "#1B1C1D26",
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 4,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 12,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "$description": "Menus, popovers, toasts, tooltips (#1B1C1D at 15%)"
+    },
+    "dialog": {
+      "$value": {
+        "color": "#1B1C1D3D",
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 24,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 60,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "$description": "Dialogs (#1B1C1D at 24%)"
+    }
+  }
+}

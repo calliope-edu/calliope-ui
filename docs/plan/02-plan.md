@@ -241,4 +241,20 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ## 7. Offene Fragen
 
-Derzeit keine. Neue Fragen kommen aus Phase 0 (Design-Audit, Token-Entwurf).
+Phase 0 (2026-10-28) produced the design audit ([03-design-audit.md](03-design-audit.md)),
+the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../DESIGN.md). Six questions came out of it;
+each has a recommendation in `DESIGN.md` → "Open decisions":
+
+- **D1** Mid-grey for secondary text and form borders: alpha of graphite/white, coal only, or one extra grey
+- **D2** Accent for on/checked/filled controls: graphite, indigo (draft) or brand
+- **D3** Outline-button border: 2px (draft) or 4px (Campus today)
+- **D4** Colours for data series in IoT charts
+- **D5** Wave order: Dialog, Menu and Tooltip into Wave 1
+- **D6** Minimum touch target on pupil surfaces: 24px or 44px
+
+Taken in Phase 0 without a separate question, because they follow from the decided colour roles:
+"paused" becomes `status.warning` (amber), since orange is Robotik identity; "online" becomes
+`status.success` (green), since lime is KI-Training identity; text on blue, indigo, violet and
+orange fills is black `#000000` (≥5.5:1), so Python identity can carry normal-size text;
+non-interactive badges are rounded rectangles, not pills; on mint surfaces the focus ring
+switches to graphite (teal on mint is 2.58:1).

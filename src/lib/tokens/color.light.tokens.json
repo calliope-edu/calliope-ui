@@ -1,0 +1,316 @@
+{
+  "$description": "Semantic colour tokens, light theme. Light and dark carry the same keys. Values with $extensions.calliope.alpha are palette colours with transparency (proposal, see DESIGN.md \"Open decisions\").",
+  "color": {
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Page background"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Panels, cards, inputs; the header band uses it inside a data-theme=\"dark\" subtree"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{palette.mint}",
+        "$description": "Secondary areas, chips, hover fill on surface.default"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Menus, popovers, dialogs (paired with a float shadow)"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Strong flip: tooltip, primary action fill"
+      },
+      "inverse-hover": {
+        "$type": "color",
+        "$value": "{palette.coal}",
+        "$description": "Hover on surface.inverse"
+      },
+      "scrim": {
+        "$type": "color",
+        "$value": "#1B1C1D99",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.graphite",
+            "alpha": 0.6,
+            "status": "proposed"
+          }
+        },
+        "$description": "Backdrop behind dialogs"
+      }
+    },
+    "text": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Body text, headings, icons"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#1B1C1DB3",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.graphite",
+            "alpha": 0.7,
+            "status": "proposed"
+          }
+        },
+        "$description": "Secondary text, metadata, placeholder (≥5.3:1 on surface.page/subtle)"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Text on surface.inverse"
+      },
+      "on-fill": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Text on light fills: brand, lime, aqua, lemon, amber, green"
+      },
+      "on-fill-mid": {
+        "$type": "color",
+        "$value": "{palette.black}",
+        "$description": "Text on mid-tone fills: blue, indigo, violet, orange (4.6–6.3:1); #1B1C1D would fail on violet"
+      },
+      "on-fill-strong": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Text on strong fills: red, magenta"
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Links and navigation text"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{palette.red}",
+        "$description": "Error message text; on dark the red goes to the icon/border (red on dark is only 2.9:1)"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{palette.mint}",
+        "$description": "Decorative dividers and card outlines (no contrast requirement)"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "#1B1C1D99",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.graphite",
+            "alpha": 0.6,
+            "status": "proposed"
+          }
+        },
+        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11 ≥3:1)"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Outline button, selected states"
+      }
+    },
+    "accent": {
+      "line": {
+        "$type": "color",
+        "$value": "{palette.cyan-strong}",
+        "$description": "Link underline, active nav marker, \"this is yours\" accent (2px)"
+      }
+    },
+    "focus": {
+      "ring": {
+        "$type": "color",
+        "$value": "{palette.cyan-strong}",
+        "$description": "Focus indicator, 2px outline + 2px offset (3.05:1 on white, 10.3:1 on black)"
+      }
+    },
+    "brand": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.cyan}",
+        "$description": "Brand fill (with text.on-fill), brand text on dark"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{palette.cyan-strong}",
+        "$description": "Brand lines/icons on light"
+      }
+    },
+    "action": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.surface.inverse}",
+          "$description": "Primary button fill"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.surface.inverse-hover}",
+          "$description": "Primary button hover"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.text.inverse}",
+          "$description": "Primary button label"
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "#1B1C1D14",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.graphite",
+            "alpha": 0.08,
+            "status": "proposed"
+          }
+        },
+        "$description": "Hover tint for ghost buttons and menu items"
+      }
+    },
+    "status": {
+      "success": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.green}",
+          "$description": "Success / online / connected"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.graphite}"
+        }
+      },
+      "warning": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.amber}",
+          "$description": "Warning / paused"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.graphite}"
+        }
+      },
+      "error": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.red}",
+          "$description": "Error / offline / destructive"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.white}"
+        }
+      },
+      "info": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.blue}",
+          "$description": "Info"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      }
+    },
+    "identity": {
+      "ki-training": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.lime}",
+          "$description": "Product KI-Training"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.graphite}"
+        }
+      },
+      "teachable": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.lemon}",
+          "$description": "Product Teachable"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.graphite}"
+        }
+      },
+      "iot": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.indigo}",
+          "$description": "Product IoT-WiFi"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      },
+      "robotik": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.orange}",
+          "$description": "Product Robotik"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      },
+      "makecode": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.magenta}",
+          "$description": "Editor MakeCode"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.white}"
+        }
+      },
+      "python": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.violet}",
+          "$description": "Editor Python"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}",
+          "$description": "Black, not graphite: #1B1C1D on violet is 4.46:1"
+        }
+      },
+      "blocks": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.aqua}",
+          "$description": "Editor Blocks"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.graphite}"
+        }
+      },
+      "markdown": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.graphite}",
+          "$description": "Editor Markdown"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.white}"
+        }
+      }
+    }
+  }
+}

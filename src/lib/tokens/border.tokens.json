@@ -1,0 +1,53 @@
+{
+  "$description": "Border and outline widths.",
+  "border-width": {
+    "$type": "dimension",
+    "hairline": {
+      "$value": {
+        "value": 1,
+        "unit": "px"
+      },
+      "$description": "Dividers, card outlines, input boundary"
+    },
+    "control": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Checkbox, radio, switch track outline"
+    },
+    "button": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Outline (secondary) button. Proposal: 2px as in the draft; Campus uses 4px today. See DESIGN.md \"Open decisions\"",
+      "$extensions": {
+        "calliope": {
+          "status": "proposed"
+        }
+      }
+    },
+    "accent": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Link underline, active nav marker, ownership stripe"
+    },
+    "focus": {
+      "$value": {
+        "value": 2,
+        "unit": "px"
+      },
+      "$description": "Focus outline"
+    }
+  },
+  "focus-offset": {
+    "$type": "dimension",
+    "$value": {
+      "value": 2,
+      "unit": "px"
+    }
+  }
+}

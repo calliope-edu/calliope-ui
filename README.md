@@ -8,6 +8,8 @@ Status: Fundament im Aufbau (Library-Scaffold, Storybook, Foundations-Seiten).
 - `docs/input/` – vorhandene Konzept-/Vorab-Dokumente
 - `docs/01-bestandsaufnahme.md` – Analyse der bestehenden UI über alle Projekte
 - `docs/plan/02-plan.md` – Architektur, Backlog, Phasen, Tool-Einsatz, offene Fragen (Entwurf)
+- `docs/03-design-audit.md` – design audit of Campus + IoT (Phase 0)
+- `DESIGN.md` – design system (draft); token source in `src/lib/tokens/*.tokens.json`
 
 ## Development
 
