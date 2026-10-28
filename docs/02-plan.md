@@ -62,15 +62,34 @@ Exports: `@calliope-edu/ui` (Komponenten), `/tokens.css`, `/tokens` (TS-Werte), 
 Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` und die
 `DESIGN.md` aus Campus fließen ein, sind aber nicht bindend.
 
-1. **Eine Markenfarbe, eine Skala.** Aus den fünf Cyan-Varianten wird eine Skala (z. B. 50…900).
-   Vorschlag: `#42C8C8` als Markenton (Python-Editor und Entwurf liegen dort), `#25A3A7` als
-   dunkle Stufe für Text und Links auf Hell. Die Fokusfarbe wird so gewählt, dass sie ≥ 3:1 erreicht
-   (heute 1.9:1).
-2. **Ein Identitätssystem statt zwei.** Produktfarben (KI-Training, Teachable, IoT, Robotik) und
-   Editorfarben (MakeCode, Python, Blocks, Markdown) werden eine Token-Familie `identity.*`.
-   Dazu gehört die Regel aus DESIGN.md: Farbe hat drei Aufgaben (Status, Identität, Neutral).
-3. **Statusfarben vereinheitlichen.** Ein Grün statt drei. Zu jeder Statusfarbe gibt es ein
-   definiertes Vordergrund-Paar, z. B. Lime nur mit Graphit-Text.
+1. **Feste Palette, keine abgeleiteten Skalen** (entschieden). Grundlage ist die Palette aus
+   `Calliope_UX_UI`:
+
+   | Gruppe | Werte |
+   |---|---|
+   | Neutral | `#000000` `#1B1C1D` `#323334` `#E8EDEB` `#FFFFFF` |
+   | Marke | `#42C8C8` `#25A3A7` |
+   | Farben | `#98F404` `#34E5DB` `#3B82F6` `#EEFF41` `#F8C526` `#FF4E00` `#E4007E` `#8073E4` `#6476FD` `#3FC663` |
+
+   Diese Werte werden als Basis-Tokens (`palette.*`) angelegt. Alles andere sind semantische Tokens,
+   die auf genau diese Werte zeigen (`text.*`, `surface.*`, `border.*`, `focus`, `status.*`,
+   `identity.*`). Bestehende Abweichungen (`#42C9CB`, `#98F600`, `#9AF406`, Slate-Hexwerte …)
+   werden auf den nächstliegenden Palettenwert gemappt.
+2. **Rollen der Farben festlegen (Phase 0).** Nach dem Entwurf vorläufig: KI-Training `#98F404`,
+   Teachable `#34E5DB`, IoT-WiFi `#6476FD`, Robotik `#FF4E00`. Offen ist, welche Werte Status
+   (Erfolg/Fehler/Warnung/Info) und welche die Editoren (MakeCode, Python, Blocks) bekommen.
+   Produkt- und Editorfarben werden eine Token-Familie `identity.*`. Weiter gilt die Regel aus
+   DESIGN.md: Farbe hat drei Aufgaben (Status, Identität, Neutral).
+3. **Kontrast über Paarungen statt über Abstufungen.** Ohne Skalen legen wir pro Farbe fest, mit
+   welcher Vordergrundfarbe sie verwendet werden darf. Erste Rechnung:
+   - `#25A3A7` auf Weiß erreicht nur ca. **3.1:1**. Das reicht für Fokusringe, Icons und großen
+     Text (≥ 3:1), aber **nicht für normalen Text** (4.5:1). Typ D „Text Navigation“ in 16px
+     verfehlt damit AA. Lösungsideen: unterstreichen und `#1B1C1D` als Textfarbe nutzen, nur auf
+     dunklem Grund einsetzen oder Text größer bzw. fett setzen. Das klären wir mit `include`.
+   - Helle Farben (`#98F404`, `#34E5DB`, `#EEFF41`, `#F8C526`, `#42C8C8`) nur als Fläche mit
+     `#1B1C1D`-Text, nie als Textfarbe auf Weiß.
+   - Fokusring: `#25A3A7` (ca. 3.1:1 auf Weiß) statt heute `#42C9CB` (1.9:1), auf Dunkel
+     `#42C8C8`.
 4. **Typografie:** Roboto bleibt Basis. Roboto Condensed (Entwurf) empfehle ich nur für H1/H2 und
    Typ-A-Buttons, wenn es nach einem Test auf Beamer und in Schülerhand überzeugt. Sonst gibt es
    nur eine Schrift. Diese Frage entscheiden wir mit einem Vergleich in Storybook.
@@ -151,18 +170,25 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ---
 
-## 6. Offene Fragen
+## 6. Entscheidungen (Stand 2026-10-28)
 
-1. **Teachable:** Wo liegt es, und in welcher Technik ist es gebaut? Und **ML Trainer**: Ist
-   `ml-trainer` (React/Chakra) gemeint oder `ml-machine` (Svelte 4)?
-2. **Icon-Set:** PrimeIcons, Material Symbols oder ein Vergleich in Storybook?
-3. **Roboto Condensed** für Überschriften und Typ-A-Buttons: ja, nein oder testen?
-4. **Markenfarbe:** Ist der Vorschlag `#42C8C8` / `#25A3A7` als Basis in Ordnung?
-5. **Verteilung:** Reicht zunächst eine GitHub-Dependency mit gepinntem SHA (wie beim Widget), oder
-   sollen wir gleich auf GitHub Packages veröffentlichen?
-6. **Submodul:** Soll `calliope-ui` als Submodul in `calliope-dev` eingetragen werden, wie
-   `mini-connection-widget`?
-7. **Storybook-Hosting:** öffentlich oder hinter Login?
-8. **Pilot:** Starten wir mit dem **IoT-Dashboard** (am stärksten abweichend, hat schon Stories)
-   oder mit **Buttons + Dialogen** in ganz Campus (größte Streuung)? Ich empfehle Buttons + Dialoge
-   als Pilot und das IoT-Dashboard als ersten kompletten Bereich.
+| Thema | Entscheidung |
+|---|---|
+| ML Trainer / Teachable | Sind dieselbe App: **`ml-machine`** (Svelte 4). Sie wird auf Svelte 5 gehoben und dann Konsument |
+| React-Apps | Die Bibliothek ist rein Svelte. React-Apps binden höchstens Svelte-Komponenten als Custom Elements ein |
+| PXT / MakeCode | außerhalb des Scopes |
+| Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen (siehe 2.1) |
+| Icon-Set | Vergleich in Storybook (PrimeIcons und Material Symbols mit den 28 Icons aus `icons.txt`), danach Entscheidung |
+| Roboto Condensed | wird in Storybook getestet (H1/H2, Typ-A-Buttons, auch auf Beamer) |
+| Verteilung | GitHub-Dependency auf gepinnten SHA + Vite-Alias im Dev, wie beim Widget. GitHub Packages später |
+| Repo-Einbindung | Submodul `lib/calliope-ui` in `calliope-dev` |
+| Storybook-Hosting | öffentlich |
+| Pilot | Buttons + Dialoge in ganz Campus. Danach das IoT-Dashboard als erster kompletter Bereich |
+
+## 7. Offene Fragen
+
+1. Rollen der Palette: Welche Farben stehen für Status und welche für die Editoren (MakeCode,
+   Python, Blocks)?
+2. `#25A3A7` als Textfarbe für Links und Navigation verfehlt AA. Wie lösen wir das (siehe 2.3)?
+3. Hosting-Ziel für das öffentliche Storybook: Cloudflare Pages wie Campus oder GitHub Pages?
+4. Für welche Apps ist das Dark-Theme Pflicht? Und brauchen wir ein Beamer-Theme?

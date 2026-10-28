@@ -6,7 +6,6 @@ Repos in `github.com/calliope-edu`. Die Dateien in `docs/input/` sind als **Entw
 nicht als Entscheidung.
 
 `C:\GIT\calliope-stack` bzw. `D:\GIT\calliope-stack` ist leer. Teachable ist lokal und in der
-Organisation nicht auffindbar (siehe offene Fragen im Plan).
 
 ## 1. Wer kommt als Konsument in Frage?
 
@@ -15,11 +14,10 @@ Organisation nicht auffindbar (siehe offene Fragen im Plan).
 | **calliope-campus** (inkl. IoT-Dashboard) | SvelteKit 2, Svelte 5 (Runes durchgängig) | SCSS + CSS-Custom-Properties (HSL-Tripel), `@layer` | **Hauptkonsument, Quelle der meisten Komponenten** |
 | **mini-connection-widget** | Svelte 5 + framework-agnostischer TS-Store | Scoped CSS, viele harte Hex-Werte, `--mkc-*` nur im MakeCode-Teil | **Konsument + Quelle** der Geräte-Verbindungs-UI |
 | **calliope-docs** (GitHub) | SvelteKit, Svelte 5, Storybook 9 | – (nicht lokal geprüft) | Konsument |
-| **ml-machine** (GitHub) | Svelte **4** | – | Konsument erst nach Svelte-5-Upgrade |
-| Teachable | unbekannt | – | offen |
+| **ml-machine** = ML Trainer / Teachable (GitHub) | Svelte **4** | – | Konsument nach Svelte-5-Upgrade |
 | pxt-iot-sim | Vanilla TS + Vite | CSS-Vars | nur Tokens (kann Svelte mounten) |
 | umo (Vue-Fork) | Vue 3 + TDesign | LESS, `--umo-*` | höchstens Tokens |
-| Python-Editor, scratch-gui (Blocks), ml-trainer | React | Chakra / CSS-Modules | **optional**: Svelte-Komponenten als Custom Element einbinden; keine React-Komponenten in der Bibliothek |
+| Python-Editor, scratch-gui (Blocks), ml-trainer (React-Variante) | React | Chakra / CSS-Modules | **optional**: Svelte-Komponenten als Custom Element einbinden; keine React-Komponenten in der Bibliothek |
 | pxt-calliope / MakeCode | PXT | Semantic UI / LESS | **außerhalb des Scopes** |
 | code4maus, Svelte-3-Stubs, SvelteKit-Scaffolds | – | – | ignorieren |
 
