@@ -75,21 +75,52 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
    die auf genau diese Werte zeigen (`text.*`, `surface.*`, `border.*`, `focus`, `status.*`,
    `identity.*`). Bestehende Abweichungen (`#42C9CB`, `#98F600`, `#9AF406`, Slate-Hexwerte …)
    werden auf den nächstliegenden Palettenwert gemappt.
-2. **Rollen der Farben festlegen (Phase 0).** Nach dem Entwurf vorläufig: KI-Training `#98F404`,
-   Teachable `#34E5DB`, IoT-WiFi `#6476FD`, Robotik `#FF4E00`. Offen ist, welche Werte Status
-   (Erfolg/Fehler/Warnung/Info) und welche die Editoren (MakeCode, Python, Blocks) bekommen.
-   Produkt- und Editorfarben werden eine Token-Familie `identity.*`. Weiter gilt die Regel aus
-   DESIGN.md: Farbe hat drei Aufgaben (Status, Identität, Neutral).
-3. **Kontrast über Paarungen statt über Abstufungen.** Ohne Skalen legen wir pro Farbe fest, mit
-   welcher Vordergrundfarbe sie verwendet werden darf. Erste Rechnung:
-   - `#25A3A7` auf Weiß erreicht nur ca. **3.1:1**. Das reicht für Fokusringe, Icons und großen
-     Text (≥ 3:1), aber **nicht für normalen Text** (4.5:1). Typ D „Text Navigation“ in 16px
-     verfehlt damit AA. Lösungsideen: unterstreichen und `#1B1C1D` als Textfarbe nutzen, nur auf
-     dunklem Grund einsetzen oder Text größer bzw. fett setzen. Das klären wir mit `include`.
-   - Helle Farben (`#98F404`, `#34E5DB`, `#EEFF41`, `#F8C526`, `#42C8C8`) nur als Fläche mit
-     `#1B1C1D`-Text, nie als Textfarbe auf Weiß.
-   - Fokusring: `#25A3A7` (ca. 3.1:1 auf Weiß) statt heute `#42C9CB` (1.9:1), auf Dunkel
-     `#42C8C8`.
+   Ergänzt um **`#C8102E`** (Rot, nur für Fehler), weil die Palette kein Rot hat.
+
+2. **Farbrollen** (entschieden 2026-10-28). Farbe hat drei Aufgaben: Neutral, Status, Identität
+   (Regel aus Campus-DESIGN.md). Jeder Wert hat genau eine Rolle.
+
+   | Rolle | Token | Wert |
+   |---|---|---|
+   | Seitenhintergrund hell | `surface.page` | `#FFFFFF` |
+   | Fläche hell / Rahmen | `surface.subtle`, `border.default` | `#E8EDEB` |
+   | Text, dunkle Fläche (Header, Primary-Button) | `text.default`, `surface.inverse` | `#1B1C1D` |
+   | Dunkle Sekundärfläche, Rahmen auf Dunkel | `surface.inverse-raised` | `#323334` |
+   | Dark-Theme-Seitenhintergrund | `surface.page` (dark) | `#000000` |
+   | Marke | `brand` | `#42C8C8` |
+   | Marke dunkel: Fokusring und Akzentlinie auf Hell | `brand.strong`, `focus` (light) | `#25A3A7` |
+   | Fokusring auf Dunkel | `focus` (dark) | `#42C8C8` |
+   | Erfolg | `status.success` | `#3FC663` |
+   | Warnung | `status.warning` | `#F8C526` |
+   | Fehler | `status.error` | `#C8102E` |
+   | Info | `status.info` | `#3B82F6` |
+   | Produkt KI-Training | `identity.ki-training` | `#98F404` |
+   | Produkt Teachable | `identity.teachable` | `#EEFF41` |
+   | Produkt IoT-WiFi | `identity.iot` | `#6476FD` |
+   | Produkt Robotik | `identity.robotik` | `#FF4E00` |
+   | Editor MakeCode | `identity.makecode` | `#E4007E` (heute `#AA278F`) |
+   | Editor Python | `identity.python` | `#8073E4` (heute `#62156D`) |
+   | Editor Blocks | `identity.blocks` | `#34E5DB` (heute `#42C8C8`) |
+   | Editor Markdown | `identity.markdown` | `#1B1C1D` |
+
+   Status wird nie nur über Farbe vermittelt, sondern immer zusammen mit Icon und Text.
+
+3. **Kontrast über Paarungen statt über Abstufungen.** Gerechnete Werte (WCAG):
+
+   | Farbe | auf Weiß | mit Text `#1B1C1D` | mit Text Weiß | Regel |
+   |---|---|---|---|---|
+   | `#42C8C8` | 2.0 | 8.4 | 2.0 | nur Fläche mit dunklem Text; Text/Links auf Dunkel |
+   | `#25A3A7` | 3.05 | 5.6 | 3.05 | Fokus, Linien, Icons auf Hell; **kein Fließtext auf Hell** |
+   | `#98F404` `#34E5DB` `#EEFF41` `#F8C526` `#3FC663` | 1.1–2.2 | 7.7–15.5 | – | nur Fläche mit dunklem Text |
+   | `#FF4E00` | 3.3 | 5.2 | 3.3 | Fläche mit dunklem Text |
+   | `#3B82F6` `#6476FD` | 3.7–3.8 | 4.5–4.6 | 3.7–3.8 | Fläche mit dunklem Text; Weiß nur für große Schrift |
+   | `#8073E4` | 3.8 | 4.46 | 3.8 | Fläche nur mit großer/fetter Schrift oder als Akzent (Rand, Icon) |
+   | `#E4007E` | 4.57 | 3.7 | 4.57 | Fläche mit **weißem** Text |
+   | `#C8102E` | 5.9 | 2.9 | 5.9 | Fläche mit weißem Text; als Fehlertext auf Hell ok. **Auf Dunkel** ist es als Text zu schwach (2.9): Fehlertext im Dark-Theme braucht eine eigene Lösung, z. B. weißen Text mit rotem Icon/Rand |
+
+   **Links und Navigation auf Hell** (entschieden): Text `#1B1C1D`, Unterstreichung bzw.
+   Aktiv-Markierung 2px in `#25A3A7`. Auf Dunkel dürfen Links `#42C8C8` sein (8.4:1).
+   Der Fokusring wechselt von heute `#42C9CB` (1.9:1) auf `#25A3A7` (3.05:1) bzw. `#42C8C8` auf Dunkel.
 4. **Typografie:** Roboto bleibt Basis. Roboto Condensed (Entwurf) empfehle ich nur für H1/H2 und
    Typ-A-Buttons, wenn es nach einem Test auf Beamer und in Schülerhand überzeugt. Sonst gibt es
    nur eine Schrift. Diese Frage entscheiden wir mit einem Vergleich in Storybook.
@@ -177,7 +208,9 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | ML Trainer / Teachable | Sind dieselbe App: **`ml-machine`** (Svelte 4). Sie wird auf Svelte 5 gehoben und dann Konsument |
 | React-Apps | Die Bibliothek ist rein Svelte. React-Apps binden höchstens Svelte-Komponenten als Custom Elements ein |
 | PXT / MakeCode | außerhalb des Scopes |
-| Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen (siehe 2.1) |
+| Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen, plus `#C8102E` für Fehler. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |
+| Links auf Hell | dunkler Text + Akzentlinie `#25A3A7` |
+| `#000000` | Seitenhintergrund im Dark-Theme |
 | Icon-Set | Vergleich in Storybook (PrimeIcons und Material Symbols mit den 28 Icons aus `icons.txt`), danach Entscheidung |
 | Roboto Condensed | wird in Storybook getestet (H1/H2, Typ-A-Buttons, auch auf Beamer) |
 | Verteilung | GitHub-Dependency auf gepinnten SHA + Vite-Alias im Dev, wie beim Widget. GitHub Packages später |
@@ -187,8 +220,7 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ## 7. Offene Fragen
 
-1. Rollen der Palette: Welche Farben stehen für Status und welche für die Editoren (MakeCode,
-   Python, Blocks)?
-2. `#25A3A7` als Textfarbe für Links und Navigation verfehlt AA. Wie lösen wir das (siehe 2.3)?
+1. **KI-Training** ist eine eigene Produktfarbe neben Teachable (ml-machine). Welche App ist das?
+2. Fehlertext im Dark-Theme: `#C8102E` ist auf Dunkel zu schwach. Gewünschte Lösung?
 3. Hosting-Ziel für das öffentliche Storybook: Cloudflare Pages wie Campus oder GitHub Pages?
 4. Für welche Apps ist das Dark-Theme Pflicht? Und brauchen wir ein Beamer-Theme?
