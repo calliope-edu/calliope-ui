@@ -211,6 +211,9 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen, plus `#C8102E` für Fehler. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |
 | Links auf Hell | dunkler Text + Akzentlinie `#25A3A7` |
 | `#000000` | Seitenhintergrund im Dark-Theme |
+| KI-Training | ist `ml-trainer` (React/Chakra). Nur optionaler Konsument (Custom Elements, Tokens) |
+| Fehler im Dark-Theme | weißer Text, Rot trägt Fläche, Rand oder Icon. Das Icon ist eine rote Scheibe mit weißem Zeichen (5.9:1), damit es nicht am Rot-auf-Dunkel-Kontrast (2.9:1) hängt |
+| Themes | **Hell** und **Dunkel** vollständig, dazu **dunkle Bereiche im hellen Theme** (Header, Panels) über `data-theme="dark"` auf einem Teilbaum. Ein Beamer-Theme gibt es vorerst nicht |
 | Icon-Set | Vergleich in Storybook (PrimeIcons und Material Symbols mit den 28 Icons aus `icons.txt`), danach Entscheidung |
 | Roboto Condensed | wird in Storybook getestet (H1/H2, Typ-A-Buttons, auch auf Beamer) |
 | Verteilung | GitHub-Dependency auf gepinnten SHA + Vite-Alias im Dev, wie beim Widget. GitHub Packages später |
@@ -220,7 +223,6 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ## 7. Offene Fragen
 
-1. **KI-Training** ist eine eigene Produktfarbe neben Teachable (ml-machine). Welche App ist das?
-2. Fehlertext im Dark-Theme: `#C8102E` ist auf Dunkel zu schwach. Gewünschte Lösung?
-3. Hosting-Ziel für das öffentliche Storybook: Cloudflare Pages wie Campus oder GitHub Pages?
-4. Für welche Apps ist das Dark-Theme Pflicht? Und brauchen wir ein Beamer-Theme?
+1. **Storybook-Hosting:** gewünscht ist GitHub Pages. Die Organisation `calliope-edu` hat aber
+   den **Free-Plan**, und dort funktioniert Pages nur für öffentliche Repos. Entweder wird
+   `calliope-ui` öffentlich, oder wir nehmen Cloudflare Pages.
