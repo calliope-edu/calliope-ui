@@ -55,7 +55,9 @@ Naming: `--cui-` plus the token path joined with `-`; colour roles drop their `c
 
 Same pattern as `mini-connection-widget`: a git dependency pinned to a commit, plus a Vite alias
 to the local checkout in dev. The package exports its sources (`src/lib`), so there is no build
-step on install.
+step on install. There is deliberately no `prepare` script either: for a git dependency pnpm would
+first install all of this repo's dev dependencies (Storybook, Wrangler, …) inside every app's
+install. The scripts that need `svelte-kit sync` run it themselves.
 
 ```jsonc
 // package.json of the app
