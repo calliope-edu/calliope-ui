@@ -31,19 +31,25 @@ Exports: `@calliope-edu/ui`, `@calliope-edu/ui/tokens`, `@calliope-edu/ui/tokens
 
 ### Deploying Storybook
 
-Storybook is published on Cloudflare as a Worker with static assets only (`wrangler.jsonc`, project
-`calliope-ui`, serving `storybook-static/`). Workers Builds is connected to the GitHub repo and
-uses the default commands: build `pnpm build-storybook`, deploy `npx wrangler deploy` (main), preview
-`npx wrangler versions upload` (pull requests get a preview URL).
+Storybook is published on Cloudflare Pages (project `calliope-ui`, config in `wrangler.jsonc`,
+output `storybook-static/`). Pages rather than Workers because a Pages project can get a custom
+subdomain through a CNAME record at any DNS provider, while a Worker custom domain needs the whole
+zone on Cloudflare.
+
+The Pages project is connected to the GitHub repo (Git integration) with these build settings:
+
+- Framework preset: none
+- Build command: `pnpm build-storybook` (must be set: without it nothing is built and there is no
+  `storybook-static/` to publish)
+- Build output directory: `storybook-static`
+- Production branch: `main`; other branches and pull requests get a preview URL
 
 The build image takes the pnpm version from the `packageManager` field in `package.json`
 (`pnpm@10.11.1`; `engines` requires pnpm >= 10). Without it the image may pick pnpm 9 and
 `pnpm install --frozen-lockfile` fails with `ERR_PNPM_UNSUPPORTED_ENGINE`. If a build still picks
-the wrong version, set the build variable `PNPM_VERSION=10.11.1` in the Workers Builds settings.
+the wrong version, set the environment variable `PNPM_VERSION=10.11.1` in the Pages build settings.
 Keep both in step when upgrading pnpm.
 
 ```sh
-pnpm run deploy                 # build and deploy manually (needs `wrangler login`; `pnpm deploy` is a pnpm built-in)
-npx wrangler deploy --dry-run   # check the config against an existing storybook-static/
-npx wrangler dev                # serve storybook-static/ locally the way the Worker does
+pnpm run deploy   # build and deploy manually (needs `wrangler login`; `pnpm deploy` is a pnpm built-in)
 ```
