@@ -32,9 +32,15 @@ Exports: `@calliope-edu/ui`, `@calliope-edu/ui/tokens`, `@calliope-edu/ui/tokens
 ### Deploying Storybook
 
 Storybook is published on Cloudflare as a Worker with static assets only (`wrangler.jsonc`, project
-`calliope-ui`, serving `storybook-static/`). Workers Builds is connected to the GitHub repo and
-uses the default commands: build `pnpm build-storybook`, deploy `npx wrangler deploy` (main), preview
-`npx wrangler versions upload` (pull requests get a preview URL).
+`calliope-ui`, serving `storybook-static/`). Workers Builds is connected to the GitHub repo with
+these commands (Worker settings > Build > Build configuration):
+
+- Build command: `pnpm build-storybook`. This must be set explicitly: Workers Builds leaves it empty
+  by default, and Wrangler does not build an assets-only Worker itself, so the deploy fails with
+  `The directory specified by the "assets.directory" field ... does not exist`.
+- Deploy command: `npx wrangler deploy` (main).
+- Non-production branch deploy command: `npx wrangler versions upload` (pull requests get a preview
+  URL).
 
 The build image takes the pnpm version from the `packageManager` field in `package.json`
 (`pnpm@10.11.1`; `engines` requires pnpm >= 10). Without it the image may pick pnpm 9 and
