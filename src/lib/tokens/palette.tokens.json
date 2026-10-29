@@ -1,24 +1,82 @@
 {
-  "$description": "Fixed Calliope palette (Calliope_UX_UI) plus #C8102E for errors. Base tokens only: components never reference these directly, they use the semantic tokens in color.*.tokens.json. No derived scales.",
+  "$description": "Fixed Calliope palette (Calliope_UX_UI) with three owner decisions (2026-10-29): #1D8286 replaces #25A3A7 for focus and links, #A5289B is the MakeCode colour, #E53F4B (the draft's red) is the error colour. Base tokens only: components never reference these directly, they use the semantic tokens in color.*.tokens.json. No derived scales.",
   "palette": {
     "$type": "color",
-    "black": { "$value": "#000000", "$description": "Dark-theme page background; text on mid-tone fills" },
-    "graphite": { "$value": "#1B1C1D", "$description": "Text, chrome band, primary action" },
-    "coal": { "$value": "#323334", "$description": "Dark secondary surface, borders on dark" },
-    "mint": { "$value": "#E8EDEB", "$description": "Light secondary surface, dividers" },
-    "white": { "$value": "#FFFFFF", "$description": "Light page background" },
-    "cyan": { "$value": "#42C8C8", "$description": "Brand" },
-    "cyan-strong": { "$value": "#25A3A7", "$description": "Brand, dark: focus ring and accent line on light" },
-    "lime": { "$value": "#98F404", "$description": "Identity: KI-Training" },
-    "aqua": { "$value": "#34E5DB", "$description": "Identity: Blocks editor" },
-    "blue": { "$value": "#3B82F6", "$description": "Status: info" },
-    "lemon": { "$value": "#EEFF41", "$description": "Identity: Teachable" },
-    "amber": { "$value": "#F8C526", "$description": "Status: warning" },
-    "orange": { "$value": "#FF4E00", "$description": "Identity: Robotik" },
-    "magenta": { "$value": "#E4007E", "$description": "Identity: MakeCode editor" },
-    "violet": { "$value": "#8073E4", "$description": "Identity: Python editor" },
-    "indigo": { "$value": "#6476FD", "$description": "Identity: IoT-WiFi" },
-    "green": { "$value": "#3FC663", "$description": "Status: success" },
-    "red": { "$value": "#C8102E", "$description": "Status: error. Errors only" }
+    "black": {
+      "$value": "#000000",
+      "$description": "Dark-theme page background; text on mid-tone fills"
+    },
+    "graphite": {
+      "$value": "#1B1C1D",
+      "$description": "Text, chrome band, primary action"
+    },
+    "coal": {
+      "$value": "#323334",
+      "$description": "Dark secondary surface, borders on dark"
+    },
+    "mint": {
+      "$value": "#E8EDEB",
+      "$description": "Light secondary surface, dividers"
+    },
+    "white": {
+      "$value": "#FFFFFF",
+      "$description": "Light page background"
+    },
+    "cyan": {
+      "$value": "#42C8C8",
+      "$description": "Brand"
+    },
+    "cyan-strong": {
+      "$value": "#1D8286",
+      "$description": "Focus ring and link text on light (4.58:1 on white, 3.87:1 on mint)"
+    },
+    "lime": {
+      "$value": "#98F404",
+      "$description": "Identity: KI-Training"
+    },
+    "aqua": {
+      "$value": "#34E5DB",
+      "$description": "Identity: Blocks editor"
+    },
+    "blue": {
+      "$value": "#3B82F6",
+      "$description": "Status: info"
+    },
+    "lemon": {
+      "$value": "#EEFF41",
+      "$description": "Identity: Teachable"
+    },
+    "amber": {
+      "$value": "#F8C526",
+      "$description": "Status: warning"
+    },
+    "orange": {
+      "$value": "#FF4E00",
+      "$description": "Identity: Robotik"
+    },
+    "magenta": {
+      "$value": "#E4007E",
+      "$description": "Highlight (Auszeichnung): marks single items, e.g. a 'new' marker. Not status, not identity, not a call to action"
+    },
+    "plum": {
+      "$value": "#A5289B",
+      "$description": "Identity: MakeCode editor"
+    },
+    "violet": {
+      "$value": "#8073E4",
+      "$description": "Identity: Python editor"
+    },
+    "indigo": {
+      "$value": "#6476FD",
+      "$description": "Identity: IoT-WiFi"
+    },
+    "green": {
+      "$value": "#3FC663",
+      "$description": "Status: success"
+    },
+    "red": {
+      "$value": "#E53F4B",
+      "$description": "Status: error. Errors only. Too light for text on white (4.08:1): error text stays graphite next to a red icon"
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "$description": "Semantic colour tokens, dark theme. Light and dark carry the same keys. Values with $extensions.calliope.alpha are palette colours with transparency (proposal, see DESIGN.md \"Open decisions\").",
+  "$description": "Semantic colour tokens, dark theme. Light and dark carry the same keys. Values with $extensions.calliope.alpha are palette colours with transparency (decided 2026-10-29, D1).",
   "color": {
     "surface": {
       "page": {
@@ -38,8 +38,7 @@
         "$extensions": {
           "calliope": {
             "base": "palette.black",
-            "alpha": 0.7,
-            "status": "proposed"
+            "alpha": 0.7
           }
         },
         "$description": "Backdrop behind dialogs"
@@ -57,11 +56,10 @@
         "$extensions": {
           "calliope": {
             "base": "palette.white",
-            "alpha": 0.7,
-            "status": "proposed"
+            "alpha": 0.7
           }
         },
-        "$description": "Secondary text, metadata, placeholder (≥5.3:1 on surface.page/subtle)"
+        "$description": "Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mint)"
       },
       "inverse": {
         "$type": "color",
@@ -76,22 +74,22 @@
       "on-fill-mid": {
         "$type": "color",
         "$value": "{palette.black}",
-        "$description": "Text on mid-tone fills: blue, indigo, violet, orange (4.6–6.3:1); #1B1C1D would fail on violet"
+        "$description": "Text on mid-tone fills: blue, indigo, violet, orange, red (5.1–6.3:1); #1B1C1D would fail on violet"
       },
       "on-fill-strong": {
         "$type": "color",
         "$value": "{palette.white}",
-        "$description": "Text on strong fills: red, magenta"
+        "$description": "Text on strong fills: plum, magenta"
       },
       "link": {
         "$type": "color",
         "$value": "{palette.cyan}",
-        "$description": "Links and navigation text"
+        "$description": "Links: colour only, no underline (4.58:1 on white, 3.73:1 against body text); underline appears on hover and focus"
       },
       "error": {
         "$type": "color",
         "$value": "{palette.white}",
-        "$description": "Error message text; on dark the red goes to the icon/border (red on dark is only 2.9:1)"
+        "$description": "Error message text. The red goes to the icon disc or border, never to the text (red is 4.08:1 on white)"
       }
     },
     "border": {
@@ -106,11 +104,10 @@
         "$extensions": {
           "calliope": {
             "base": "palette.white",
-            "alpha": 0.6,
-            "status": "proposed"
+            "alpha": 0.6
           }
         },
-        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11 ≥3:1)"
+        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mint)"
       },
       "strong": {
         "$type": "color",
@@ -122,14 +119,24 @@
       "line": {
         "$type": "color",
         "$value": "{palette.cyan}",
-        "$description": "Link underline, active nav marker, \"this is yours\" accent (2px)"
+        "$description": "Active nav marker, \"this is yours\" accent (2px). Not used under links"
+      },
+      "highlight": {
+        "$type": "color",
+        "$value": "{palette.magenta}",
+        "$description": "Highlight (Auszeichnung): marks a single item, e.g. \"new\""
+      },
+      "highlight-on": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Text on accent.highlight (4.57:1)"
       }
     },
     "focus": {
       "ring": {
         "$type": "color",
         "$value": "{palette.cyan}",
-        "$description": "Focus indicator, 2px outline + 2px offset (3.05:1 on white, 10.3:1 on black)"
+        "$description": "Focus indicator, 2px outline + 2px offset (4.58:1 on white, 3.87:1 on mint, 10.3:1 on black)"
       }
     },
     "brand": {
@@ -142,6 +149,18 @@
         "$type": "color",
         "$value": "{palette.cyan}",
         "$description": "Brand lines/icons on light"
+      }
+    },
+    "control": {
+      "on": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "On / checked / filled state of switch, checkbox, radio, slider, progress (D2)"
+      },
+      "on-mark": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Check mark and switch knob on control.on"
       }
     },
     "action": {
@@ -168,8 +187,7 @@
         "$extensions": {
           "calliope": {
             "base": "palette.white",
-            "alpha": 0.12,
-            "status": "proposed"
+            "alpha": 0.12
           }
         },
         "$description": "Hover tint for ghost buttons and menu items"
@@ -206,7 +224,8 @@
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.white}"
+          "$value": "{palette.black}",
+          "$description": "Black, not white: white on #E53F4B is 4.08:1"
         }
       },
       "info": {
@@ -269,12 +288,13 @@
       "makecode": {
         "fill": {
           "$type": "color",
-          "$value": "{palette.magenta}",
+          "$value": "{palette.plum}",
           "$description": "Editor MakeCode"
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.white}"
+          "$value": "{palette.white}",
+          "$description": "6.22:1"
         }
       },
       "python": {
@@ -310,6 +330,33 @@
           "$type": "color",
           "$value": "{palette.white}"
         }
+      }
+    },
+    "data": {
+      "series-1": {
+        "$type": "color",
+        "$value": "{palette.aqua}",
+        "$description": "Chart series (D4): on dark widget cards, assigned by device serial, always with name and marker shape"
+      },
+      "series-2": {
+        "$type": "color",
+        "$value": "{palette.magenta}"
+      },
+      "series-3": {
+        "$type": "color",
+        "$value": "{palette.lime}"
+      },
+      "series-4": {
+        "$type": "color",
+        "$value": "{palette.indigo}"
+      },
+      "series-5": {
+        "$type": "color",
+        "$value": "{palette.orange}"
+      },
+      "series-6": {
+        "$type": "color",
+        "$value": "{palette.lemon}"
       }
     }
   }

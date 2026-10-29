@@ -21,10 +21,31 @@
         "value": 2,
         "unit": "px"
       },
-      "$description": "Outline (secondary) button. Proposal: 2px as in the draft; Campus uses 4px today. See DESIGN.md \"Open decisions\"",
+      "$description": "Outline (secondary) button, all sizes (D3, decided 2026-10-29; Campus used 4px)"
+    },
+    "button-scaled": {
+      "$description": "Comparison variant for Storybook (D3): border grows with button size, close to the stroke width of the label (action text 12/14/16, weight 600)",
       "$extensions": {
         "calliope": {
-          "status": "proposed"
+          "status": "comparison"
+        }
+      },
+      "s": {
+        "$value": {
+          "value": 1.5,
+          "unit": "px"
+        }
+      },
+      "m": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      },
+      "l": {
+        "$value": {
+          "value": 2.5,
+          "unit": "px"
         }
       }
     },
@@ -33,7 +54,7 @@
         "value": 2,
         "unit": "px"
       },
-      "$description": "Link underline, active nav marker, ownership stripe"
+      "$description": "Active nav marker, ownership stripe, status stripe on banners"
     },
     "focus": {
       "$value": {

@@ -1,7 +1,7 @@
 ---
 name: calliope-ui
 description: Shared design system for Calliope's Svelte apps — a calm light canvas, dark chrome, one fixed palette in which every colour has exactly one job, legible from the back row of a classroom.
-status: draft (Phase 0, 2026-10-28). Normative once the open decisions at the end are settled.
+status: draft (Phase 0). Colour, shape and focus decisions settled 2026-10-29; D5 and D6 still open.
 tokens: src/lib/tokens/*.tokens.json (DTCG)
 colors:
   black: '#000000'
@@ -10,7 +10,7 @@ colors:
   mint: '#E8EDEB'
   white: '#FFFFFF'
   cyan: '#42C8C8'
-  cyan-strong: '#25A3A7'
+  cyan-strong: '#1D8286'
   lime: '#98F404'
   aqua: '#34E5DB'
   blue: '#3B82F6'
@@ -18,10 +18,11 @@ colors:
   amber: '#F8C526'
   orange: '#FF4E00'
   magenta: '#E4007E'
+  plum: '#A5289B'
   violet: '#8073E4'
   indigo: '#6476FD'
   green: '#3FC663'
-  red: '#C8102E'
+  red: '#E53F4B'
 typography:
   display: { fontFamily: Roboto, fontSize: 'clamp(2.5rem, 5vw, 3.8rem)', fontWeight: 700, lineHeight: 1.1 }
   h1: { fontFamily: Roboto, fontSize: '1.5rem', fontWeight: 600, lineHeight: 1.2 }
@@ -91,7 +92,7 @@ Dictionary into `tokens.css` (custom properties, prefix `--calliope-`), `tokens.
 | `motion.tokens.json` | Durations and easings |
 | `layout.tokens.json` | z-index scale, breakpoints, control and icon sizes |
 
-Tokens marked `$extensions.calliope.status: "proposed"` depend on an open decision.
+Tokens marked `$extensions.calliope.status: "comparison"` exist only to compare variants in Storybook (D3).
 
 ## Colours
 
@@ -100,12 +101,15 @@ Tokens marked `$extensions.calliope.status: "proposed"` depend on an open decisi
 | Group | Values |
 |---|---|
 | Neutral | `#000000` black · `#1B1C1D` graphite · `#323334` coal · `#E8EDEB` mint · `#FFFFFF` white |
-| Brand | `#42C8C8` cyan · `#25A3A7` cyan-strong |
-| Colours | `#98F404` lime · `#34E5DB` aqua · `#3B82F6` blue · `#EEFF41` lemon · `#F8C526` amber · `#FF4E00` orange · `#E4007E` magenta · `#8073E4` violet · `#6476FD` indigo · `#3FC663` green |
-| Error | `#C8102E` red (errors only) |
+| Brand | `#42C8C8` cyan · `#1D8286` cyan-strong (focus, links) |
+| Colours | `#98F404` lime · `#34E5DB` aqua · `#3B82F6` blue · `#EEFF41` lemon · `#F8C526` amber · `#FF4E00` orange · `#E4007E` magenta · `#A5289B` plum · `#8073E4` violet · `#6476FD` indigo · `#3FC663` green |
+| Error | `#E53F4B` red (errors only) |
 
-Values found in the apps that are not on this list are mapped to the nearest role (see audit §1).
-`#FAFAFA` (Chalk) becomes `#FFFFFF`; Steel `#90A4A8` has no successor colour (decision D1).
+The palette follows `Calliope_UX_UI` with three owner decisions (2026-10-29): `#1D8286` replaces
+`#25A3A7` for focus and links, MakeCode gets `#A5289B`, and the error red is the draft's
+`#E53F4B`. Values found in the apps that are not on this list are mapped to the nearest role
+(see audit §1).
+`#FAFAFA` (Chalk) becomes `#FFFFFF`; Steel `#90A4A8` is replaced by graphite with transparency (D1).
 
 ### Roles
 
@@ -117,12 +121,15 @@ Values found in the apps that are not on this list are mapped to the nearest rol
 | `surface.raised` | white | coal | Menus, popovers, dialogs (+ shadow) |
 | `surface.inverse` | graphite | white | Primary action, tooltip |
 | `text.default` | graphite | white | Text and icons |
-| `text.muted` | graphite 70 % | white 70 % | Secondary text, placeholder (D1) |
-| `text.link` + `accent.line` | graphite + cyan-strong 2px | cyan | Links, active navigation |
-| `text.error` | red | white (red goes to icon/border) | Error messages |
+| `text.muted` | graphite 70 % | white 70 % | Secondary text, placeholder |
+| `text.link` | cyan-strong | cyan | Links: colour only, no underline |
+| `accent.line` | cyan-strong | cyan | Active navigation marker, "this is yours" stripe |
+| `accent.highlight` | magenta | magenta | Highlight (Auszeichnung): marks a single item, e.g. "new" |
+| `text.error` | graphite | white | Error messages; the red goes to the icon disc or border |
 | `border.subtle` | mint | coal | Decorative dividers only |
-| `border.control` | graphite 60 % | white 60 % | Input, checkbox, radio, switch boundary (D1) |
+| `border.control` | graphite 60 % | white 60 % | Input, checkbox, radio, switch boundary |
 | `focus.ring` | cyan-strong | cyan | Focus indicator |
+| `control.on` | graphite | white | On / checked / filled: switch, checkbox, radio, slider, progress |
 | `brand.default` | cyan | cyan | Brand fill (dark text on it), brand text on dark |
 | `status.success` | green | green | Online, connected, done |
 | `status.warning` | amber | amber | Warning, **paused** |
@@ -132,10 +139,11 @@ Values found in the apps that are not on this list are mapped to the nearest rol
 | `identity.teachable` | lemon | lemon | Product Teachable |
 | `identity.iot` | indigo | indigo | Product IoT-WiFi |
 | `identity.robotik` | orange | orange | Product Robotik |
-| `identity.makecode` | magenta | magenta | Editor MakeCode |
+| `identity.makecode` | plum | plum | Editor MakeCode |
 | `identity.python` | violet | violet | Editor Python |
 | `identity.blocks` | aqua | aqua | Editor Blocks |
 | `identity.markdown` | graphite | coal | Editor Markdown |
+| `data.series-1…6` | aqua, magenta, lime, indigo, orange, lemon | same | Chart series on dark widget cards |
 
 Every fill has a paired `.on` text token. The pairs are fixed; nothing else goes on a coloured
 fill:
@@ -143,8 +151,8 @@ fill:
 | Fill | Text on it | Ratio |
 |---|---|---|
 | cyan, lime, aqua, lemon, amber, green | graphite `#1B1C1D` | 7.7–15.5 |
-| blue, indigo, violet, orange | **black** `#000000` | 5.5–6.3 |
-| red, magenta | white | 5.9 / 4.6 |
+| blue, indigo, violet, orange, red | **black** `#000000` | 5.1–6.3 |
+| plum, magenta | white | 6.2 / 4.6 |
 | graphite, coal | white | 17.1 / 12.7 |
 
 Black, not graphite, goes on the mid tones because graphite on violet is only 4.46:1. This lets
@@ -153,8 +161,9 @@ the Python identity carry normal-size text, which the earlier contrast table rul
 ### Rules
 
 **One job per colour.** Status colours never decorate, identity colours never signal state,
-brand never fills a call to action. Lime is KI-Training, not "online"; orange is Robotik, not
-"paused". A paused room is `status.warning`.
+brand never fills a call to action, the highlight colour never means anything but "look here".
+Lime is KI-Training, not "online"; orange is Robotik, not "paused". A paused room is
+`status.warning`.
 
 **Never colour alone.** Status always comes with a word or an icon. A dot with only a `title` is
 not a status display.
@@ -213,9 +222,12 @@ surface (Live Wall, IoT fullscreen) is below 16px. Captions at 12px are for meta
 
 - **Focus ring:** `outline: 2px solid var(focus.ring); outline-offset: 2px` on `:focus-visible`,
   defined once in `styles.css` inside `@layer calliope.base`. Components may change the offset,
-  never remove the outline. Contrast: 3.05:1 on white, 10.3:1 on black, 8.4:1 on graphite.
-- On `surface.subtle` (mint) the teal ring drops to 2.58:1, so containers that use mint set
-  `data-surface="subtle"`, and there `focus.ring` switches to graphite (14.4:1).
+  never remove the outline. Contrast: 4.58:1 on white, 3.87:1 on mint, 10.3:1 on black,
+  8.4:1 on graphite.
+- **Links** are coloured, not underlined: `#1D8286` on light (4.58:1 against white, 3.73:1
+  against graphite body text, which meets the 3:1 link rule of WCAG technique G183), `#42C8C8` on
+  dark. On hover and focus they gain an underline, so a link is not told apart by colour alone
+  when it is being used.
 - **Hover** is a tint (`action.hover`, graphite 8 % / white 12 %) or the `inverse-hover` fill.
   Hover never carries information that focus and touch do not also get.
 - **Disabled** uses the native `disabled` attribute (or `aria-disabled` when the control must
@@ -237,12 +249,14 @@ screen reader.
 ### Button
 
 `variant`: primary (graphite fill, white text; dark theme: white fill, graphite text) ·
-secondary (outline, 2px `border.strong`) · ghost (no border, hover tint) · link (graphite text,
-2px cyan-strong underline). `tone`: neutral · positive · negative · identity. `size`: s / m / l =
+secondary (outline, 2px `border.strong`) · ghost (no border, hover tint) · link (`text.link`, no
+underline until hover or focus). `tone`: neutral · positive · negative · identity. `size`: s / m / l =
 32 / 36 / 40px high, action text 12 / 14 / 16.
 
 - Native `type` stays HTML and defaults to `"button"`.
-- Tones only fill: positive = green + graphite text, negative = red + white text, identity =
+- Border: 2px at every size (D3). Storybook also shows the comparison variant
+  `border-width.button-scaled` (1.5 / 2 / 2.5px for s / m / l, close to the label's stroke).
+- Tones only fill: positive = green + graphite text, negative = red + black text, identity =
   identity fill + its `.on` text. There is no coloured text on white (lime text was 1.30:1).
 - `pressed` turns it into a toggle (`aria-pressed`) with a stable label; the room pause control
   becomes "Raum pausieren" pressed/unpressed plus a separate `status.warning` badge "Pausiert".
@@ -271,18 +285,21 @@ interactive content, and never names an icon-only button on its own.
 ### Switch, Checkbox, Radio
 
 Switch: `role="switch"`, 48×28 track, knob position plus fill tell on/off apart. Checkbox and
-radio 24px, 2px `border.control`. Checked, on and slider fill use the control accent (D2).
+radio 24px, 2px `border.control`. Checked, on and slider fill use `control.on` (graphite on
+light, white on dark).
 Help text is linked with `aria-describedby`, never nested inside the control.
 
 ### TextField, Label, FieldHint
 
 Visible label required (placeholder is never the label). 40px high, `surface.default`, 1px
 `border.control`, `radius.md`. Hint and error linked via `aria-describedby`; error sets
-`aria-invalid` and is announced politely; error text is `text.error` with an error icon.
+`aria-invalid` and is announced politely; error text is `text.error` (graphite / white) next to a
+red icon disc with a black mark.
 
 ### Badge, StatusDot
 
-Badge: `radius.md`, caption or label size, fill + paired text. StatusDot: 8px dot plus a visible
+Badge: `radius.md` (a non-interactive badge is never a pill), caption or label size, fill +
+paired text. StatusDot: 8px dot plus a visible
 word (or a distinct shape plus visually hidden text); `title` alone is not allowed. On teacher and
 projected surfaces the word is at least 14 / 16px.
 
@@ -303,23 +320,34 @@ Toast: thin wrapper around svelte-sonner with the same severities.
 - Design the frame and stop at the iframe boundary.
 
 **Don't**
-- Use tints, shades, `color-mix()` or opacity to make new colours (the alpha neutrals in D1 are
-  the only exception, if approved).
+- Use tints, shades, `color-mix()` or opacity to make new colours. The only exception are the
+  fixed alpha neutrals (`text.muted`, `border.control`, `action.hover`, `surface.scrim`).
 - Use `outline: none` without an equivalent visible ring.
+- Underline links at rest, or colour error text red.
 - Use identity colours for state or status colours for identity.
 - Put text below 14px on anything a teacher reads at distance.
 - Add a shadow to a resting card or lift it on hover.
 - Hard-code strings in a library component.
 
-## Open decisions
+## Decisions
 
-Each has a recommendation; the token draft already follows it and marks it `proposed`.
+### Settled (owner, 2026-10-29)
+
+| # | Question | Decision |
+|---|---|---|
+| D1 | Mid-grey for secondary text and form borders | Graphite / white with fixed alpha: 70 % text, 60 % borders, plus the hover tint and the scrim. No extra grey |
+| D2 | Colour of on / checked / filled controls | Graphite (light) / white (dark). Indigo stays IoT-WiFi only |
+| D3 | Border of outline buttons | 2px at every size. Storybook shows a comparison with a border that grows with button size (1.5 / 2 / 2.5px) |
+| D4 | Data series in IoT charts | Six palette colours on dark widget cards (aqua, magenta, lime, indigo, orange, lemon), assigned by device serial, always with name and marker shape; status colours excluded |
+| – | Non-interactive badges | Rounded rectangles (`radius.md`); the pill means "press me" |
+| – | Tints | None. Notices show their status colour as a stripe or icon |
+| – | Links | Not underlined; link and focus colour `#1D8286` on light |
+| – | MakeCode | `#A5289B`; `#E4007E` stays as the highlight colour (`accent.highlight`) |
+| – | Error red | `#E53F4B` (the draft's red). Too light for text on white (4.08:1): error text stays graphite next to a red icon, the destructive button has black text (5.1:1) |
+
+### Open
 
 | # | Question | Options | Recommendation |
 |---|---|---|---|
-| D1 | The palette jumps from coal `#323334` to mint `#E8EDEB`. Secondary text, placeholders and form-control borders (Steel today, ~95 uses) need something in between. | (a) graphite / white with fixed alpha (70 % text = 6.3:1 on white / 5.3:1 on mint, 60 % border = 4.5:1 / 3.8:1) · (b) only coal, differentiate by size and weight · (c) add one grey to the palette | **(a)**: no new colour, the draft already draws its greys this way, passes AA on white and mint |
-| D2 | Colour of "on / checked / filled" in switch, checkbox, radio, slider, progress. The draft uses indigo `#6476FD`, which is IoT-WiFi identity. | (a) graphite (neutral) · (b) indigo as in the draft · (c) brand cyan-strong | **(a)**: keeps one job per colour, 17:1, also what the draft's second page shows |
-| D3 | Border of outline buttons. Campus: 4px (signature, touch); draft: 2.5 / 2.2 / 1.9. | (a) 2px all sizes · (b) keep 4px · (c) 3px | **(a)**: follows the draft and reads lighter next to filled buttons; the 36–40px height carries the touch target |
-| D4 | Colours of data series (several Calliope minis in one IoT chart). Campus DESIGN.md wants four muted derived hues, which a fixed palette does not allow. | (a) six palette colours on the dark widget cards (aqua, magenta, lime, indigo, orange, lemon), assigned by serial number, always with name + marker shape · (b) graphite / coal with line styles only · (c) allow a separate data palette outside the fixed palette | **(a)**: inside a chart the legend names each series, so overlap with product identity is acceptable there; status colours stay excluded |
 | D5 | Wave order. The audit's largest P1 clusters are dialogs and menus. | (a) Wave 1 = tokens, Button/IconButton, Icon, Spinner, Dialog/ConfirmDialog, Menu, Tooltip, TextField, Switch; Checkbox/Radio/Badge move to Wave 2 · (b) keep the plan's waves | **(a)**: the pilot is "buttons + dialogs" anyway, and Menu needs Tooltip because Dropdown is misused as a tooltip today |
 | D6 | Minimum touch target on pupil surfaces (iPads in use). | (a) 24px everywhere (WCAG 2.2 AA), default control 36–40px · (b) 44px on pupil surfaces | **(a)**, with size l (40px) as the default in pupil-facing views |

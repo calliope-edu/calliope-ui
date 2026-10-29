@@ -42,11 +42,11 @@ never defines, which is the natural hook for calliope-ui tokens.
 | Pale Mint `#E8EDEB`, slate-200/300, `#DDD`, `#F1F5F9` | ~70 | `#E8EDEB` (`surface.subtle`, `border.subtle`) |
 | slate-700, `#333`, `#475569`, `#343537`, `hsl(210 4% 21%)` | ~35 | `#323334` |
 | **Steel `#90A4A8`, slate-400/500, `#666`, `#8E908F`, `hsl(0 0% 35–60%)`** | **~95** | **no palette value** → `text.muted` / `border.control` as graphite with alpha (proposal D1) |
-| Signal Cyan `#42C9CB`, sky-400 `#38BDF8` | ~15 | `#42C8C8` (brand) / `#25A3A7` (focus on light) |
+| Signal Cyan `#42C9CB`, sky-400 `#38BDF8` | ~15 | `#42C8C8` (brand) / `#1D8286` (focus and links on light) |
 | Live Lime `#98F600`, `#9AF406` | ~20 | status "online" → `#3FC663` (`status.success`); lime `#98F404` is now KI-Training identity |
-| Alarm Red `#E53F4B`, red-700, `#EF4444`, Bootstrap reds | ~25 | `#C8102E` (`status.error`) |
+| Alarm Red `#E53F4B`, red-700, `#EF4444`, Bootstrap reds | ~25 | `#E53F4B` (`status.error`, owner decision 2026-10-29) |
 | Hold Orange `#FF4E00` for "paused" | 6 | `#F8C526` (`status.warning`); `#FF4E00` is now Robotik identity |
-| Editor MakeCode `#AA278F`, Python `#62156D` | tokens | `#E4007E`, `#8073E4` (decided) |
+| Editor MakeCode `#AA278F`, Python `#62156D` | tokens | `#A5289B`, `#8073E4` (decided); `#E4007E` becomes the highlight colour |
 | emerald-700 `#047857` (success text), amber tint boxes | 7 + 6 | no tints: status fill + icon + text in `text.default` |
 | IoT device colours (`deviceColors.ts`: 8 saturated hues incl. status red/lime, plus an `hsl()` generator) | 50+ | data series palette (proposal D4) |
 
@@ -100,11 +100,11 @@ IotProgramChip's full Paraglide use.
 ## 3. The drafts in `docs/input/`
 
 - Button fills in `Calliope_UX_UI 3` are `#231F20` (Illustrator rich black), not `#1B1C1D`.
-  The red swatch is `#E53F4B` (labelled "e8edeb"); `#C8102E` appears in no draft.
+  The red swatch is `#E53F4B` (labelled "e8edeb"); it became the error red (2026-10-29).
 - The draft uses **`#6476FD` as control accent** (switch on, checkbox checked, slider and progress
   fill), which the colour roles give to IoT-WiFi identity (decision D2).
 - Product pills IoT-WiFi and Robotik carry white text: 3.8:1 and 3.3:1, below 4.5:1 at 16px.
-  Text link Typ D `#25A3A7` on white is 3.05:1 (already resolved: dark text + teal underline).
+  Text link Typ D `#25A3A7` on white is 3.05:1 (resolved 2026-10-29: links in `#1D8286`, 4.58:1, no underline).
 - Draft greys are drawn as `#1B1C1D` / white at 25–50 % opacity (checkbox border, slider track,
   switch track). The palette has no mid-grey either way (decision D1).
 - Measures used for the token draft: buttons L/M/S 39/34/30 px high with 16/14/12 text and
