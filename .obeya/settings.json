@@ -1,0 +1,9 @@
+{
+	"setup": "pnpm install",
+	"checks": ["pnpm lint", "pnpm check"],
+	"direct": true,
+	"app": {
+		"run": "The app is the Storybook of the component library (Node 22+, pnpm 10; run `pnpm install` first). Start it with `node .obeya/storybook.mjs start`: it picks a free port from 6006 on (other workspaces run their own Storybook), starts `storybook dev` in the background, waits until it answers and prints its URL; `.obeya/run/storybook.json` holds the URL, port and PID, `.obeya/run/storybook.log` the output. Stories and components reload by themselves (Vite HMR); after a change to `.storybook/` (main.ts, preview.ts), `vite.config.ts` or the dependencies, stop and start it again. There is no login and no test data: everything to show is in the stories under `src/stories/` (Foundations: colours, typography) and beside the components, with the theme switch (light/dark) in the toolbar. Stop it with `node .obeya/storybook.mjs stop`, which kills only this workspace's Storybook by its PID.",
+		"stop": "node .obeya/storybook.mjs stop"
+	}
+}
