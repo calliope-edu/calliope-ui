@@ -9,17 +9,17 @@
       },
       "default": {
         "$type": "color",
-        "$value": "{palette.graphite}",
+        "$value": "{palette.ink}",
         "$description": "Panels, cards, inputs; the header band uses it inside a data-theme=\"dark\" subtree"
       },
       "subtle": {
         "$type": "color",
-        "$value": "{palette.coal}",
+        "$value": "{palette.graphite}",
         "$description": "Secondary areas, chips, hover fill on surface.default"
       },
       "raised": {
         "$type": "color",
-        "$value": "{palette.coal}",
+        "$value": "{palette.graphite}",
         "$description": "Menus, popovers, dialogs (paired with a float shadow)"
       },
       "inverse": {
@@ -29,7 +29,7 @@
       },
       "inverse-hover": {
         "$type": "color",
-        "$value": "{palette.mint}",
+        "$value": "{palette.mist}",
         "$description": "Hover on surface.inverse"
       },
       "scrim": {
@@ -59,17 +59,17 @@
             "alpha": 0.7
           }
         },
-        "$description": "Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mint)"
+        "$description": "Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist)"
       },
       "inverse": {
         "$type": "color",
-        "$value": "{palette.graphite}",
+        "$value": "{palette.ink}",
         "$description": "Text on surface.inverse"
       },
       "on-fill": {
         "$type": "color",
-        "$value": "{palette.graphite}",
-        "$description": "Text on light fills: brand, lime, aqua, lemon, amber, green"
+        "$value": "{palette.ink}",
+        "$description": "Text on light fills: brand, lime, cyan, yellow, amber, green"
       },
       "on-fill-mid": {
         "$type": "color",
@@ -83,7 +83,7 @@
       },
       "link": {
         "$type": "color",
-        "$value": "{palette.cyan}",
+        "$value": "{palette.teal}",
         "$description": "Links: colour only, no underline (4.58:1 on white, 3.73:1 against body text); underline appears on hover and focus"
       },
       "error": {
@@ -95,7 +95,7 @@
     "border": {
       "subtle": {
         "$type": "color",
-        "$value": "{palette.coal}",
+        "$value": "{palette.graphite}",
         "$description": "Decorative dividers and card outlines (no contrast requirement)"
       },
       "control": {
@@ -107,7 +107,7 @@
             "alpha": 0.6
           }
         },
-        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mint)"
+        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist)"
       },
       "strong": {
         "$type": "color",
@@ -118,7 +118,7 @@
     "accent": {
       "line": {
         "$type": "color",
-        "$value": "{palette.cyan}",
+        "$value": "{palette.teal}",
         "$description": "Active nav marker, \"this is yours\" accent (2px). Not used under links"
       },
       "highlight": {
@@ -135,19 +135,19 @@
     "focus": {
       "ring": {
         "$type": "color",
-        "$value": "{palette.cyan}",
-        "$description": "Focus indicator, 2px outline + 2px offset (4.58:1 on white, 3.87:1 on mint, 10.3:1 on black)"
+        "$value": "{palette.teal}",
+        "$description": "Focus indicator, 2px outline + 2px offset (4.58:1 on white, 3.87:1 on mist, 10.3:1 on black)"
       }
     },
     "brand": {
       "default": {
         "$type": "color",
-        "$value": "{palette.cyan}",
+        "$value": "{palette.teal}",
         "$description": "Brand fill (with text.on-fill), brand text on dark"
       },
       "strong": {
         "$type": "color",
-        "$value": "{palette.cyan}",
+        "$value": "{palette.teal}",
         "$description": "Brand lines/icons on light"
       }
     },
@@ -159,7 +159,7 @@
       },
       "on-mark": {
         "$type": "color",
-        "$value": "{palette.graphite}",
+        "$value": "{palette.ink}",
         "$description": "Check mark and switch knob on control.on"
       }
     },
@@ -202,7 +202,7 @@
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.graphite}"
+          "$value": "{palette.ink}"
         }
       },
       "warning": {
@@ -213,7 +213,7 @@
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.graphite}"
+          "$value": "{palette.ink}"
         }
       },
       "error": {
@@ -249,18 +249,18 @@
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.graphite}"
+          "$value": "{palette.ink}"
         }
       },
       "teachable": {
         "fill": {
           "$type": "color",
-          "$value": "{palette.lemon}",
+          "$value": "{palette.yellow}",
           "$description": "Product Teachable"
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.graphite}"
+          "$value": "{palette.ink}"
         }
       },
       "iot": {
@@ -306,24 +306,24 @@
         "on": {
           "$type": "color",
           "$value": "{palette.black}",
-          "$description": "Black, not graphite: #1B1C1D on violet is 4.46:1"
+          "$description": "Black, not ink: #1B1C1D on violet is 4.46:1"
         }
       },
       "blocks": {
         "fill": {
           "$type": "color",
-          "$value": "{palette.aqua}",
+          "$value": "{palette.cyan}",
           "$description": "Editor Blocks"
         },
         "on": {
           "$type": "color",
-          "$value": "{palette.graphite}"
+          "$value": "{palette.ink}"
         }
       },
       "markdown": {
         "fill": {
           "$type": "color",
-          "$value": "{palette.coal}",
+          "$value": "{palette.graphite}",
           "$description": "Editor Markdown"
         },
         "on": {
@@ -335,7 +335,7 @@
     "data": {
       "series-1": {
         "$type": "color",
-        "$value": "{palette.aqua}",
+        "$value": "{palette.cyan}",
         "$description": "Chart series (D4): on dark widget cards, assigned by device serial, always with name and marker shape"
       },
       "series-2": {
@@ -356,7 +356,7 @@
       },
       "series-6": {
         "$type": "color",
-        "$value": "{palette.lemon}"
+        "$value": "{palette.yellow}"
       }
     }
   }

@@ -14,13 +14,13 @@ Grundlage: [01-bestandsaufnahme.md](../01-bestandsaufnahme.md).
 
 Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 
-- [ ] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
+- [x] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
 - [ ] **W1:** Fundament. Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI,
   Verteilung per gepinntem SHA. Campus bindet `tokens.css` ein, ohne visuelle Änderung
-- [ ] **W2:** Welle 1. Primitives inkl. Stories und Tests. Pilot: Campus ersetzt `ui/Button` und
-  die `.btn`-Klassen
-- [ ] **W3:** Welle 2. Overlays/Navigation auf bits-ui. Pilot: Campus-Modals und Dropdown,
-  IoT-Dashboard komplett auf Tokens und Bibliothekskomponenten
+- [ ] **W2:** Welle 1. Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests. Pilot: Campus
+  ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` (order changed by D5)
+- [ ] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
+  Bibliothekskomponenten
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
 - [ ] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
@@ -138,12 +138,12 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
    | `#8073E4` | 3.8 | 4.46 | 3.8 | Fläche nur mit großer/fetter Schrift oder als Akzent (Rand, Icon) |
    | `#E4007E` | 4.57 | 3.7 | 4.57 | Fläche mit **weißem** Text |
    | `#A5289B` | 6.22 | 2.74 | 6.22 | Fill with white text (MakeCode) |
-   | `#E53F4B` | 4.08 | 4.18 | 4.08 | Fill with **black** text (5.1:1); never as text. Error text is graphite (light) or white (dark) next to a red icon disc |
+   | `#E53F4B` | 4.08 | 4.18 | 4.08 | Fill with **black** text (5.1:1); never as text. Error text is ink (light) or white (dark) next to a red icon disc |
 
    **Links and navigation on light** (decided 2026-10-29, replaces the earlier underline rule):
    links are `#1D8286` text without underline; they gain an underline on hover and focus. Active
    navigation keeps a 2px marker in `#1D8286`. On dark, links are `#42C8C8` (8.4:1). The focus
-   ring moves from today's `#42C9CB` (1.9:1) to `#1D8286` (4.58:1, 3.87:1 on mint) and
+   ring moves from today's `#42C9CB` (1.9:1) to `#1D8286` (4.58:1, 3.87:1 on mist) and
    `#42C8C8` on dark.
 4. **Typografie:** Roboto bleibt Basis. Roboto Condensed (Entwurf) empfehle ich nur für H1/H2 und
    Typ-A-Buttons, wenn es nach einem Test auf Beamer und in Schülerhand überzeugt. Sonst gibt es
@@ -243,8 +243,8 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | PXT / MakeCode | außerhalb des Scopes |
 | Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen. 2026-10-29: error red `#E53F4B`, focus/link `#1D8286`, MakeCode `#A5289B`, `#E4007E` as highlight. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |
 | Links auf Hell | `#1D8286`, no underline (underline on hover/focus) (2026-10-29) |
-| Mid-grey (D1) | graphite / white with fixed alpha: 70 % text, 60 % borders (2026-10-29) |
-| Control accent (D2) | graphite on light, white on dark (2026-10-29) |
+| Mid-grey (D1) | ink / white with fixed alpha: 70 % text, 60 % borders (2026-10-29) |
+| Control accent (D2) | ink on light, white on dark (2026-10-29) |
 | Outline-button border (D3) | 2px; Storybook compares a border growing with button size (2026-10-29) |
 | Data series (D4) | six palette colours on dark widget cards, by device serial, with name + marker (2026-10-29) |
 | Wave order (D5) | Dialog, ConfirmDialog, Menu, Tooltip move into Wave 1; Checkbox, Radio, Badge into Wave 2; Combobox, LiveRegion and a chart a11y pattern added (2026-10-29) |
@@ -263,8 +263,8 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ## 7. Offene Fragen
 
-Phase 0 (2026-10-28) produced the design audit ([03-design-audit.md](03-design-audit.md)),
-the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../DESIGN.md). All six questions from it
+Phase 0 (2026-10-28) produced the design audit ([03-design-audit.md](../03-design-audit.md)),
+the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../../DESIGN.md). All six questions from it
 (D1–D6) were decided on 2026-10-29, see section 6. No open questions.
 
 Taken in Phase 0 without a separate question, because they follow from the colour roles:

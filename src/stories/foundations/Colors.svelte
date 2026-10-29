@@ -11,7 +11,7 @@
 		{
 			id: 'brand',
 			title: 'Marke',
-			intro: 'Markenfarbe und ihre dunkle Variante für Fokus und Linien.'
+			intro: 'Markenfarbe und ihre dunkle Variante für Fokus und Links.'
 		},
 		{
 			id: 'color',
@@ -21,14 +21,14 @@
 		{
 			id: 'error',
 			title: 'Ergänzung',
-			intro: 'Rot nur für Fehler. Die Palette selbst hat kein Rot.'
+			intro: 'Rot nur für Fehler.'
 		}
 	];
 
 	// Usage rules per palette value (docs/plan/02-plan.md, section 2.3).
 	const rules: Partial<Record<PaletteName, string>> = {
 		teal: 'Nur als Fläche mit dunklem Text. Als Text und Link nur auf Dunkel.',
-		'teal-dark': 'Fokusring, Linien und Icons auf Hell. Kein Fließtext auf Hell.',
+		'teal-dark': 'Fokusring, Links, Linien und Icons auf Hell. Links ohne Unterstreichung.',
 		lime: 'Nur als Fläche mit dunklem Text.',
 		cyan: 'Nur als Fläche mit dunklem Text.',
 		yellow: 'Nur als Fläche mit dunklem Text.',
@@ -37,9 +37,10 @@
 		orange: 'Als Fläche mit dunklem Text.',
 		blue: 'Als Fläche mit dunklem Text. Weiß nur für große Schrift.',
 		indigo: 'Als Fläche mit dunklem Text. Weiß nur für große Schrift.',
-		violet: 'Als Fläche nur mit großer oder fetter Schrift, sonst als Akzent (Rand, Icon).',
-		magenta: 'Als Fläche mit weißem Text.',
-		red: 'Als Fläche mit weißem Text, als Fehlertext auf Hell. Auf Dunkel kein roter Text.'
+		violet: 'Als Fläche mit schwarzem Text, sonst als Akzent (Rand, Icon).',
+		magenta: 'Auszeichnung: Fläche mit weißem Text.',
+		plum: 'Editor MakeCode: Fläche mit weißem Text.',
+		red: 'Als Fläche mit schwarzem Text. Nie als Text: Fehlertext bleibt dunkel, das Rot sitzt im Icon.'
 	};
 
 	const ratingLabel: Record<Rating, string> = {
@@ -68,8 +69,8 @@
 			roles: [
 				{ token: 'brand', role: 'Markenfarbe als Fläche' },
 				{ token: 'brand-strong', role: 'Akzentlinie und Icons auf Hell' },
-				{ token: 'link-text', role: 'Linktext' },
-				{ token: 'link-underline', role: 'Unterstreichung und Aktiv-Markierung (2 px)' },
+				{ token: 'link-text', role: 'Linktext, ohne Unterstreichung' },
+				{ token: 'highlight', role: 'Auszeichnung, z. B. „Neu“' },
 				{ token: 'focus', role: 'Fokusring' }
 			]
 		},
@@ -230,8 +231,8 @@
 			<div class="pairing" data-theme="light">
 				<p class="pairing-label">Hell</p>
 				<p>
-					Weiter zur <a href="#pairings">Projektübersicht</a>. Links sind dunkel mit einer
-					Akzentlinie.
+					Weiter zur <a href="#pairings">Projektübersicht</a>. Links sind petrol und ohne
+					Unterstreichung, die erst beim Zeigen oder Fokussieren erscheint.
 				</p>
 				<button type="button" class="demo-button">Speichern</button>
 			</div>
@@ -486,7 +487,12 @@
 
 	.pairing a {
 		color: var(--cui-link-text);
-		text-decoration-color: var(--cui-link-underline);
+		text-decoration: none;
+	}
+
+	.pairing a:hover,
+	.pairing a:focus-visible {
+		text-decoration: underline;
 		text-decoration-thickness: 2px;
 		text-underline-offset: 0.2em;
 	}

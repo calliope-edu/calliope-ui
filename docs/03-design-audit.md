@@ -41,7 +41,7 @@ never defines, which is the natural hook for calliope-ui tokens.
 | `#1B1C1D`, `hsl(210 4% 11%)`, slate-900, `#1C1D1F`, `#111827` | ~90 | `#1B1C1D` (`text.default`, `surface.inverse`) |
 | Pale Mint `#E8EDEB`, slate-200/300, `#DDD`, `#F1F5F9` | ~70 | `#E8EDEB` (`surface.subtle`, `border.subtle`) |
 | slate-700, `#333`, `#475569`, `#343537`, `hsl(210 4% 21%)` | ~35 | `#323334` |
-| **Steel `#90A4A8`, slate-400/500, `#666`, `#8E908F`, `hsl(0 0% 35–60%)`** | **~95** | **no palette value** → `text.muted` / `border.control` as graphite with alpha (proposal D1) |
+| **Steel `#90A4A8`, slate-400/500, `#666`, `#8E908F`, `hsl(0 0% 35–60%)`** | **~95** | **no palette value** → `text.muted` / `border.control` as ink with alpha (D1) |
 | Signal Cyan `#42C9CB`, sky-400 `#38BDF8` | ~15 | `#42C8C8` (brand) / `#1D8286` (focus and links on light) |
 | Live Lime `#98F600`, `#9AF406` | ~20 | status "online" → `#3FC663` (`status.success`); lime `#98F404` is now KI-Training identity |
 | Alarm Red `#E53F4B`, red-700, `#EF4444`, Bootstrap reds | ~25 | `#E53F4B` (`status.error`, owner decision 2026-10-29) |

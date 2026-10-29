@@ -6,15 +6,15 @@
       "$value": "#000000",
       "$description": "Dark-theme page background; text on mid-tone fills"
     },
-    "graphite": {
+    "ink": {
       "$value": "#1B1C1D",
       "$description": "Text, chrome band, primary action"
     },
-    "coal": {
+    "graphite": {
       "$value": "#323334",
       "$description": "Dark secondary surface, borders on dark"
     },
-    "mint": {
+    "mist": {
       "$value": "#E8EDEB",
       "$description": "Light secondary surface, dividers"
     },
@@ -22,19 +22,19 @@
       "$value": "#FFFFFF",
       "$description": "Light page background"
     },
-    "cyan": {
+    "teal": {
       "$value": "#42C8C8",
       "$description": "Brand"
     },
-    "cyan-strong": {
+    "teal-dark": {
       "$value": "#1D8286",
-      "$description": "Focus ring and link text on light (4.58:1 on white, 3.87:1 on mint)"
+      "$description": "Focus ring and link text on light (4.58:1 on white, 3.87:1 on mist)"
     },
     "lime": {
       "$value": "#98F404",
       "$description": "Identity: KI-Training"
     },
-    "aqua": {
+    "cyan": {
       "$value": "#34E5DB",
       "$description": "Identity: Blocks editor"
     },
@@ -42,7 +42,7 @@
       "$value": "#3B82F6",
       "$description": "Status: info"
     },
-    "lemon": {
+    "yellow": {
       "$value": "#EEFF41",
       "$description": "Identity: Teachable"
     },
@@ -76,7 +76,7 @@
     },
     "red": {
       "$value": "#E53F4B",
-      "$description": "Status: error. Errors only. Too light for text on white (4.08:1): error text stays graphite next to a red icon"
+      "$description": "Status: error. Errors only. Too light for text on white (4.08:1): error text stays ink next to a red icon"
     }
   }
 }
