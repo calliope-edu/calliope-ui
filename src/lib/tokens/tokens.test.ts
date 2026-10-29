@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contrastRatio } from './contrast.js';
 import { colors, palette, tokens } from './tokens.js';
 
-const hex = new Map(palette.map((c) => [c.name, c.hex.toLowerCase()]));
+const hex = new Map<string, string>(palette.map((c) => [c.name, c.hex.toLowerCase()]));
 const HEX = /^#[0-9a-f]{6}([0-9a-f]{2})?$/;
 
 /** Resolve a CSS value like "var(--cui-palette-ink)" or "var(--cui-surface-inverse)". */
