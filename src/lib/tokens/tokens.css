@@ -1,0 +1,115 @@
+/*
+ * Calliope design tokens.
+ *
+ * Palette tokens (--cui-palette-*) hold the fixed palette (docs/plan/02-plan.md, 2.1).
+ * Everything else is a semantic token that points at exactly one palette value
+ * (roles: 2.2, contrast rules: 2.3). Components use semantic tokens only.
+ *
+ * Hand-maintained together with palette.ts until the Style Dictionary pipeline
+ * generates both from one DTCG source.
+ */
+
+@layer calliope.tokens {
+	:root {
+		/* Palette: neutral */
+		--cui-palette-black: #000000;
+		--cui-palette-ink: #1b1c1d;
+		--cui-palette-graphite: #323334;
+		--cui-palette-mist: #e8edeb;
+		--cui-palette-white: #ffffff;
+
+		/* Palette: brand */
+		--cui-palette-teal: #42c8c8;
+		--cui-palette-teal-dark: #25a3a7;
+
+		/* Palette: colours */
+		--cui-palette-lime: #98f404;
+		--cui-palette-cyan: #34e5db;
+		--cui-palette-blue: #3b82f6;
+		--cui-palette-yellow: #eeff41;
+		--cui-palette-amber: #f8c526;
+		--cui-palette-orange: #ff4e00;
+		--cui-palette-magenta: #e4007e;
+		--cui-palette-violet: #8073e4;
+		--cui-palette-indigo: #6476fd;
+		--cui-palette-green: #3fc663;
+
+		/* Palette: error only (the source palette has no red) */
+		--cui-palette-red: #c8102e;
+
+		/* Typography */
+		--cui-font-family-base: 'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif;
+		--cui-font-family-condensed:
+			'Roboto Condensed Variable', 'Roboto Condensed', var(--cui-font-family-base);
+
+		--cui-font-weight-regular: 400;
+		--cui-font-weight-medium: 500;
+		--cui-font-weight-semibold: 600;
+		--cui-font-weight-extrabold: 800;
+
+		--cui-font-size-display: clamp(2.5rem, 5vw, 3.8rem);
+		--cui-font-size-headline: 1.5rem;
+		--cui-font-size-title: 1.25rem;
+		--cui-font-size-body: 1rem;
+		--cui-font-size-label: 0.875rem;
+		--cui-font-size-caption: 0.75rem;
+
+		--cui-line-height-tight: 1.1;
+		--cui-line-height-heading: 1.25;
+		--cui-line-height-body: 1.3;
+		--cui-line-height-caption: 1.33;
+
+		/* Identity: products and editors. Same in every theme. */
+		--cui-identity-ki-training: var(--cui-palette-lime);
+		--cui-identity-teachable: var(--cui-palette-yellow);
+		--cui-identity-iot: var(--cui-palette-indigo);
+		--cui-identity-robotik: var(--cui-palette-orange);
+		--cui-identity-makecode: var(--cui-palette-magenta);
+		--cui-identity-python: var(--cui-palette-violet);
+		--cui-identity-blocks: var(--cui-palette-cyan);
+		--cui-identity-markdown: var(--cui-palette-ink);
+
+		/* Status. Never conveyed by colour alone: always with icon and text. */
+		--cui-status-success: var(--cui-palette-green);
+		--cui-status-warning: var(--cui-palette-amber);
+		--cui-status-error: var(--cui-palette-red);
+		--cui-status-info: var(--cui-palette-blue);
+
+		--cui-brand: var(--cui-palette-teal);
+		--cui-brand-strong: var(--cui-palette-teal-dark);
+	}
+
+	/* Light theme (default) */
+	:root,
+	[data-theme='light'] {
+		color-scheme: light;
+		--cui-surface-page: var(--cui-palette-white);
+		--cui-surface-subtle: var(--cui-palette-mist);
+		--cui-surface-inverse: var(--cui-palette-ink);
+		--cui-surface-inverse-raised: var(--cui-palette-graphite);
+		--cui-border-default: var(--cui-palette-mist);
+		--cui-text-default: var(--cui-palette-ink);
+		--cui-text-inverse: var(--cui-palette-white);
+		--cui-link-text: var(--cui-palette-ink);
+		--cui-link-underline: var(--cui-palette-teal-dark);
+		--cui-focus: var(--cui-palette-teal-dark);
+	}
+
+	/*
+	 * Dark theme, for a whole page or a subtree (header, panels) inside the light theme.
+	 * Draft: the plan fixes page background, focus and links; the rest is a first mapping.
+	 */
+	[data-theme='dark'] {
+		color-scheme: dark;
+		--cui-surface-page: var(--cui-palette-black);
+		--cui-surface-subtle: var(--cui-palette-ink);
+		--cui-surface-inverse: var(--cui-palette-white);
+		--cui-surface-inverse-raised: var(--cui-palette-mist);
+		--cui-border-default: var(--cui-palette-graphite);
+		--cui-text-default: var(--cui-palette-white);
+		--cui-text-inverse: var(--cui-palette-ink);
+		--cui-link-text: var(--cui-palette-teal);
+		--cui-link-underline: var(--cui-palette-teal);
+		--cui-focus: var(--cui-palette-teal);
+	}
+}
