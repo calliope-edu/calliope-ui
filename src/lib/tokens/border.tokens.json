@@ -1,74 +1,74 @@
 {
-  "$description": "Border and outline widths.",
-  "border-width": {
-    "$type": "dimension",
-    "hairline": {
-      "$value": {
-        "value": 1,
-        "unit": "px"
-      },
-      "$description": "Dividers, card outlines, input boundary"
-    },
-    "control": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      },
-      "$description": "Checkbox, radio, switch track outline"
-    },
-    "button": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      },
-      "$description": "Outline (secondary) button, all sizes (D3, decided 2026-10-29; Campus used 4px)"
-    },
-    "button-scaled": {
-      "$description": "Comparison variant for Storybook (D3): border grows with button size, close to the stroke width of the label (action text 12/14/16, weight 600)",
-      "$extensions": {
-        "calliope": {
-          "status": "comparison"
-        }
-      },
-      "s": {
-        "$value": {
-          "value": 1.5,
-          "unit": "px"
-        }
-      },
-      "m": {
-        "$value": {
-          "value": 2,
-          "unit": "px"
-        }
-      },
-      "l": {
-        "$value": {
-          "value": 2.5,
-          "unit": "px"
-        }
-      }
-    },
-    "accent": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      },
-      "$description": "Active nav marker, ownership stripe, status stripe on banners"
-    },
-    "focus": {
-      "$value": {
-        "value": 2,
-        "unit": "px"
-      },
-      "$description": "Focus outline"
-    }
-  },
-  "focus-offset": {
-    "$type": "dimension",
-    "$value": {
-      "value": 2,
-      "unit": "px"
-    }
-  }
+	"$description": "Border and outline widths.",
+	"border-width": {
+		"$type": "dimension",
+		"hairline": {
+			"$value": {
+				"value": 1,
+				"unit": "px"
+			},
+			"$description": "Dividers, card outlines, input boundary"
+		},
+		"control": {
+			"$value": {
+				"value": 2,
+				"unit": "px"
+			},
+			"$description": "Checkbox, radio, switch track outline"
+		},
+		"button": {
+			"$value": {
+				"value": 2,
+				"unit": "px"
+			},
+			"$description": "Outline (secondary) button, all sizes (D3, decided 2026-10-29; Campus used 4px)"
+		},
+		"button-scaled": {
+			"$description": "Comparison variant for Storybook (D3): border grows with button size, close to the stroke width of the label (action text 12/14/16, weight 600)",
+			"$extensions": {
+				"calliope": {
+					"status": "comparison"
+				}
+			},
+			"s": {
+				"$value": {
+					"value": 1.5,
+					"unit": "px"
+				}
+			},
+			"m": {
+				"$value": {
+					"value": 2,
+					"unit": "px"
+				}
+			},
+			"l": {
+				"$value": {
+					"value": 2.5,
+					"unit": "px"
+				}
+			}
+		},
+		"accent": {
+			"$value": {
+				"value": 2,
+				"unit": "px"
+			},
+			"$description": "Active nav marker, ownership stripe, status stripe on banners"
+		},
+		"focus": {
+			"$value": {
+				"value": 2,
+				"unit": "px"
+			},
+			"$description": "Focus outline"
+		}
+	},
+	"focus-offset": {
+		"$type": "dimension",
+		"$value": {
+			"value": 2,
+			"unit": "px"
+		}
+	}
 }

@@ -15,14 +15,24 @@
 	}
 
 	:root {
-		font-family: var(--cui-font-family-base);
+		font-family: var(--cui-font-family-sans);
 		font-size: 100%;
-		line-height: var(--cui-line-height-body);
+		line-height: var(--cui-font-line-height-normal);
 		-webkit-font-smoothing: antialiased;
 	}
 
 	:focus-visible {
-		outline: 2px solid var(--cui-focus);
-		outline-offset: 2px;
+		outline: var(--cui-border-width-focus) solid var(--cui-focus-ring);
+		outline-offset: var(--cui-focus-offset);
+	}
+
+	/* Motion tokens drop to zero; the spinner keeps turning, slower (DESIGN.md, Motion). */
+	@media (prefers-reduced-motion: reduce) {
+		:root {
+			--cui-duration-fast: 0ms;
+			--cui-duration-base: 0ms;
+			--cui-duration-slow: 0ms;
+			--cui-duration-spin: 1600ms;
+		}
 	}
 }

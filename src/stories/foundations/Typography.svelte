@@ -1,107 +1,70 @@
 <script lang="ts">
+	import { tokens, type TokenName } from '#lib/tokens/index.js';
+
 	type TextStyle = {
-		name: string;
+		/** Token group: --cui-typography-<id>-* */
+		id: string;
 		use: string;
-		size: string;
-		sizeLabel: string;
-		weight: string;
-		weightLabel: string;
-		lineHeight: string;
-		lineHeightLabel: string;
 		sample: string;
+		uppercase?: boolean;
+		tabular?: boolean;
 	};
 
-	// Scale taken over from Campus DESIGN.md.
+	// Text styles from typography.tokens.json (DESIGN.md, Typography).
 	const scale: TextStyle[] = [
+		{ id: 'display', use: 'Einstiegsseiten, einmal pro Seite', sample: 'Programmieren lernen' },
+		{ id: 'h1', use: 'Seitentitel', sample: 'Meine Projekte' },
+		{ id: 'h2', use: 'Abschnitt, Dialogtitel', sample: 'Neues Projekt anlegen' },
+		{ id: 'h3', use: 'Titel von Panels und Karten', sample: 'Lauflicht mit dem Calliope mini' },
+		{ id: 'subtitle', use: 'Abschnittslabel', sample: 'Zuletzt bearbeitet', uppercase: true },
 		{
-			name: 'Display',
-			use: 'Seitentitel auf Einstiegsseiten',
-			size: 'display',
-			sizeLabel: '2,5–3,8 rem',
-			weight: 'extrabold',
-			weightLabel: '800',
-			lineHeight: 'tight',
-			lineHeightLabel: '1,1',
-			sample: 'Programmieren lernen'
-		},
-		{
-			name: 'Headline',
-			use: 'Abschnittsüberschrift',
-			size: 'headline',
-			sizeLabel: '1,5 rem',
-			weight: 'semibold',
-			weightLabel: '600',
-			lineHeight: 'heading',
-			lineHeightLabel: '1,25',
-			sample: 'Meine Projekte'
-		},
-		{
-			name: 'Title',
-			use: 'Titel von Karten und Dialogen',
-			size: 'title',
-			sizeLabel: '1,25 rem',
-			weight: 'semibold',
-			weightLabel: '600',
-			lineHeight: 'heading',
-			lineHeightLabel: '1,25',
-			sample: 'Lauflicht mit dem Calliope mini'
-		},
-		{
-			name: 'Body',
-			use: 'Fließtext',
-			size: 'body',
-			sizeLabel: '1 rem',
-			weight: 'regular',
-			weightLabel: '400',
-			lineHeight: 'body',
-			lineHeightLabel: '1,3',
+			id: 'body',
+			use: 'Standardtext',
 			sample:
 				'Verbinde den Calliope mini per USB oder Bluetooth und übertrage dein Programm mit einem Klick.'
 		},
 		{
-			name: 'Label',
-			use: 'Formularfelder, Tabellen, Metadaten',
-			size: 'label',
-			sizeLabel: '0,875 rem',
-			weight: 'medium',
-			weightLabel: '500',
-			lineHeight: 'body',
-			lineHeightLabel: '1,3',
-			sample: 'Name des Projekts'
+			id: 'prose',
+			use: 'Fließtext über mehrere Zeilen',
+			sample:
+				'Der Calliope mini misst Licht, Temperatur und Bewegung. Mit wenigen Blöcken wird daraus eine Wetterstation, die ihre Werte ins Klassenzimmer funkt.'
 		},
+		{ id: 'label', use: 'Formularlabels, Menüeinträge', sample: 'Name des Projekts' },
 		{
-			name: 'Action',
-			use: 'Beschriftung von Buttons',
-			size: 'label',
-			sizeLabel: '0,875 rem',
-			weight: 'semibold',
-			weightLabel: '600',
-			lineHeight: 'body',
-			lineHeightLabel: '1,3',
-			sample: 'Auf den mini übertragen'
+			id: 'caption',
+			use: 'Badges, Zeitstempel (nicht für Text auf Distanz)',
+			sample: 'Vor 5 Minuten'
 		},
-		{
-			name: 'Caption',
-			use: 'Hinweise, Zeitstempel, Badges',
-			size: 'caption',
-			sizeLabel: '0,75 rem',
-			weight: 'medium',
-			weightLabel: '500',
-			lineHeight: 'caption',
-			lineHeightLabel: '1,33',
-			sample: 'Zuletzt geändert vor 5 Minuten'
-		}
+		{ id: 'action', use: 'Button-Beschriftung (Größe m)', sample: 'Übertragen', uppercase: true },
+		{ id: 'readout', use: 'Live-Messwerte (IoT)', sample: '23,4 °C', tabular: true },
+		{ id: 'code', use: 'Code, serielle Ausgabe, Raumcodes', sample: 'basic.showString("Hallo")' }
 	];
+
+	const value = (id: string, prop: string) =>
+		String(tokens[`typography-${id}-${prop}` as TokenName] ?? '');
+
+	/** "1.5rem" → "24 px"; fluid sizes stay as written. */
+	function px(size: string): string {
+		const rem = /^([\d.]+)rem$/.exec(size);
+		return rem ? `${Number(rem[1]) * 16} px` : size.replace(/\./g, ',');
+	}
+
+	const numbers = (id: string) =>
+		[
+			px(value(id, 'font-size')),
+			value(id, 'font-weight'),
+			`Zeilenhöhe ${value(id, 'line-height').replace('.', ',')}`
+		].join(' · ');
 
 	const weights = [
-		{ token: 'regular', label: 'Regular', value: '400' },
-		{ token: 'medium', label: 'Medium', value: '500' },
-		{ token: 'semibold', label: 'SemiBold', value: '600' },
-		{ token: 'extrabold', label: 'ExtraBold', value: '800' }
-	];
+		{ token: 'regular', label: 'Regular' },
+		{ token: 'medium', label: 'Medium' },
+		{ token: 'semibold', label: 'SemiBold' },
+		{ token: 'bold', label: 'Bold' }
+	].map((w) => ({ ...w, value: String(tokens[`font-weight-${w.token}` as TokenName]) }));
 
 	const families = [
-		{ id: 'base', name: 'Roboto', note: 'Heute in Campus und im Python-Editor.' },
+		{ id: 'sans', name: 'Roboto', note: 'Heute in Campus und im Python-Editor.' },
 		{
 			id: 'condensed',
 			name: 'Roboto Condensed',
@@ -117,29 +80,33 @@
 		<p class="eyebrow">Foundations</p>
 		<h1>Typografie</h1>
 		<p class="lead">
-			Roboto ist die Grundschrift. Die Skala stammt aus der Campus-<code>DESIGN.md</code> und steht
-			als Tokens <code>--cui-font-*</code> und <code>--cui-line-height-*</code> bereit.
+			Roboto ist die Grundschrift. Jeder Textstil steht als Gruppe von Tokens bereit, zum Beispiel
+			<code>--cui-typography-h1-font-size</code>. Die Bausteine darunter heißen
+			<code>--cui-font-size-*</code>, <code>--cui-font-weight-*</code> und
+			<code>--cui-font-line-height-*</code>.
 		</p>
 	</header>
 
 	<section aria-labelledby="scale">
 		<h2 id="scale">Skala</h2>
 		<ul class="scale">
-			{#each scale as style (style.name)}
+			{#each scale as style (style.id)}
 				<li class="step">
 					<div class="spec">
-						<p class="style-name">{style.name}</p>
+						<p class="style-name">{style.id}</p>
 						<p>{style.use}</p>
-						<p class="numbers">
-							{style.sizeLabel} · {style.weightLabel} · Zeilenhöhe {style.lineHeightLabel}
-						</p>
-						<code>--cui-font-size-{style.size}</code>
+						<p class="numbers">{numbers(style.id)}</p>
+						<code>--cui-typography-{style.id}-*</code>
 					</div>
 					<p
 						class="specimen"
-						style:font-size="var(--cui-font-size-{style.size})"
-						style:font-weight="var(--cui-font-weight-{style.weight})"
-						style:line-height="var(--cui-line-height-{style.lineHeight})"
+						class:uppercase={style.uppercase}
+						class:tabular={style.tabular}
+						style:font-family="var(--cui-typography-{style.id}-font-family)"
+						style:font-size="var(--cui-typography-{style.id}-font-size)"
+						style:font-weight="var(--cui-typography-{style.id}-font-weight)"
+						style:line-height="var(--cui-typography-{style.id}-line-height)"
+						style:letter-spacing="var(--cui-typography-{style.id}-letter-spacing)"
 					>
 						{style.sample}
 					</p>
@@ -203,7 +170,7 @@
 		max-width: 72rem;
 		margin: 0 auto;
 		padding: 3rem 2rem 4rem;
-		font-family: var(--cui-font-family-base);
+		font-family: var(--cui-font-family-sans);
 		color: var(--cui-text-default);
 	}
 
@@ -212,7 +179,7 @@
 	}
 
 	.eyebrow {
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 		font-weight: var(--cui-font-weight-semibold);
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -221,8 +188,8 @@
 	h1 {
 		margin: 0.25rem 0 1rem;
 		font-size: var(--cui-font-size-display);
-		font-weight: var(--cui-font-weight-extrabold);
-		line-height: var(--cui-line-height-tight);
+		font-weight: var(--cui-font-weight-bold);
+		line-height: var(--cui-typography-display-line-height);
 		letter-spacing: -0.01em;
 	}
 
@@ -240,9 +207,9 @@
 		margin: 0 0 1rem;
 		padding-bottom: 0.5rem;
 		border-bottom: 2px solid var(--cui-brand-strong);
-		font-size: var(--cui-font-size-headline);
+		font-size: var(--cui-font-size-2xl);
 		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-line-height-heading);
+		line-height: var(--cui-font-line-height-tight);
 	}
 
 	.section-intro {
@@ -268,13 +235,13 @@
 		gap: 2rem;
 		align-items: start;
 		padding: 1.25rem 0;
-		border-bottom: 1px solid var(--cui-border-default);
+		border-bottom: 1px solid var(--cui-border-subtle);
 	}
 
 	.spec {
 		display: grid;
 		gap: 0.125rem;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	.style-name {
@@ -289,6 +256,14 @@
 		max-width: 40rem;
 	}
 
+	.uppercase {
+		text-transform: uppercase;
+	}
+
+	.tabular {
+		font-variant-numeric: tabular-nums;
+	}
+
 	.weights {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
@@ -299,9 +274,9 @@
 		display: grid;
 		gap: 0.125rem;
 		padding: 1rem;
-		border: 1px solid var(--cui-border-default);
+		border: 1px solid var(--cui-border-subtle);
 		border-radius: 0.5rem;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	.weight-sample {
@@ -314,7 +289,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		margin-bottom: 1rem;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 		font-weight: var(--cui-font-weight-medium);
 		cursor: pointer;
 	}
@@ -341,12 +316,12 @@
 		flex-direction: column;
 		gap: 0.75em;
 		padding: 1.5em;
-		border: 1px solid var(--cui-border-default);
+		border: 1px solid var(--cui-border-subtle);
 		border-radius: 0.5rem;
 	}
 
 	.family-name {
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 		font-weight: var(--cui-font-weight-semibold);
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -355,7 +330,7 @@
 	.family-note {
 		margin-top: -0.5em;
 		margin-bottom: 0.5em;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	/* Heading and button sizes of the design draft: H1 26px, H2 20px, H3 18px, buttons 16/14/12px. */
@@ -363,7 +338,7 @@
 	.c-h2 {
 		font-family: var(--family);
 		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-line-height-heading);
+		line-height: var(--cui-font-line-height-tight);
 		text-transform: uppercase;
 	}
 
@@ -378,7 +353,7 @@
 	.c-h3 {
 		font-size: 1.125em;
 		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-line-height-heading);
+		line-height: var(--cui-font-line-height-tight);
 	}
 
 	.c-buttons {
