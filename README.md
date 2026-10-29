@@ -34,6 +34,12 @@ Storybook is published on Cloudflare as a Worker with static assets only (`wrang
 uses the default commands: build `pnpm build-storybook`, deploy `npx wrangler deploy` (main), preview
 `npx wrangler versions upload` (pull requests get a preview URL).
 
+The build image takes the pnpm version from the `packageManager` field in `package.json`
+(`pnpm@10.11.1`; `engines` requires pnpm >= 10). Without it the image may pick pnpm 9 and
+`pnpm install --frozen-lockfile` fails with `ERR_PNPM_UNSUPPORTED_ENGINE`. If a build still picks
+the wrong version, set the build variable `PNPM_VERSION=10.11.1` in the Workers Builds settings.
+Keep both in step when upgrading pnpm.
+
 ```sh
 pnpm run deploy                 # build and deploy manually (needs `wrangler login`; `pnpm deploy` is a pnpm built-in)
 npx wrangler deploy --dry-run   # check the config against an existing storybook-static/

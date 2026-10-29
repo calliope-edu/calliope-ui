@@ -4,6 +4,7 @@
 	"description": "Shared Svelte 5 component library for the Calliope editors and apps",
 	"private": true,
 	"type": "module",
+	"packageManager": "pnpm@10.11.1",
 	"engines": {
 		"node": ">=22",
 		"pnpm": ">=10"
