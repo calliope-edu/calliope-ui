@@ -12,6 +12,7 @@
 		"dev": "storybook dev -p 6006",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
+		"deploy": "pnpm build-storybook && wrangler deploy",
 		"package": "svelte-kit sync && svelte-package && publint",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -61,7 +62,8 @@
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.7",
 		"typescript": "^6.0.3",
-		"vite": "^8.3.5"
+		"vite": "^8.3.5",
+		"wrangler": "^4.155.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [

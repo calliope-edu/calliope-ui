@@ -26,3 +26,16 @@ pnpm check            # svelte-check
 
 Exports: `@calliope-edu/ui`, `@calliope-edu/ui/tokens`, `@calliope-edu/ui/tokens.css`,
 `@calliope-edu/ui/styles.css` (tokens plus base styles in `@layer calliope.*`).
+
+### Deploying Storybook
+
+Storybook is published on Cloudflare as a Worker with static assets only (`wrangler.jsonc`, project
+`calliope-ui`, serving `storybook-static/`). Workers Builds is connected to the GitHub repo and
+uses the default commands: build `pnpm build-storybook`, deploy `npx wrangler deploy` (main), preview
+`npx wrangler versions upload` (pull requests get a preview URL).
+
+```sh
+pnpm run deploy                 # build and deploy manually (needs `wrangler login`; `pnpm deploy` is a pnpm built-in)
+npx wrangler deploy --dry-run   # check the config against an existing storybook-static/
+npx wrangler dev                # serve storybook-static/ locally the way the Worker does
+```

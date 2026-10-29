@@ -1,0 +1,11 @@
+{
+	// Static Storybook on Cloudflare Workers (static assets only, no Worker script).
+	// Workers Builds runs `pnpm build-storybook`, then `npx wrangler deploy`
+	// (main branch) or `npx wrangler versions upload` (PR previews).
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "calliope-ui",
+	"compatibility_date": "2026-10-29",
+	"assets": {
+		"directory": "./storybook-static"
+	}
+}
