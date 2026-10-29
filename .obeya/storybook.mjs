@@ -60,6 +60,9 @@ async function start() {
 	const port = await freePort(6006);
 	const url = `http://localhost:${port}/`;
 	const log = openSync(logFile, 'w');
+	// There is no prepare script (see README), so generate .svelte-kit/ here like `pnpm storybook` does.
+	const kit = join(root, 'node_modules', '@sveltejs', 'kit', 'src', 'cli.js');
+	execFileSync(process.execPath, [kit, 'sync'], { cwd: root, stdio: ['ignore', log, log] });
 	const bin = join(root, 'node_modules', 'storybook', 'dist', 'bin', 'dispatcher.js');
 	const child = spawn(process.execPath, [bin, 'dev', '-p', String(port), '--ci', '--no-open'], {
 		cwd: root,
