@@ -14,13 +14,13 @@ Grundlage: [01-bestandsaufnahme.md](../01-bestandsaufnahme.md).
 
 Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 
-- [ ] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
+- [x] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
 - [ ] **W1:** Fundament. Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI,
   Verteilung per gepinntem SHA. Campus bindet `tokens.css` ein, ohne visuelle Änderung
-- [ ] **W2:** Welle 1. Primitives inkl. Stories und Tests. Pilot: Campus ersetzt `ui/Button` und
-  die `.btn`-Klassen
-- [ ] **W3:** Welle 2. Overlays/Navigation auf bits-ui. Pilot: Campus-Modals und Dropdown,
-  IoT-Dashboard komplett auf Tokens und Bibliothekskomponenten
+- [ ] **W2:** Welle 1. Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests. Pilot: Campus
+  ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` (order changed by D5)
+- [ ] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
+  Bibliothekskomponenten
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
 - [ ] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
@@ -86,14 +86,16 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
    | Gruppe | Werte |
    |---|---|
    | Neutral | `#000000` `#1B1C1D` `#323334` `#E8EDEB` `#FFFFFF` |
-   | Marke | `#42C8C8` `#25A3A7` |
-   | Farben | `#98F404` `#34E5DB` `#3B82F6` `#EEFF41` `#F8C526` `#FF4E00` `#E4007E` `#8073E4` `#6476FD` `#3FC663` |
+   | Marke | `#42C8C8` `#1D8286` |
+   | Farben | `#98F404` `#34E5DB` `#3B82F6` `#EEFF41` `#F8C526` `#FF4E00` `#E4007E` `#A5289B` `#8073E4` `#6476FD` `#3FC663` |
 
    Diese Werte werden als Basis-Tokens (`palette.*`) angelegt. Alles andere sind semantische Tokens,
    die auf genau diese Werte zeigen (`text.*`, `surface.*`, `border.*`, `focus`, `status.*`,
    `identity.*`). Bestehende Abweichungen (`#42C9CB`, `#98F600`, `#9AF406`, Slate-Hexwerte …)
    werden auf den nächstliegenden Palettenwert gemappt.
-   Ergänzt um **`#C8102E`** (Rot, nur für Fehler), weil die Palette kein Rot hat.
+   Error red is **`#E53F4B`**, the draft's red swatch (owner decision 2026-10-29; this plan first
+   proposed `#C8102E`). Also decided 2026-10-29: `#1D8286` replaces `#25A3A7`, MakeCode gets
+   `#A5289B`.
 
 2. **Farbrollen** (entschieden 2026-10-28). Farbe hat drei Aufgaben: Neutral, Status, Identität
    (Regel aus Campus-DESIGN.md). Jeder Wert hat genau eine Rolle.
@@ -106,17 +108,18 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
    | Dunkle Sekundärfläche, Rahmen auf Dunkel | `surface.inverse-raised` | `#323334` |
    | Dark-Theme-Seitenhintergrund | `surface.page` (dark) | `#000000` |
    | Marke | `brand` | `#42C8C8` |
-   | Marke dunkel: Fokusring und Akzentlinie auf Hell | `brand.strong`, `focus` (light) | `#25A3A7` |
+   | Marke dunkel: Fokusring, Links und Akzentlinie auf Hell | `brand.strong`, `focus`, `text.link` (light) | `#1D8286` |
    | Fokusring auf Dunkel | `focus` (dark) | `#42C8C8` |
    | Erfolg | `status.success` | `#3FC663` |
    | Warnung | `status.warning` | `#F8C526` |
-   | Fehler | `status.error` | `#C8102E` |
+   | Fehler | `status.error` | `#E53F4B` |
    | Info | `status.info` | `#3B82F6` |
    | Produkt KI-Training | `identity.ki-training` | `#98F404` |
    | Produkt Teachable | `identity.teachable` | `#EEFF41` |
    | Produkt IoT-WiFi | `identity.iot` | `#6476FD` |
    | Produkt Robotik | `identity.robotik` | `#FF4E00` |
-   | Editor MakeCode | `identity.makecode` | `#E4007E` (heute `#AA278F`) |
+   | Editor MakeCode | `identity.makecode` | `#A5289B` (heute `#AA278F`) |
+   | Highlight (Auszeichnung) | `accent.highlight` | `#E4007E` |
    | Editor Python | `identity.python` | `#8073E4` (heute `#62156D`) |
    | Editor Blocks | `identity.blocks` | `#34E5DB` (heute `#42C8C8`) |
    | Editor Markdown | `identity.markdown` | `#1B1C1D` |
@@ -128,17 +131,20 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
    | Farbe | auf Weiß | mit Text `#1B1C1D` | mit Text Weiß | Regel |
    |---|---|---|---|---|
    | `#42C8C8` | 2.0 | 8.4 | 2.0 | nur Fläche mit dunklem Text; Text/Links auf Dunkel |
-   | `#25A3A7` | 3.05 | 5.6 | 3.05 | Fokus, Linien, Icons auf Hell; **kein Fließtext auf Hell** |
+   | `#1D8286` | 4.58 | 3.73 | 4.58 | Focus ring, links, lines and icons on light; link text without underline (3.73:1 against body text) |
    | `#98F404` `#34E5DB` `#EEFF41` `#F8C526` `#3FC663` | 1.1–2.2 | 7.7–15.5 | – | nur Fläche mit dunklem Text |
    | `#FF4E00` | 3.3 | 5.2 | 3.3 | Fläche mit dunklem Text |
    | `#3B82F6` `#6476FD` | 3.7–3.8 | 4.5–4.6 | 3.7–3.8 | Fläche mit dunklem Text; Weiß nur für große Schrift |
    | `#8073E4` | 3.8 | 4.46 | 3.8 | Fläche nur mit großer/fetter Schrift oder als Akzent (Rand, Icon) |
    | `#E4007E` | 4.57 | 3.7 | 4.57 | Fläche mit **weißem** Text |
-   | `#C8102E` | 5.9 | 2.9 | 5.9 | Fläche mit weißem Text; als Fehlertext auf Hell ok. **Auf Dunkel** ist es als Text zu schwach (2.9): Fehlertext im Dark-Theme braucht eine eigene Lösung, z. B. weißen Text mit rotem Icon/Rand |
+   | `#A5289B` | 6.22 | 2.74 | 6.22 | Fill with white text (MakeCode) |
+   | `#E53F4B` | 4.08 | 4.18 | 4.08 | Fill with **black** text (5.1:1); never as text. Error text is ink (light) or white (dark) next to a red icon disc |
 
-   **Links und Navigation auf Hell** (entschieden): Text `#1B1C1D`, Unterstreichung bzw.
-   Aktiv-Markierung 2px in `#25A3A7`. Auf Dunkel dürfen Links `#42C8C8` sein (8.4:1).
-   Der Fokusring wechselt von heute `#42C9CB` (1.9:1) auf `#25A3A7` (3.05:1) bzw. `#42C8C8` auf Dunkel.
+   **Links and navigation on light** (decided 2026-10-29, replaces the earlier underline rule):
+   links are `#1D8286` text without underline; they gain an underline on hover and focus. Active
+   navigation keeps a 2px marker in `#1D8286`. On dark, links are `#42C8C8` (8.4:1). The focus
+   ring moves from today's `#42C9CB` (1.9:1) to `#1D8286` (4.58:1, 3.87:1 on mist) and
+   `#42C8C8` on dark.
 4. **Typografie:** Roboto bleibt Basis. Roboto Condensed (Entwurf) empfehle ich nur für H1/H2 und
    Typ-A-Buttons, wenn es nach einem Test auf Beamer und in Schülerhand überzeugt. Sonst gibt es
    nur eine Schrift. Diese Frage entscheiden wir mit einem Vergleich in Storybook.
@@ -159,18 +165,27 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
 
 ## 3. Komponenten-Backlog (priorisiert)
 
-**Welle 1 – Fundament** (größte Streuung, schnellster Effekt)
-Tokens + Styles, `Icon`, `Button`/`IconButton`, `Spinner`, `Badge`/`Chip`/`StatusDot`,
-`TextField`/`Label`/`FieldHint`, `Switch` (aus Toggle), `Checkbox`, `Radio`.
+Wave order changed after the Phase 0 audit (D5, decided 2026-10-29): dialogs and menus hold the
+largest P1 clusters, and the pilot is "buttons + dialogs" anyway.
 
-**Welle 2 – Overlays und Navigation**
-`Dialog` (ersetzt Modal, mit Focus-Trap), `ConfirmDialog`, `Menu`/`Dropdown`, `Popover`, `Tooltip`,
-`Toast` (dünner Wrapper um svelte-sonner), `Tabs`, `SegmentedControl` (Dashboard/Feeds,
-Trainieren/Anwenden/Programmieren), `Select`, `Slider`, `ProgressBar`.
+**Welle 1 – Fundament und Pilot**
+Tokens + Styles, `Icon`, `Button`/`IconButton`, `Spinner`, `Dialog` (replaces Modal, with focus
+trap), `ConfirmDialog` (replaces `window.confirm/alert/prompt`), `Menu`/`Dropdown`, `Tooltip`
+(Dropdown is misused as a tooltip today), `TextField`/`Label`/`FieldHint`, `Switch` (from Toggle).
+
+**Welle 2 – Formulare, Status und Navigation**
+`Checkbox`, `Radio` (incl. swatch variant), `Badge`/`Chip`/`StatusDot`, `Popover`, `Toast` (thin
+wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl`
+(Dashboard/Feeds, Trainieren/Anwenden/Programmieren), `Select`, `Combobox` (room-code words),
+`Slider`, `ProgressBar`, `VisuallyHidden`/`LiveRegion`.
 
 **Welle 3 – Patterns und Chrome**
-`EmptyState`, `Banner`, `Card`, `AppHeader` (aus BrandedHeader), `LocaleSwitcher`, `Avatar`,
-`Toolbar`. Danach Chart-Basis: Entscheidung zwischen svelteplot und eigenem SVG.
+`Card`, `AppHeader` (aus BrandedHeader), `LocaleSwitcher`, `Avatar`, `Toolbar`. Danach
+Chart-Basis: svelteplot or own SVG, including an accessible chart pattern (hidden data table,
+keyboard cursor).
+
+Touch targets (D6, decided 2026-10-29): at least 24×24px everywhere (WCAG 2.5.8); pupil-facing
+views use size l (40px) as default.
 
 **Bleibt in den Apps:** Editor-Integrationen, ProgramCard, Room, Chat, IoT-Widgets. Diese bauen
 künftig auf calliope-ui auf. **Bleibt im Widget:** Verbindungslogik und Verbindungs-UI, die künftig
@@ -185,8 +200,8 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 |---|---|---|
 | **0 Entscheiden** | Offene Fragen (Abschnitt 7) klären. Design-Audit von Campus + IoT. Token-Entwurf | Abgestimmte Liste der Design-Entscheidungen, `DESIGN.md` für calliope-ui |
 | **1 Fundament** | Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI (lint, check, test, Storybook-Build), Verteilung per gepinntem SHA | Campus kann `tokens.css` einbinden. `colors.scss` wird auf die neuen Tokens gemappt, ohne visuelle Änderung |
-| **2 Welle 1** | Primitives inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button` und die `.btn`-Klassen |
-| **3 Welle 2** | Overlays/Navigation auf bits-ui | Pilot: Campus-Modals und Dropdown migriert, **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
+| **2 Welle 1** | Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` |
+| **3 Welle 2** | Formulare, Status, Navigation | **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
 | **4 Widget** | mini-connection-widget nutzt calliope-ui. Dubletten mit Campus aufgelöst | Eine Verbindungs-UI in einer Quelle |
 | **5 Welle 3 + Ausrollen** | Patterns, Header. Danach calliope-docs, ML/Teachable (Svelte-5-Upgrade vorausgesetzt) | Weitere Apps im gemeinsamen Stand |
 | **6 optional** | Custom-Element-Build (`/elements`) für React-Hosts, z. B. Connect-Button im Python-Editor oder in Blocks. Token-Export für Chakra/LESS | Nur bei konkretem Bedarf |
@@ -226,8 +241,15 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | ML Trainer / Teachable | Sind dieselbe App: **`ml-machine`** (Svelte 4). Sie wird auf Svelte 5 gehoben und dann Konsument |
 | React-Apps | Die Bibliothek ist rein Svelte. React-Apps binden höchstens Svelte-Komponenten als Custom Elements ein |
 | PXT / MakeCode | außerhalb des Scopes |
-| Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen, plus `#C8102E` für Fehler. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |
-| Links auf Hell | dunkler Text + Akzentlinie `#25A3A7` |
+| Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen. 2026-10-29: error red `#E53F4B`, focus/link `#1D8286`, MakeCode `#A5289B`, `#E4007E` as highlight. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |
+| Links auf Hell | `#1D8286`, no underline (underline on hover/focus) (2026-10-29) |
+| Mid-grey (D1) | ink / white with fixed alpha: 70 % text, 60 % borders (2026-10-29) |
+| Control accent (D2) | ink on light, white on dark (2026-10-29) |
+| Outline-button border (D3) | 2px; Storybook compares a border growing with button size (2026-10-29) |
+| Data series (D4) | six palette colours on dark widget cards, by device serial, with name + marker (2026-10-29) |
+| Wave order (D5) | Dialog, ConfirmDialog, Menu, Tooltip move into Wave 1; Checkbox, Radio, Badge into Wave 2; Combobox, LiveRegion and a chart a11y pattern added (2026-10-29) |
+| Touch targets (D6) | at least 24px everywhere, size l (40px) as default on pupil surfaces (2026-10-29) |
+| Badges, tints | non-interactive badges are rounded rectangles; no tinted backgrounds (2026-10-29) |
 | `#000000` | Seitenhintergrund im Dark-Theme |
 | KI-Training | ist `ml-trainer` (React/Chakra). Nur optionaler Konsument (Custom Elements, Tokens) |
 | Fehler im Dark-Theme | weißer Text, Rot trägt Fläche, Rand oder Icon. Das Icon ist eine rote Scheibe mit weißem Zeichen (5.9:1), damit es nicht am Rot-auf-Dunkel-Kontrast (2.9:1) hängt |
@@ -241,4 +263,11 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 ## 7. Offene Fragen
 
-Derzeit keine. Neue Fragen kommen aus Phase 0 (Design-Audit, Token-Entwurf).
+Phase 0 (2026-10-28) produced the design audit ([03-design-audit.md](../03-design-audit.md)),
+the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../../DESIGN.md). All six questions from it
+(D1–D6) were decided on 2026-10-29, see section 6. No open questions.
+
+Taken in Phase 0 without a separate question, because they follow from the colour roles:
+"paused" becomes `status.warning` (amber), since orange is Robotik identity; "online" becomes
+`status.success` (green), since lime is KI-Training identity; text on blue, indigo, violet, orange
+and red fills is black `#000000` (5.1–6.3:1), so Python identity can carry normal-size text.

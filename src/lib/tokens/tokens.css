@@ -20,7 +20,7 @@
 
 		/* Palette: brand */
 		--cui-palette-teal: #42c8c8;
-		--cui-palette-teal-dark: #25a3a7;
+		--cui-palette-teal-dark: #1d8286;
 
 		/* Palette: colours */
 		--cui-palette-lime: #98f404;
@@ -30,12 +30,13 @@
 		--cui-palette-amber: #f8c526;
 		--cui-palette-orange: #ff4e00;
 		--cui-palette-magenta: #e4007e;
+		--cui-palette-plum: #a5289b;
 		--cui-palette-violet: #8073e4;
 		--cui-palette-indigo: #6476fd;
 		--cui-palette-green: #3fc663;
 
-		/* Palette: error only (the source palette has no red) */
-		--cui-palette-red: #c8102e;
+		/* Palette: error only (the draft's red swatch) */
+		--cui-palette-red: #e53f4b;
 
 		/* Typography */
 		--cui-font-family-base: 'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif;
@@ -64,7 +65,7 @@
 		--cui-identity-teachable: var(--cui-palette-yellow);
 		--cui-identity-iot: var(--cui-palette-indigo);
 		--cui-identity-robotik: var(--cui-palette-orange);
-		--cui-identity-makecode: var(--cui-palette-magenta);
+		--cui-identity-makecode: var(--cui-palette-plum);
 		--cui-identity-python: var(--cui-palette-violet);
 		--cui-identity-blocks: var(--cui-palette-cyan);
 		--cui-identity-markdown: var(--cui-palette-ink);
@@ -77,6 +78,9 @@
 
 		--cui-brand: var(--cui-palette-teal);
 		--cui-brand-strong: var(--cui-palette-teal-dark);
+
+		/* Highlight (Auszeichnung): marks a single item, e.g. "new". Not status, not identity. */
+		--cui-highlight: var(--cui-palette-magenta);
 	}
 
 	/* Light theme (default) */
@@ -90,8 +94,7 @@
 		--cui-border-default: var(--cui-palette-mist);
 		--cui-text-default: var(--cui-palette-ink);
 		--cui-text-inverse: var(--cui-palette-white);
-		--cui-link-text: var(--cui-palette-ink);
-		--cui-link-underline: var(--cui-palette-teal-dark);
+		--cui-link-text: var(--cui-palette-teal-dark);
 		--cui-focus: var(--cui-palette-teal-dark);
 	}
 
@@ -109,7 +112,6 @@
 		--cui-text-default: var(--cui-palette-white);
 		--cui-text-inverse: var(--cui-palette-ink);
 		--cui-link-text: var(--cui-palette-teal);
-		--cui-link-underline: var(--cui-palette-teal);
 		--cui-focus: var(--cui-palette-teal);
 	}
 }

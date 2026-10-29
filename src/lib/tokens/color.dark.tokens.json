@@ -1,0 +1,363 @@
+{
+  "$description": "Semantic colour tokens, dark theme. Light and dark carry the same keys. Values with $extensions.calliope.alpha are palette colours with transparency (decided 2026-10-29, D1).",
+  "color": {
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{palette.black}",
+        "$description": "Page background"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{palette.ink}",
+        "$description": "Panels, cards, inputs; the header band uses it inside a data-theme=\"dark\" subtree"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Secondary areas, chips, hover fill on surface.default"
+      },
+      "raised": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Menus, popovers, dialogs (paired with a float shadow)"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Strong flip: tooltip, primary action fill"
+      },
+      "inverse-hover": {
+        "$type": "color",
+        "$value": "{palette.mist}",
+        "$description": "Hover on surface.inverse"
+      },
+      "scrim": {
+        "$type": "color",
+        "$value": "#000000B3",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.black",
+            "alpha": 0.7
+          }
+        },
+        "$description": "Backdrop behind dialogs"
+      }
+    },
+    "text": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Body text, headings, icons"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#FFFFFFB3",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.white",
+            "alpha": 0.7
+          }
+        },
+        "$description": "Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist)"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{palette.ink}",
+        "$description": "Text on surface.inverse"
+      },
+      "on-fill": {
+        "$type": "color",
+        "$value": "{palette.ink}",
+        "$description": "Text on light fills: brand, lime, cyan, yellow, amber, green"
+      },
+      "on-fill-mid": {
+        "$type": "color",
+        "$value": "{palette.black}",
+        "$description": "Text on mid-tone fills: blue, indigo, violet, orange, red (5.1–6.3:1); #1B1C1D would fail on violet"
+      },
+      "on-fill-strong": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Text on strong fills: plum, magenta"
+      },
+      "link": {
+        "$type": "color",
+        "$value": "{palette.teal}",
+        "$description": "Links: colour only, no underline (4.58:1 on white, 3.73:1 against body text); underline appears on hover and focus"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Error message text. The red goes to the icon disc or border, never to the text (red is 4.08:1 on white)"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{palette.graphite}",
+        "$description": "Decorative dividers and card outlines (no contrast requirement)"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "#FFFFFF99",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.white",
+            "alpha": 0.6
+          }
+        },
+        "$description": "Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist)"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Outline button, selected states"
+      }
+    },
+    "accent": {
+      "line": {
+        "$type": "color",
+        "$value": "{palette.teal}",
+        "$description": "Active nav marker, \"this is yours\" accent (2px). Not used under links"
+      },
+      "highlight": {
+        "$type": "color",
+        "$value": "{palette.magenta}",
+        "$description": "Highlight (Auszeichnung): marks a single item, e.g. \"new\""
+      },
+      "highlight-on": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "Text on accent.highlight (4.57:1)"
+      }
+    },
+    "focus": {
+      "ring": {
+        "$type": "color",
+        "$value": "{palette.teal}",
+        "$description": "Focus indicator, 2px outline + 2px offset (4.58:1 on white, 3.87:1 on mist, 10.3:1 on black)"
+      }
+    },
+    "brand": {
+      "default": {
+        "$type": "color",
+        "$value": "{palette.teal}",
+        "$description": "Brand fill (with text.on-fill), brand text on dark"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{palette.teal}",
+        "$description": "Brand lines/icons on light"
+      }
+    },
+    "control": {
+      "on": {
+        "$type": "color",
+        "$value": "{palette.white}",
+        "$description": "On / checked / filled state of switch, checkbox, radio, slider, progress (D2)"
+      },
+      "on-mark": {
+        "$type": "color",
+        "$value": "{palette.ink}",
+        "$description": "Check mark and switch knob on control.on"
+      }
+    },
+    "action": {
+      "primary": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.surface.inverse}",
+          "$description": "Primary button fill"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.surface.inverse-hover}",
+          "$description": "Primary button hover"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.text.inverse}",
+          "$description": "Primary button label"
+        }
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "#FFFFFF1F",
+        "$extensions": {
+          "calliope": {
+            "base": "palette.white",
+            "alpha": 0.12
+          }
+        },
+        "$description": "Hover tint for ghost buttons and menu items"
+      }
+    },
+    "status": {
+      "success": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.green}",
+          "$description": "Success / online / connected"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.ink}"
+        }
+      },
+      "warning": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.amber}",
+          "$description": "Warning / paused"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.ink}"
+        }
+      },
+      "error": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.red}",
+          "$description": "Error / offline / destructive"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}",
+          "$description": "Black, not white: white on #E53F4B is 4.08:1"
+        }
+      },
+      "info": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.blue}",
+          "$description": "Info"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      }
+    },
+    "identity": {
+      "ki-training": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.lime}",
+          "$description": "Product KI-Training"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.ink}"
+        }
+      },
+      "teachable": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.yellow}",
+          "$description": "Product Teachable"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.ink}"
+        }
+      },
+      "iot": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.indigo}",
+          "$description": "Product IoT-WiFi"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      },
+      "robotik": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.orange}",
+          "$description": "Product Robotik"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}"
+        }
+      },
+      "makecode": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.plum}",
+          "$description": "Editor MakeCode"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.white}",
+          "$description": "6.22:1"
+        }
+      },
+      "python": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.violet}",
+          "$description": "Editor Python"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.black}",
+          "$description": "Black, not ink: #1B1C1D on violet is 4.46:1"
+        }
+      },
+      "blocks": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.cyan}",
+          "$description": "Editor Blocks"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.ink}"
+        }
+      },
+      "markdown": {
+        "fill": {
+          "$type": "color",
+          "$value": "{palette.graphite}",
+          "$description": "Editor Markdown"
+        },
+        "on": {
+          "$type": "color",
+          "$value": "{palette.white}"
+        }
+      }
+    },
+    "data": {
+      "series-1": {
+        "$type": "color",
+        "$value": "{palette.cyan}",
+        "$description": "Chart series (D4): on dark widget cards, assigned by device serial, always with name and marker shape"
+      },
+      "series-2": {
+        "$type": "color",
+        "$value": "{palette.magenta}"
+      },
+      "series-3": {
+        "$type": "color",
+        "$value": "{palette.lime}"
+      },
+      "series-4": {
+        "$type": "color",
+        "$value": "{palette.indigo}"
+      },
+      "series-5": {
+        "$type": "color",
+        "$value": "{palette.orange}"
+      },
+      "series-6": {
+        "$type": "color",
+        "$value": "{palette.yellow}"
+      }
+    }
+  }
+}

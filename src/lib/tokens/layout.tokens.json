@@ -1,0 +1,150 @@
+{
+  "$description": "Stacking order, breakpoints and control sizes.",
+  "z-index": {
+    "$type": "number",
+    "base": {
+      "$value": 0
+    },
+    "raised": {
+      "$value": 1
+    },
+    "sticky": {
+      "$value": 10
+    },
+    "header": {
+      "$value": 100
+    },
+    "dropdown": {
+      "$value": 1000
+    },
+    "overlay": {
+      "$value": 1100,
+      "$description": "Iframe overlays, multi-tab warning"
+    },
+    "dialog": {
+      "$value": 1200
+    },
+    "toast": {
+      "$value": 1300
+    },
+    "tooltip": {
+      "$value": 1400
+    }
+  },
+  "breakpoint": {
+    "$type": "dimension",
+    "$description": "Desktop-first max-width queries, as in Campus today",
+    "sm": {
+      "$value": {
+        "value": 480,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$value": {
+        "value": 640,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$value": {
+        "value": 768,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$value": {
+        "value": 1024,
+        "unit": "px"
+      }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "control": {
+      "s": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        },
+        "$description": "Button s, chips"
+      },
+      "m": {
+        "$value": {
+          "value": 2.25,
+          "unit": "rem"
+        },
+        "$description": "Button m (default)"
+      },
+      "l": {
+        "$value": {
+          "value": 2.5,
+          "unit": "rem"
+        },
+        "$description": "Button l, segmented control"
+      }
+    },
+    "field": {
+      "$value": {
+        "value": 2.5,
+        "unit": "rem"
+      },
+      "$description": "Text field and select height"
+    },
+    "icon": {
+      "s": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "m": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      },
+      "l": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      }
+    },
+    "touch-min": {
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      },
+      "$description": "Minimum hit area (WCAG 2.5.8); icon buttons pad up to size.control"
+    },
+    "checkbox": {
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      },
+      "$description": "Checkbox and radio box (draft: 28)"
+    },
+    "switch": {
+      "width": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        }
+      },
+      "height": {
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        }
+      }
+    },
+    "header": {
+      "$value": {
+        "value": 3.5,
+        "unit": "rem"
+      },
+      "$description": "App header band (Campus --branded-header-height 3.5rem)"
+    }
+  }
+}

@@ -22,7 +22,7 @@ export const palette = [
 	{ name: 'mist', hex: '#E8EDEB', group: 'neutral' },
 	{ name: 'white', hex: '#FFFFFF', group: 'neutral' },
 	{ name: 'teal', hex: '#42C8C8', group: 'brand' },
-	{ name: 'teal-dark', hex: '#25A3A7', group: 'brand' },
+	{ name: 'teal-dark', hex: '#1D8286', group: 'brand' },
 	{ name: 'lime', hex: '#98F404', group: 'color' },
 	{ name: 'cyan', hex: '#34E5DB', group: 'color' },
 	{ name: 'blue', hex: '#3B82F6', group: 'color' },
@@ -30,10 +30,11 @@ export const palette = [
 	{ name: 'amber', hex: '#F8C526', group: 'color' },
 	{ name: 'orange', hex: '#FF4E00', group: 'color' },
 	{ name: 'magenta', hex: '#E4007E', group: 'color' },
+	{ name: 'plum', hex: '#A5289B', group: 'color' },
 	{ name: 'violet', hex: '#8073E4', group: 'color' },
 	{ name: 'indigo', hex: '#6476FD', group: 'color' },
 	{ name: 'green', hex: '#3FC663', group: 'color' },
-	{ name: 'red', hex: '#C8102E', group: 'error' }
+	{ name: 'red', hex: '#E53F4B', group: 'error' }
 ] as const satisfies readonly PaletteColor[];
 
 export type PaletteName = (typeof palette)[number]['name'];
