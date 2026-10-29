@@ -3,7 +3,8 @@
 Gemeinsame Svelte-Komponentenbibliothek (inkl. Storybook) für die Calliope-Editoren und -Apps
 (Campus, IoT-Dashboard, Teachable, ML Trainer, …).
 
-Status: Fundament im Aufbau (Library-Scaffold, Storybook, Foundations-Seiten).
+Status: Fundament (Phase 1): Token-Pipeline, Storybook mit Foundations-Seiten, CI, Einbindung per
+gepinntem SHA. Komponenten folgen ab Welle 1.
 
 - `docs/input/` – vorhandene Konzept-/Vorab-Dokumente
 - `docs/01-bestandsaufnahme.md` – Analyse der bestehenden UI über alle Projekte
@@ -19,15 +20,76 @@ Requires Node 22+ and pnpm 10+.
 pnpm install
 pnpm storybook        # Storybook on http://localhost:6006
 pnpm build-storybook  # static Storybook in storybook-static/
-pnpm package          # library build into dist/ (svelte-package + publint)
+pnpm tokens           # regenerate tokens.css / tokens.scss / tokens.ts from the JSON source
+pnpm test             # Vitest (token contrast and decision checks)
+pnpm lint             # Prettier
 pnpm check            # svelte-check
+pnpm package          # library build into dist/ (svelte-package + publint)
 ```
 
 - `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`)
-- `src/stories/` – Storybook pages, starting with Foundations (colours, typography)
+- `src/stories/` – Storybook pages, starting with Foundations (colours, typography, spacing,
+  shape, elevation, sizes, motion)
+- `scripts/build-tokens.js` – the token pipeline
 
-Exports: `@calliope-edu/ui`, `@calliope-edu/ui/tokens`, `@calliope-edu/ui/tokens.css`,
-`@calliope-edu/ui/styles.css` (tokens plus base styles in `@layer calliope.*`).
+CI (`.github/workflows/ci.yml`) runs on every push to `main` and every pull request: generated
+tokens up to date, lint, svelte-check, tests, library build, Storybook build.
+
+## Tokens
+
+The source of truth is `src/lib/tokens/*.tokens.json` (DTCG 2025.10). `pnpm tokens` runs Style
+Dictionary and writes three files next to the source. They are committed, because apps install
+the library from a git SHA without building it; CI fails when they are out of date.
+
+| File          | Contents                                                                                                                                                                                             |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tokens.css`  | Custom properties `--cui-*` in `@layer calliope.tokens`: palette and scales on `:root`, colour roles for light (`:root`, `[data-theme='light']`) and dark (`[data-theme='dark']`, also on a subtree) |
+| `tokens.scss` | Sass variables `$cui-*` with static light-theme values, for places where Sass needs a value (media queries)                                                                                          |
+| `tokens.ts`   | `palette`, `tokens` (theme-independent), `colors.light` / `colors.dark`, `cssVar()`                                                                                                                  |
+
+Naming: `--cui-` plus the token path joined with `-`; colour roles drop their `color` group.
+`color.text.default` → `--cui-text-default`, `palette.ink` → `--cui-palette-ink`,
+`space.4` → `--cui-space-4`, `typography.h1` → `--cui-typography-h1-font-size` and its siblings.
+
+## Using it in an app
+
+Same pattern as `mini-connection-widget`: a git dependency pinned to a commit, plus a Vite alias
+to the local checkout in dev. The package exports its sources (`src/lib`), so there is no build
+step on install.
+
+```jsonc
+// package.json of the app
+"@calliope-edu/ui": "github:calliope-edu/calliope-ui#<commit sha>"
+```
+
+```js
+// vite.config.js: link the checkout in the calliope-dev superrepo while developing
+const uiSrc = fileURLToPath(new URL('../../lib/calliope-ui/src/lib', import.meta.url));
+const linkUi = command === 'serve' && process.env.UI_PINNED !== '1' && existsSync(uiSrc);
+// resolve.alias (exact entries before the bare one):
+//   '@calliope-edu/ui/tokens.css' -> uiSrc + '/tokens/tokens.css'
+//   '@calliope-edu/ui/styles.css' -> uiSrc + '/styles/styles.css'
+//   '@calliope-edu/ui/tokens'     -> uiSrc + '/tokens/index.ts'
+//   '@calliope-edu/ui'            -> uiSrc + '/index.ts'
+```
+
+Then import the tokens once, e.g. in the app's root layout:
+
+```js
+import '@calliope-edu/ui/tokens.css'; // custom properties only, changes nothing visible
+// later, once the app adopts the base styles:
+// import '@calliope-edu/ui/styles.css';
+```
+
+`tokens.css` only defines `--cui-*` properties inside `@layer calliope.tokens`, so including it
+has no visual effect until something uses them. `styles.css` adds base styles (page colours,
+font, focus ring) and is meant for the step where an app actually switches over.
+
+The repository is private: installing the git dependency needs read access to it (an SSH key
+locally; in CI a token, e.g. via `git config url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"`).
+
+Later the package goes to GitHub Packages with semver; `publishConfig` already switches the
+exports to the `dist/` build for that.
 
 ### Deploying Storybook
 

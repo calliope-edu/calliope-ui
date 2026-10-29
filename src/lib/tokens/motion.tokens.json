@@ -1,76 +1,56 @@
 {
-  "$description": "Durations and easings. Under prefers-reduced-motion: reduce, the base styles set durations to 0; the spinner keeps turning, slower.",
-  "duration": {
-    "$type": "duration",
-    "instant": {
-      "$value": {
-        "value": 0,
-        "unit": "ms"
-      }
-    },
-    "fast": {
-      "$value": {
-        "value": 150,
-        "unit": "ms"
-      },
-      "$description": "Hover, menus"
-    },
-    "base": {
-      "$value": {
-        "value": 200,
-        "unit": "ms"
-      },
-      "$description": "Default state change"
-    },
-    "slow": {
-      "$value": {
-        "value": 300,
-        "unit": "ms"
-      },
-      "$description": "Dialogs, panels"
-    },
-    "spin": {
-      "$value": {
-        "value": 800,
-        "unit": "ms"
-      },
-      "$description": "One spinner revolution"
-    }
-  },
-  "easing": {
-    "$type": "cubicBezier",
-    "standard": {
-      "$value": [
-        0.25,
-        0.1,
-        0.25,
-        1
-      ],
-      "$description": "CSS ease"
-    },
-    "enter": {
-      "$value": [
-        0,
-        0,
-        0.2,
-        1
-      ]
-    },
-    "exit": {
-      "$value": [
-        0.4,
-        0,
-        1,
-        1
-      ]
-    },
-    "linear": {
-      "$value": [
-        0,
-        0,
-        1,
-        1
-      ]
-    }
-  }
+	"$description": "Durations and easings. Under prefers-reduced-motion: reduce, the base styles set durations to 0; the spinner keeps turning, slower.",
+	"duration": {
+		"$type": "duration",
+		"instant": {
+			"$value": {
+				"value": 0,
+				"unit": "ms"
+			}
+		},
+		"fast": {
+			"$value": {
+				"value": 150,
+				"unit": "ms"
+			},
+			"$description": "Hover, menus"
+		},
+		"base": {
+			"$value": {
+				"value": 200,
+				"unit": "ms"
+			},
+			"$description": "Default state change"
+		},
+		"slow": {
+			"$value": {
+				"value": 300,
+				"unit": "ms"
+			},
+			"$description": "Dialogs, panels"
+		},
+		"spin": {
+			"$value": {
+				"value": 800,
+				"unit": "ms"
+			},
+			"$description": "One spinner revolution"
+		}
+	},
+	"easing": {
+		"$type": "cubicBezier",
+		"standard": {
+			"$value": [0.25, 0.1, 0.25, 1],
+			"$description": "CSS ease"
+		},
+		"enter": {
+			"$value": [0, 0, 0.2, 1]
+		},
+		"exit": {
+			"$value": [0.4, 0, 1, 1]
+		},
+		"linear": {
+			"$value": [0, 0, 1, 1]
+		}
+	}
 }

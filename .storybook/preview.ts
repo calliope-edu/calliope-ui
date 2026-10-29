@@ -25,7 +25,15 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Foundations',
-					['Farben', 'Typografie'],
+					[
+						'Farben',
+						'Typografie',
+						'Abstände',
+						'Formen und Rahmen',
+						'Schatten und Ebenen',
+						'Größen',
+						'Bewegung'
+					],
 					'Primitives',
 					'Overlays',
 					'Patterns',

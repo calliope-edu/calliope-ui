@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Attachment } from 'svelte/attachments';
 	import { palette, type PaletteGroup, type PaletteName } from '#lib/tokens/index.js';
-	import { contrastRatio, formatRatio, rate, type Rating } from './contrast.js';
+	import { contrastRatio, formatRatio, rate, type Rating } from '#lib/tokens/contrast.js';
 
 	const INK = '#1B1C1D';
 	const WHITE = '#FFFFFF';
@@ -53,50 +53,90 @@
 
 	const roleGroups: { title: string; roles: Role[] }[] = [
 		{
-			title: 'Flächen und Text',
+			title: 'Flächen',
 			roles: [
 				{ token: 'surface-page', role: 'Seitenhintergrund' },
-				{ token: 'surface-subtle', role: 'Ruhige Fläche, z. B. Karten und Leisten' },
-				{ token: 'border-default', role: 'Rahmen und Trennlinien' },
-				{ token: 'text-default', role: 'Text' },
-				{ token: 'surface-inverse', role: 'Gegenfläche: Header, Primary-Button' },
-				{ token: 'surface-inverse-raised', role: 'Sekundärfläche auf der Gegenfläche' },
-				{ token: 'text-inverse', role: 'Text auf der Gegenfläche' }
+				{ token: 'surface-default', role: 'Panels, Karten, Eingabefelder' },
+				{ token: 'surface-subtle', role: 'Ruhige Fläche, z. B. Leisten und Chips' },
+				{ token: 'surface-raised', role: 'Menüs, Popover, Dialoge (mit Schatten)' },
+				{ token: 'surface-inverse', role: 'Gegenfläche: Tooltip, Primary-Button' },
+				{ token: 'surface-inverse-hover', role: 'Hover auf der Gegenfläche' },
+				{ token: 'surface-scrim', role: 'Abdunklung hinter Dialogen' }
+			]
+		},
+		{
+			title: 'Text und Rahmen',
+			roles: [
+				{ token: 'text-default', role: 'Text und Icons' },
+				{ token: 'text-muted', role: 'Sekundärtext, Platzhalter' },
+				{ token: 'text-inverse', role: 'Text auf der Gegenfläche' },
+				{ token: 'text-error', role: 'Fehlertext (das Rot sitzt im Icon)' },
+				{ token: 'border-subtle', role: 'Trennlinien, Kartenrahmen' },
+				{ token: 'border-control', role: 'Rahmen von Eingabefeldern und Checkboxen' },
+				{ token: 'border-strong', role: 'Outline-Button, Auswahl' }
 			]
 		},
 		{
 			title: 'Marke, Links und Fokus',
 			roles: [
-				{ token: 'brand', role: 'Markenfarbe als Fläche' },
-				{ token: 'brand-strong', role: 'Akzentlinie und Icons auf Hell' },
-				{ token: 'link-text', role: 'Linktext, ohne Unterstreichung' },
-				{ token: 'highlight', role: 'Auszeichnung, z. B. „Neu“' },
-				{ token: 'focus', role: 'Fokusring' }
+				{ token: 'brand-default', role: 'Markenfarbe als Fläche' },
+				{ token: 'brand-strong', role: 'Markenlinien und Icons' },
+				{ token: 'text-link', role: 'Linktext, ohne Unterstreichung' },
+				{ token: 'accent-line', role: 'Aktive Navigation, „gehört dir“' },
+				{ token: 'accent-highlight', role: 'Auszeichnung, z. B. „Neu“' },
+				{ token: 'focus-ring', role: 'Fokusring' }
+			]
+		},
+		{
+			title: 'Bedienelemente',
+			roles: [
+				{ token: 'control-on', role: 'Eingeschaltet, angehakt (Switch, Checkbox)' },
+				{ token: 'control-on-mark', role: 'Haken und Knopf darauf' },
+				{ token: 'action-primary-bg', role: 'Primary-Button' },
+				{ token: 'action-primary-bg-hover', role: 'Primary-Button, Hover' },
+				{ token: 'action-hover', role: 'Hover von Ghost-Buttons und Menüeinträgen' }
 			]
 		},
 		{
 			title: 'Status',
 			roles: [
-				{ token: 'status-success', role: 'Erfolg' },
-				{ token: 'status-warning', role: 'Warnung' },
-				{ token: 'status-error', role: 'Fehler' },
-				{ token: 'status-info', role: 'Info' }
+				{ token: 'status-success-fill', role: 'Erfolg, online' },
+				{ token: 'status-warning-fill', role: 'Warnung, pausiert' },
+				{ token: 'status-error-fill', role: 'Fehler, offline, Löschen' },
+				{ token: 'status-info-fill', role: 'Info' }
 			]
 		},
 		{
 			title: 'Identität',
 			roles: [
-				{ token: 'identity-ki-training', role: 'Produkt KI-Training' },
-				{ token: 'identity-teachable', role: 'Produkt Teachable' },
-				{ token: 'identity-iot', role: 'Produkt IoT-WiFi' },
-				{ token: 'identity-robotik', role: 'Produkt Robotik' },
-				{ token: 'identity-makecode', role: 'Editor MakeCode' },
-				{ token: 'identity-python', role: 'Editor Python' },
-				{ token: 'identity-blocks', role: 'Editor Blocks' },
-				{ token: 'identity-markdown', role: 'Editor Markdown' }
+				{ token: 'identity-ki-training-fill', role: 'Produkt KI-Training' },
+				{ token: 'identity-teachable-fill', role: 'Produkt Teachable' },
+				{ token: 'identity-iot-fill', role: 'Produkt IoT-WiFi' },
+				{ token: 'identity-robotik-fill', role: 'Produkt Robotik' },
+				{ token: 'identity-makecode-fill', role: 'Editor MakeCode' },
+				{ token: 'identity-python-fill', role: 'Editor Python' },
+				{ token: 'identity-blocks-fill', role: 'Editor Blocks' },
+				{ token: 'identity-markdown-fill', role: 'Editor Markdown' }
 			]
+		},
+		{
+			title: 'Datenreihen (IoT-Diagramme)',
+			roles: [1, 2, 3, 4, 5, 6].map((n) => ({
+				token: `data-series-${n}`,
+				role: `Reihe ${n}, immer mit Name und Markerform`
+			}))
 		}
 	];
+
+	/** "#1b1c1db3" → "ink 70 %": the fixed alpha neutrals (D1). */
+	function describe(value: string): { name?: string; hex: string; alpha?: string } {
+		const base = value.slice(0, 7);
+		const alpha =
+			value.length === 9
+				? `${Math.round((parseInt(value.slice(7), 16) / 255) * 100)} %`
+				: undefined;
+		return { name: paletteByHex.get(base), hex: base.toUpperCase(), alpha };
+	}
 
 	const paletteByHex = new Map(palette.map((c) => [c.hex.toLowerCase(), c.name]));
 
@@ -203,13 +243,15 @@
 				<tbody>
 					{#each group.roles as { token, role } (token)}
 						{@const value = resolved[token] ?? ''}
+						{@const color = describe(value)}
 						<tr>
 							<td><span class="dot" style:background-color="var(--cui-{token})"></span></td>
 							<td><code>--cui-{token}</code></td>
 							<td>{role}</td>
 							<td class="value">
-								{#if paletteByHex.has(value)}
-									{paletteByHex.get(value)} <span class="hex">{value.toUpperCase()}</span>
+								{#if color.name}
+									{color.name}{color.alpha ? ` ${color.alpha}` : ''}
+									<span class="hex">{color.hex}</span>
 								{:else}
 									{value}
 								{/if}
@@ -250,13 +292,13 @@
 		max-width: 72rem;
 		margin: 0 auto;
 		padding: 3rem 2rem 4rem;
-		font-family: var(--cui-font-family-base);
+		font-family: var(--cui-font-family-sans);
 		color: var(--cui-text-default);
 	}
 
 	.eyebrow {
 		margin: 0;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 		font-weight: var(--cui-font-weight-semibold);
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -265,8 +307,8 @@
 	h1 {
 		margin: 0.25rem 0 1rem;
 		font-size: var(--cui-font-size-display);
-		font-weight: var(--cui-font-weight-extrabold);
-		line-height: var(--cui-line-height-tight);
+		font-weight: var(--cui-font-weight-bold);
+		line-height: var(--cui-typography-display-line-height);
 		letter-spacing: -0.01em;
 	}
 
@@ -285,16 +327,16 @@
 		margin: 0 0 0.5rem;
 		padding-bottom: 0.5rem;
 		border-bottom: 2px solid var(--cui-brand-strong);
-		font-size: var(--cui-font-size-headline);
+		font-size: var(--cui-font-size-2xl);
 		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-line-height-heading);
+		line-height: var(--cui-font-line-height-tight);
 	}
 
 	h3 {
 		margin: 2.5rem 0 0.25rem;
-		font-size: var(--cui-font-size-title);
+		font-size: var(--cui-font-size-xl);
 		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-line-height-heading);
+		line-height: var(--cui-font-line-height-tight);
 	}
 
 	.section-intro,
@@ -322,7 +364,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-		border: 1px solid var(--cui-border-default);
+		border: 1px solid var(--cui-border-subtle);
 		border-radius: 0.5rem;
 	}
 
@@ -332,7 +374,7 @@
 		gap: 0.75rem;
 		height: 6rem;
 		padding: 0.75rem 1rem;
-		border-bottom: 1px solid var(--cui-border-default);
+		border-bottom: 1px solid var(--cui-border-subtle);
 	}
 
 	.sample {
@@ -347,7 +389,7 @@
 		flex-direction: column;
 		gap: 0.25rem;
 		padding: 0.75rem 1rem 1rem;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	.meta p {
@@ -355,7 +397,7 @@
 	}
 
 	.name {
-		font-size: var(--cui-font-size-body);
+		font-size: var(--cui-font-size-md);
 		font-weight: var(--cui-font-weight-semibold);
 	}
 
@@ -367,7 +409,7 @@
 		display: grid;
 		gap: 0.25rem;
 		margin: 0.5rem 0 0;
-		font-size: var(--cui-font-size-caption);
+		font-size: var(--cui-font-size-xs);
 	}
 
 	.ratios div {
@@ -409,7 +451,7 @@
 	.rule {
 		margin-top: 0.5rem !important;
 		padding-top: 0.5rem;
-		border-top: 1px solid var(--cui-border-default);
+		border-top: 1px solid var(--cui-border-subtle);
 		line-height: 1.4;
 	}
 
@@ -417,19 +459,19 @@
 		width: 100%;
 		border-collapse: collapse;
 		table-layout: fixed;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	.roles th {
 		padding: 0.5rem 0.75rem;
-		border-bottom: 2px solid var(--cui-border-default);
+		border-bottom: 2px solid var(--cui-border-subtle);
 		font-weight: var(--cui-font-weight-semibold);
 		text-align: left;
 	}
 
 	.roles td {
 		padding: 0.5rem 0.75rem;
-		border-bottom: 1px solid var(--cui-border-default);
+		border-bottom: 1px solid var(--cui-border-subtle);
 		vertical-align: middle;
 	}
 
@@ -454,7 +496,7 @@
 		display: block;
 		width: 1.75rem;
 		height: 1.75rem;
-		border: 1px solid var(--cui-border-default);
+		border: 1px solid var(--cui-border-subtle);
 		border-radius: 50%;
 	}
 
@@ -466,7 +508,7 @@
 
 	.pairing {
 		padding: 1.5rem;
-		border: 1px solid var(--cui-border-default);
+		border: 1px solid var(--cui-border-subtle);
 		border-radius: 0.5rem;
 		background: var(--cui-surface-page);
 		color: var(--cui-text-default);
@@ -479,14 +521,14 @@
 
 	.pairing .pairing-label {
 		margin-bottom: 0.5rem;
-		font-size: var(--cui-font-size-caption);
+		font-size: var(--cui-font-size-xs);
 		font-weight: var(--cui-font-weight-semibold);
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
 	}
 
 	.pairing a {
-		color: var(--cui-link-text);
+		color: var(--cui-text-link);
 		text-decoration: none;
 	}
 
@@ -504,7 +546,7 @@
 		background: var(--cui-surface-inverse);
 		color: var(--cui-text-inverse);
 		font: inherit;
-		font-size: var(--cui-font-size-label);
+		font-size: var(--cui-font-size-sm);
 		font-weight: var(--cui-font-weight-semibold);
 		cursor: pointer;
 	}

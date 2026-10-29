@@ -1,4 +1,4 @@
-/** WCAG 2.x contrast helpers for the Foundations pages. */
+/** WCAG 2.x contrast helpers (Foundations pages, token tests). */
 
 function channel(value: number): number {
 	const c = value / 255;
