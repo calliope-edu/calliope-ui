@@ -165,18 +165,27 @@ Die folgenden Punkte sind **meine Empfehlungen**. Die Notizen in `docs/input/` u
 
 ## 3. Komponenten-Backlog (priorisiert)
 
-**Welle 1 – Fundament** (größte Streuung, schnellster Effekt)
-Tokens + Styles, `Icon`, `Button`/`IconButton`, `Spinner`, `Badge`/`Chip`/`StatusDot`,
-`TextField`/`Label`/`FieldHint`, `Switch` (aus Toggle), `Checkbox`, `Radio`.
+Wave order changed after the Phase 0 audit (D5, decided 2026-10-29): dialogs and menus hold the
+largest P1 clusters, and the pilot is "buttons + dialogs" anyway.
 
-**Welle 2 – Overlays und Navigation**
-`Dialog` (ersetzt Modal, mit Focus-Trap), `ConfirmDialog`, `Menu`/`Dropdown`, `Popover`, `Tooltip`,
-`Toast` (dünner Wrapper um svelte-sonner), `Tabs`, `SegmentedControl` (Dashboard/Feeds,
-Trainieren/Anwenden/Programmieren), `Select`, `Slider`, `ProgressBar`.
+**Welle 1 – Fundament und Pilot**
+Tokens + Styles, `Icon`, `Button`/`IconButton`, `Spinner`, `Dialog` (replaces Modal, with focus
+trap), `ConfirmDialog` (replaces `window.confirm/alert/prompt`), `Menu`/`Dropdown`, `Tooltip`
+(Dropdown is misused as a tooltip today), `TextField`/`Label`/`FieldHint`, `Switch` (from Toggle).
+
+**Welle 2 – Formulare, Status und Navigation**
+`Checkbox`, `Radio` (incl. swatch variant), `Badge`/`Chip`/`StatusDot`, `Popover`, `Toast` (thin
+wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl`
+(Dashboard/Feeds, Trainieren/Anwenden/Programmieren), `Select`, `Combobox` (room-code words),
+`Slider`, `ProgressBar`, `VisuallyHidden`/`LiveRegion`.
 
 **Welle 3 – Patterns und Chrome**
-`EmptyState`, `Banner`, `Card`, `AppHeader` (aus BrandedHeader), `LocaleSwitcher`, `Avatar`,
-`Toolbar`. Danach Chart-Basis: Entscheidung zwischen svelteplot und eigenem SVG.
+`Card`, `AppHeader` (aus BrandedHeader), `LocaleSwitcher`, `Avatar`, `Toolbar`. Danach
+Chart-Basis: svelteplot or own SVG, including an accessible chart pattern (hidden data table,
+keyboard cursor).
+
+Touch targets (D6, decided 2026-10-29): at least 24×24px everywhere (WCAG 2.5.8); pupil-facing
+views use size l (40px) as default.
 
 **Bleibt in den Apps:** Editor-Integrationen, ProgramCard, Room, Chat, IoT-Widgets. Diese bauen
 künftig auf calliope-ui auf. **Bleibt im Widget:** Verbindungslogik und Verbindungs-UI, die künftig
@@ -191,8 +200,8 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 |---|---|---|
 | **0 Entscheiden** | Offene Fragen (Abschnitt 7) klären. Design-Audit von Campus + IoT. Token-Entwurf | Abgestimmte Liste der Design-Entscheidungen, `DESIGN.md` für calliope-ui |
 | **1 Fundament** | Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI (lint, check, test, Storybook-Build), Verteilung per gepinntem SHA | Campus kann `tokens.css` einbinden. `colors.scss` wird auf die neuen Tokens gemappt, ohne visuelle Änderung |
-| **2 Welle 1** | Primitives inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button` und die `.btn`-Klassen |
-| **3 Welle 2** | Overlays/Navigation auf bits-ui | Pilot: Campus-Modals und Dropdown migriert, **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
+| **2 Welle 1** | Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` |
+| **3 Welle 2** | Formulare, Status, Navigation | **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
 | **4 Widget** | mini-connection-widget nutzt calliope-ui. Dubletten mit Campus aufgelöst | Eine Verbindungs-UI in einer Quelle |
 | **5 Welle 3 + Ausrollen** | Patterns, Header. Danach calliope-docs, ML/Teachable (Svelte-5-Upgrade vorausgesetzt) | Weitere Apps im gemeinsamen Stand |
 | **6 optional** | Custom-Element-Build (`/elements`) für React-Hosts, z. B. Connect-Button im Python-Editor oder in Blocks. Token-Export für Chakra/LESS | Nur bei konkretem Bedarf |
@@ -238,6 +247,8 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | Control accent (D2) | graphite on light, white on dark (2026-10-29) |
 | Outline-button border (D3) | 2px; Storybook compares a border growing with button size (2026-10-29) |
 | Data series (D4) | six palette colours on dark widget cards, by device serial, with name + marker (2026-10-29) |
+| Wave order (D5) | Dialog, ConfirmDialog, Menu, Tooltip move into Wave 1; Checkbox, Radio, Badge into Wave 2; Combobox, LiveRegion and a chart a11y pattern added (2026-10-29) |
+| Touch targets (D6) | at least 24px everywhere, size l (40px) as default on pupil surfaces (2026-10-29) |
 | Badges, tints | non-interactive badges are rounded rectangles; no tinted backgrounds (2026-10-29) |
 | `#000000` | Seitenhintergrund im Dark-Theme |
 | KI-Training | ist `ml-trainer` (React/Chakra). Nur optionaler Konsument (Custom Elements, Tokens) |
@@ -253,11 +264,8 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 ## 7. Offene Fragen
 
 Phase 0 (2026-10-28) produced the design audit ([03-design-audit.md](03-design-audit.md)),
-the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../DESIGN.md). D1–D4 were decided on
-2026-10-29 (see section 6). Still open, with a recommendation in `DESIGN.md` → "Decisions":
-
-- **D5** Wave order: Dialog, Menu and Tooltip into Wave 1
-- **D6** Minimum touch target on pupil surfaces: 24px or 44px
+the token draft (`src/lib/tokens/`) and [`DESIGN.md`](../DESIGN.md). All six questions from it
+(D1–D6) were decided on 2026-10-29, see section 6. No open questions.
 
 Taken in Phase 0 without a separate question, because they follow from the colour roles:
 "paused" becomes `status.warning` (amber), since orange is Robotik identity; "online" becomes

@@ -1,7 +1,7 @@
 ---
 name: calliope-ui
 description: Shared design system for Calliope's Svelte apps — a calm light canvas, dark chrome, one fixed palette in which every colour has exactly one job, legible from the back row of a classroom.
-status: draft (Phase 0). Colour, shape and focus decisions settled 2026-10-29; D5 and D6 still open.
+status: Phase 0 result. All decisions settled 2026-10-29; to be revised from the built state at the end of each wave.
 tokens: src/lib/tokens/*.tokens.json (DTCG)
 colors:
   black: '#000000'
@@ -344,10 +344,5 @@ Toast: thin wrapper around svelte-sonner with the same severities.
 | – | Links | Not underlined; link and focus colour `#1D8286` on light |
 | – | MakeCode | `#A5289B`; `#E4007E` stays as the highlight colour (`accent.highlight`) |
 | – | Error red | `#E53F4B` (the draft's red). Too light for text on white (4.08:1): error text stays graphite next to a red icon, the destructive button has black text (5.1:1) |
-
-### Open
-
-| # | Question | Options | Recommendation |
-|---|---|---|---|
-| D5 | Wave order. The audit's largest P1 clusters are dialogs and menus. | (a) Wave 1 = tokens, Button/IconButton, Icon, Spinner, Dialog/ConfirmDialog, Menu, Tooltip, TextField, Switch; Checkbox/Radio/Badge move to Wave 2 · (b) keep the plan's waves | **(a)**: the pilot is "buttons + dialogs" anyway, and Menu needs Tooltip because Dropdown is misused as a tooltip today |
-| D6 | Minimum touch target on pupil surfaces (iPads in use). | (a) 24px everywhere (WCAG 2.2 AA), default control 36–40px · (b) 44px on pupil surfaces | **(a)**, with size l (40px) as the default in pupil-facing views |
+| D5 | Wave order | Wave 1 = tokens, Button/IconButton, Icon, Spinner, Dialog/ConfirmDialog, Menu, Tooltip, TextField, Switch. Checkbox, Radio, Badge move to Wave 2; Combobox, LiveRegion and a chart pattern join the backlog |
+| D6 | Minimum touch target | 24×24px everywhere (WCAG 2.5.8); pupil-facing views default to size l (40px) |
