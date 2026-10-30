@@ -15,7 +15,7 @@ Grundlage: [01-bestandsaufnahme.md](../01-bestandsaufnahme.md).
 Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 
 - [x] **W0:** Entscheiden. Design-Audit von Campus + IoT, Token-Entwurf, `DESIGN.md` für calliope-ui
-- [ ] **W1:** Fundament. Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI,
+- [x] **W1:** Fundament. Repo-Scaffold, Tokens-Pipeline, Storybook mit Foundations-Seiten, CI,
   Verteilung per gepinntem SHA. Campus bindet `tokens.css` ein, ohne visuelle Änderung
 - [ ] **W2:** Welle 1. Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests. Pilot: Campus
   ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` (order changed by D5)
