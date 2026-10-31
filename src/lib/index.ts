@@ -56,3 +56,82 @@ export {
 	type TooltipProps,
 	type TooltipSide
 } from './components/Tooltip/Tooltip.svelte';
+
+// Wave 2: forms
+export { default as Checkbox, type CheckboxProps } from './components/Checkbox/Checkbox.svelte';
+export {
+	default as RadioGroup,
+	type RadioGroupProps,
+	type RadioVariant
+} from './components/Radio/RadioGroup.svelte';
+export { default as Radio, type RadioProps } from './components/Radio/Radio.svelte';
+export {
+	default as Select,
+	type SelectItem,
+	type SelectProps
+} from './components/Select/Select.svelte';
+export {
+	default as Combobox,
+	type ComboboxItem,
+	type ComboboxProps
+} from './components/Combobox/Combobox.svelte';
+export { default as Slider, type SliderProps } from './components/Slider/Slider.svelte';
+export {
+	default as SegmentedControl,
+	type SegmentedControlProps,
+	type SegmentedControlSize,
+	type SegmentedOption
+} from './components/SegmentedControl/SegmentedControl.svelte';
+
+// Wave 2: navigation
+export { default as Tabs, type TabsProps } from './components/Tabs/Tabs.svelte';
+export { default as TabList, type TabListProps } from './components/Tabs/TabList.svelte';
+export { default as Tab, type TabProps } from './components/Tabs/Tab.svelte';
+export { default as TabPanel, type TabPanelProps } from './components/Tabs/TabPanel.svelte';
+
+// Wave 2: status
+export {
+	default as Badge,
+	type BadgeProps,
+	type BadgeSize,
+	type BadgeTone
+} from './components/Badge/Badge.svelte';
+export {
+	default as ProgressBar,
+	formatPercent,
+	type ProgressBarProps
+} from './components/ProgressBar/ProgressBar.svelte';
+export { default as Chip, type ChipProps } from './components/Chip/Chip.svelte';
+export {
+	default as StatusDot,
+	type Status,
+	type StatusDotProps,
+	type StatusDotSize
+} from './components/StatusDot/StatusDot.svelte';
+export {
+	default as Banner,
+	type BannerProps,
+	type BannerTone
+} from './components/Banner/Banner.svelte';
+export {
+	default as EmptyState,
+	type EmptyStateProps
+} from './components/EmptyState/EmptyState.svelte';
+export {
+	default as Toaster,
+	type ToasterPosition,
+	type ToasterProps
+} from './components/Toast/Toaster.svelte';
+export { toast } from 'svelte-sonner';
+
+// Wave 2: overlays
+export {
+	default as Popover,
+	type PopoverAlign,
+	type PopoverProps,
+	type PopoverSide
+} from './components/Popover/Popover.svelte';
+
+// Wave 2: accessibility helpers
+export { default as VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.svelte';
+export { default as LiveRegion, type Politeness } from './components/LiveRegion/LiveRegion.svelte';

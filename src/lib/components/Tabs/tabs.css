@@ -1,0 +1,88 @@
+/*
+ * Tabs. bits-ui renders these elements, so they are styled by class rather than through
+ * scoped component CSS.
+ */
+
+@layer calliope.components {
+	/* The 1px divider is an inset shadow, not a border: the list scrolls sideways when the
+	   tabs do not fit, and a border would sit outside the scroll box and clip the active bar. */
+	.cui-tab-list {
+		display: flex;
+		gap: var(--cui-space-1);
+		overflow-x: auto;
+		box-shadow: inset 0 calc(-1 * var(--cui-border-width-hairline)) 0 var(--cui-border-subtle);
+		/* No scrollbar under the tabs: the arrow keys scroll the focused tab into view, and a
+		   cut-off tab at the edge shows there is more. */
+		scrollbar-width: none;
+	}
+
+	.cui-tab {
+		position: relative;
+		box-sizing: border-box;
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		gap: var(--cui-space-2);
+		height: var(--cui-size-control-l);
+		margin: 0;
+		padding: 0 var(--cui-space-4);
+		border: 0;
+		border-radius: var(--cui-radius-md) var(--cui-radius-md) 0 0;
+		background-color: transparent;
+		color: var(--cui-text-muted);
+		font-family: var(--cui-typography-label-font-family);
+		font-size: var(--cui-typography-label-font-size);
+		font-weight: var(--cui-typography-label-font-weight);
+		line-height: var(--cui-typography-label-line-height);
+		white-space: nowrap;
+		cursor: pointer;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
+		transition:
+			background-color var(--cui-duration-fast) var(--cui-easing-standard),
+			color var(--cui-duration-fast) var(--cui-easing-standard);
+	}
+
+	/* Active: default text plus the 2px accent marker along the bottom edge, over the divider.
+	   The marker carries the state; the colour change alone would not. */
+	.cui-tab[data-state='active'] {
+		color: var(--cui-text-default);
+	}
+
+	.cui-tab[data-state='active']::after {
+		content: '';
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: var(--cui-border-width-accent);
+		background-color: var(--cui-accent-line);
+	}
+
+	@media (hover: hover) {
+		.cui-tab:not([data-disabled]):hover {
+			background-color: var(--cui-action-hover);
+		}
+	}
+
+	/* The list scrolls, so a ring outside the tab would be clipped; it sits just inside. */
+	.cui-tab:focus-visible {
+		outline-offset: calc(-1 * var(--cui-border-width-focus));
+	}
+
+	.cui-tab[data-disabled] {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.cui-tab-label {
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	/* The panel is focusable (Tab from the tablist lands here); the global ring applies. */
+	.cui-tab-panel {
+		padding-top: var(--cui-space-4);
+		border-radius: var(--cui-radius-md);
+	}
+}

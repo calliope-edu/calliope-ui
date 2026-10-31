@@ -4,7 +4,10 @@ Gemeinsame Svelte-Komponentenbibliothek (inkl. Storybook) für die Calliope-Edit
 (Campus, IoT-Dashboard, Teachable, ML Trainer, …).
 
 Status: Welle 1 (Phase 2): Icon, Button, IconButton, Spinner, TextField, Switch, Dialog,
-ConfirmDialog, Menu und Tooltip mit Stories und Tests. Der Pilot in Campus folgt.
+ConfirmDialog, Menu und Tooltip. Welle 2 (Phase 3): Checkbox, Radio (mit Farbfeldern), Select,
+Combobox, Slider, SegmentedControl, Tabs, Badge, Chip, StatusDot, Banner, EmptyState, Toast,
+ProgressBar, Popover, VisuallyHidden und LiveRegion, alle mit Stories und Tests. Die Umstellung
+des IoT-Dashboards in Campus folgt (Vorlage: Storybook, Rezepte/IoT-Dashboard).
 
 - `docs/input/` – vorhandene Konzept-/Vorab-Dokumente
 - `docs/01-bestandsaufnahme.md` – Analyse der bestehenden UI über alle Projekte
@@ -31,7 +34,8 @@ pnpm package          # library build into dist/ (pnpm tokens + svelte-package +
 - `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`),
   icons (`icons/`), components (`components/<Name>/`, each with its stories and tests beside it)
 - `src/stories/` – Foundations pages (colours, typography, spacing, shape, elevation, sizes,
-  motion, the icon set comparison) and the shared frame of the component overview stories
+  motion, the icon set comparison), recipes that assemble a screen from the components
+  (`recipes/`) and the shared frame of the component overview stories
 - `scripts/build-tokens.js` – the token pipeline
 - `scripts/build-icons.js` – semantic icon names → SVG bodies from an Iconify set
 
@@ -96,8 +100,11 @@ Components need the tokens loaded and are imported from the package root:
 <Button tone="negative" icon="delete" onclick={remove}>Löschen</Button>
 ```
 
-Overlays (Dialog, Menu, Tooltip) are built on [bits-ui](https://bits-ui.com), a dependency of the
-package. `confirmDialog()` needs one `<ConfirmDialogHost />` in the app's root layout.
+Overlays and form controls (Dialog, Menu, Tooltip, Popover, Select, Combobox, Checkbox, Radio,
+Slider, Tabs, …) are built on [bits-ui](https://bits-ui.com), toasts on
+[svelte-sonner](https://github.com/wobsoriano/svelte-sonner); both are dependencies of the
+package. `confirmDialog()` needs one `<ConfirmDialogHost />` and `toast()` one `<Toaster />` in
+the app's root layout.
 
 Text uses Roboto, headings and button labels use Roboto Condensed. The package does not load
 fonts; the app does, e.g. with `@fontsource-variable/roboto` and
