@@ -24,7 +24,7 @@ pnpm tokens           # regenerate tokens.css / tokens.scss / tokens.ts from the
 pnpm test             # Vitest (token contrast and decision checks)
 pnpm lint             # Prettier
 pnpm check            # svelte-check
-pnpm package          # library build into dist/ (svelte-package + publint)
+pnpm package          # library build into dist/ (pnpm tokens + svelte-package + publint)
 ```
 
 - `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`)
