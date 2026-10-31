@@ -148,6 +148,7 @@
 		border-radius: var(--cui-radius-full);
 		background: var(--cui-action-primary-bg);
 		color: var(--cui-action-primary-fg);
+		font-family: var(--cui-typography-action-font-family);
 		font-weight: var(--cui-typography-action-font-weight);
 	}
 

@@ -172,6 +172,7 @@
 	}
 
 	.dialog-title {
+		font-family: var(--cui-typography-h2-font-family);
 		font-size: var(--cui-typography-h2-font-size);
 		font-weight: var(--cui-typography-h2-font-weight);
 	}

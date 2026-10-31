@@ -25,10 +25,15 @@ colors:
   red: '#E53F4B'
 typography:
   display:
-    { fontFamily: Roboto, fontSize: 'clamp(2.5rem, 5vw, 3.8rem)', fontWeight: 700, lineHeight: 1.1 }
-  h1: { fontFamily: Roboto, fontSize: '1.5rem', fontWeight: 600, lineHeight: 1.2 }
-  h2: { fontFamily: Roboto, fontSize: '1.25rem', fontWeight: 600, lineHeight: 1.2 }
-  h3: { fontFamily: Roboto, fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.2 }
+    {
+      fontFamily: Roboto Condensed,
+      fontSize: 'clamp(2.5rem, 5vw, 3.8rem)',
+      fontWeight: 700,
+      lineHeight: 1.1
+    }
+  h1: { fontFamily: Roboto Condensed, fontSize: '1.5rem', fontWeight: 600, lineHeight: 1.2 }
+  h2: { fontFamily: Roboto Condensed, fontSize: '1.25rem', fontWeight: 600, lineHeight: 1.2 }
+  h3: { fontFamily: Roboto Condensed, fontSize: '1.125rem', fontWeight: 600, lineHeight: 1.2 }
   subtitle:
     {
       fontFamily: Roboto,
@@ -43,7 +48,7 @@ typography:
   caption: { fontFamily: Roboto, fontSize: '0.75rem', fontWeight: 500, lineHeight: 1.4 }
   action:
     {
-      fontFamily: Roboto,
+      fontFamily: Roboto Condensed,
       fontSize: '0.875rem',
       fontWeight: 600,
       lineHeight: 1.2,
@@ -204,10 +209,15 @@ beamer theme for now.
 
 ## Typography
 
-One family, **Roboto** (self-hosted variable font, as Campus already ships), plus one mono stack
-(`ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`) for code, serial output and room
-codes. Roboto Condensed for H1/H2 and uppercase buttons is tested in Storybook before it is
-adopted (decided); until then H1 is Roboto 24 instead of the draft's Condensed 26.
+Two families, both self-hosted variable fonts: **Roboto** (as Campus already ships) for text,
+labels and captions, and **Roboto Condensed** (`font.family.condensed`, as in the draft) for
+headings (display, h1–h3) and button labels (decided 2026-10-31). Sizes and weights are the same
+as in Roboto; the condensed cut only runs narrower, so long German words fit buttons and titles.
+Headings stay in sentence case (the draft's uppercase H1/H2 is not adopted), H1 stays 24 on the
+scale instead of the draft's 26. One mono stack (`ui-monospace, SFMono-Regular, Menlo, Consolas,
+monospace`) serves code, serial output and room codes. Apps load both fonts
+(`@fontsource-variable/roboto`, `@fontsource-variable/roboto-condensed`); without the condensed
+one the stack falls back to Roboto.
 
 | Style    | Size                            | Weight | Line height | Use                                        |
 | -------- | ------------------------------- | ------ | ----------- | ------------------------------------------ |

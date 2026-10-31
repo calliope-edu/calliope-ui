@@ -255,7 +255,7 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 | Fehler im Dark-Theme | weißer Text, Rot trägt Fläche, Rand oder Icon. Das Icon ist eine rote Scheibe mit weißem Zeichen (5.9:1), damit es nicht am Rot-auf-Dunkel-Kontrast (2.9:1) hängt |
 | Themes | **Hell** und **Dunkel** vollständig, dazu **dunkle Bereiche im hellen Theme** (Header, Panels) über `data-theme="dark"` auf einem Teilbaum. Ein Beamer-Theme gibt es vorerst nicht |
 | Icon-Set | Vergleich in Storybook (PrimeIcons und Material Symbols mit den 28 Icons aus `icons.txt`, Seite Foundations/Icons), danach Entscheidung |
-| Roboto Condensed | wird in Storybook getestet (H1/H2, Typ-A-Buttons, auch auf Beamer) |
+| Roboto Condensed | für alle Überschriften (display bis h3) und alle Buttons, ohne Großschreibung der Überschriften (2026-10-31) |
 | Verteilung | GitHub-Dependency auf gepinnten SHA + Vite-Alias im Dev, wie beim Widget. GitHub Packages später |
 | Repo-Einbindung | Submodul `lib/calliope-ui` in `calliope-dev` |
 | Storybook-Hosting | öffentlich auf **Cloudflare Pages** (mit PR-Previews). Pages statt Workers, weil eine eigene Subdomain bei Workers nur geht, wenn die ganze Domain bei Cloudflare liegt. Das Repo bleibt privat |

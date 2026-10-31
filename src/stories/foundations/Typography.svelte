@@ -64,11 +64,15 @@
 	].map((w) => ({ ...w, value: String(tokens[`font-weight-${w.token}` as TokenName]) }));
 
 	const families = [
-		{ id: 'sans', name: 'Roboto', note: 'Heute in Campus und im Python-Editor.' },
+		{
+			id: 'sans',
+			name: 'Roboto (bisher)',
+			note: 'So sahen Überschriften und Buttons bis jetzt aus.'
+		},
 		{
 			id: 'condensed',
-			name: 'Roboto Condensed',
-			note: 'Aus dem Entwurf Calliope_UX_UI. Wäre eine zweite Webfont.'
+			name: 'Roboto Condensed (jetzt)',
+			note: 'Aus dem Entwurf Calliope_UX_UI, für Überschriften und Buttons.'
 		}
 	];
 
@@ -80,9 +84,10 @@
 		<p class="eyebrow">Foundations</p>
 		<h1>Typografie</h1>
 		<p class="lead">
-			Roboto ist die Grundschrift. Jeder Textstil steht als Gruppe von Tokens bereit, zum Beispiel
-			<code>--cui-typography-h1-font-size</code>. Die Bausteine darunter heißen
-			<code>--cui-font-size-*</code>, <code>--cui-font-weight-*</code> und
+			Roboto ist die Grundschrift für Text. Überschriften und Button-Beschriftungen stehen in Roboto
+			Condensed (<code>--cui-font-family-condensed</code>). Jeder Textstil steht als Gruppe von
+			Tokens bereit, zum Beispiel <code>--cui-typography-h1-font-size</code>. Die Bausteine darunter
+			heißen <code>--cui-font-size-*</code>, <code>--cui-font-weight-*</code> und
 			<code>--cui-font-line-height-*</code>.
 		</p>
 	</header>
@@ -130,12 +135,13 @@
 	</section>
 
 	<section aria-labelledby="condensed">
-		<h2 id="condensed">Vergleich: Roboto Condensed</h2>
+		<h2 id="condensed">Roboto Condensed für Überschriften und Buttons</h2>
 		<p class="section-intro">
-			Der Entwurf setzt H1, H2 und die großen Buttons (Typ A) in Roboto Condensed SemiBold, in
-			Großbuchstaben. Offen ist, ob sich das lohnt. Hier stehen beide Schriften nebeneinander. Die
-			Beamer-Ansicht vergrößert alles auf das 1,5-Fache, um die Lesbarkeit aus der Ferne
-			einzuschätzen.
+			Überschriften (display bis h3) und alle Button-Beschriftungen stehen in Roboto Condensed, wie
+			im Entwurf. Größe und Gewicht bleiben gleich, die Schrift läuft nur schmaler. So passen lange
+			deutsche Wörter besser in Buttons und Titel. Zum Vergleich stehen hier beide Schriften
+			nebeneinander. Die Beamer-Ansicht vergrößert alles auf das 1,5-Fache, um die Lesbarkeit aus
+			der Ferne einzuschätzen.
 		</p>
 		<label class="toggle">
 			<input type="checkbox" bind:checked={beamer} />
@@ -151,13 +157,12 @@
 					<p class="c-h2">Neues Projekt anlegen</p>
 					<p class="c-h3">Lauflicht mit dem Calliope mini</p>
 					<div class="c-buttons">
-						<span class="c-button c-button-l">Programmieren</span>
+						<span class="c-button c-button-l">Herunterladen</span>
 						<span class="c-button c-button-m">Übertragen</span>
 						<span class="c-button c-button-s">Teilen</span>
 					</div>
 					<p class="c-body">
-						H3 und Fließtext bleiben in beiden Varianten in Roboto, damit nur die Überschriften und
-						Buttons wechseln.
+						Fließtext bleibt in beiden Varianten in Roboto, nur Überschriften und Buttons wechseln.
 					</p>
 				</div>
 			{/each}
@@ -187,6 +192,7 @@
 
 	h1 {
 		margin: 0.25rem 0 1rem;
+		font-family: var(--cui-typography-display-font-family);
 		font-size: var(--cui-font-size-display);
 		font-weight: var(--cui-font-weight-bold);
 		line-height: var(--cui-typography-display-line-height);
@@ -207,6 +213,7 @@
 		margin: 0 0 1rem;
 		padding-bottom: 0.5rem;
 		border-bottom: 2px solid var(--cui-brand-strong);
+		font-family: var(--cui-typography-h1-font-family);
 		font-size: var(--cui-font-size-2xl);
 		font-weight: var(--cui-font-weight-semibold);
 		line-height: var(--cui-font-line-height-tight);
@@ -333,17 +340,17 @@
 		font-size: var(--cui-font-size-sm);
 	}
 
-	/* Heading and button sizes of the design draft: H1 26px, H2 20px, H3 18px, buttons 16/14/12px. */
+	/* Heading and button sizes of the scale: H1 24px, H2 20px, H3 18px, buttons 16/14/12px. */
 	.c-h1,
-	.c-h2 {
+	.c-h2,
+	.c-h3 {
 		font-family: var(--family);
 		font-weight: var(--cui-font-weight-semibold);
 		line-height: var(--cui-font-line-height-tight);
-		text-transform: uppercase;
 	}
 
 	.c-h1 {
-		font-size: 1.625em;
+		font-size: 1.5em;
 	}
 
 	.c-h2 {
@@ -352,8 +359,6 @@
 
 	.c-h3 {
 		font-size: 1.125em;
-		font-weight: var(--cui-font-weight-semibold);
-		line-height: var(--cui-font-line-height-tight);
 	}
 
 	.c-buttons {

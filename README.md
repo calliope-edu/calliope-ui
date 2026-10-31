@@ -99,6 +99,11 @@ Components need the tokens loaded and are imported from the package root:
 Overlays (Dialog, Menu, Tooltip) are built on [bits-ui](https://bits-ui.com), a dependency of the
 package. `confirmDialog()` needs one `<ConfirmDialogHost />` in the app's root layout.
 
+Text uses Roboto, headings and button labels use Roboto Condensed. The package does not load
+fonts; the app does, e.g. with `@fontsource-variable/roboto` and
+`@fontsource-variable/roboto-condensed`. Without the condensed font, headings and buttons fall
+back to Roboto.
+
 `tokens.css` only defines `--cui-*` properties inside `@layer calliope.tokens`, so including it
 has no visual effect until something uses them. `styles.css` adds base styles (page colours,
 font, focus ring) and is meant for the step where an app actually switches over.
