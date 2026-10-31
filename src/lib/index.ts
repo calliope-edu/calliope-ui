@@ -142,6 +142,31 @@ export {
 	type ChoiceItemProps
 } from './components/ChoiceList/ChoiceItem.svelte';
 
+// Wave 3: patterns and chrome
+export { default as Card, type CardPadding, type CardProps } from './components/Card/Card.svelte';
+export {
+	default as Avatar,
+	initials,
+	type AvatarProps,
+	type AvatarSize
+} from './components/Avatar/Avatar.svelte';
+export {
+	default as Toolbar,
+	type ToolbarOrientation,
+	type ToolbarProps
+} from './components/Toolbar/Toolbar.svelte';
+export { default as ToolbarSeparator } from './components/Toolbar/ToolbarSeparator.svelte';
+export {
+	default as LocaleSwitcher,
+	type Locale,
+	type LocaleSwitcherProps
+} from './components/LocaleSwitcher/LocaleSwitcher.svelte';
+export {
+	default as AccountMenu,
+	type AccountMenuProps
+} from './components/AccountMenu/AccountMenu.svelte';
+export { default as AppHeader, type AppHeaderProps } from './components/AppHeader/AppHeader.svelte';
+
 // Wave 2: accessibility helpers
 export { default as VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.svelte';
 export { default as LiveRegion, type Politeness } from './components/LiveRegion/LiveRegion.svelte';
