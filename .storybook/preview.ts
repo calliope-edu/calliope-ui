@@ -36,8 +36,10 @@ const preview: Preview = {
 						'Bewegung'
 					],
 					'Primitives',
+					'Navigation',
 					'Overlays',
 					'Patterns',
+					'Hilfsmittel',
 					'Rezepte'
 				]
 			}

@@ -100,9 +100,9 @@
 		--cui-z-index-raised: 1;
 		--cui-z-index-sticky: 10;
 		--cui-z-index-header: 100;
-		--cui-z-index-dropdown: 1000;
 		--cui-z-index-overlay: 1100; /** Iframe overlays, multi-tab warning */
 		--cui-z-index-dialog: 1200;
+		--cui-z-index-dropdown: 1250; /** Menus, select lists, popovers. Above dialogs, because they open from inside them */
 		--cui-z-index-toast: 1300;
 		--cui-z-index-tooltip: 1400;
 		--cui-breakpoint-sm: 480px;

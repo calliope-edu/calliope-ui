@@ -1,0 +1,40 @@
+/*
+ * Listbox popup of Select and Combobox. It builds on the menu surface and items
+ * (.cui-menu, .cui-menu-item); bits-ui renders these elements, so they are styled by class.
+ */
+
+@layer calliope.components {
+	/* Doubled class: wins over .cui-menu whatever order the two files load in. */
+	.cui-menu.cui-listbox {
+		/* At least as wide as the field it opens from. */
+		min-width: var(--cui-listbox-anchor-width, 12rem);
+		max-width: max(20rem, var(--cui-listbox-anchor-width, 0px));
+		max-height: min(20rem, var(--cui-listbox-available-height, 20rem));
+	}
+
+	.cui-listbox[data-kind='select'] {
+		--cui-listbox-anchor-width: var(--bits-select-anchor-width);
+		--cui-listbox-available-height: var(--bits-select-content-available-height);
+	}
+
+	.cui-listbox[data-kind='combobox'] {
+		--cui-listbox-anchor-width: var(--bits-combobox-anchor-width);
+		--cui-listbox-available-height: var(--bits-combobox-content-available-height);
+	}
+
+	.cui-listbox-viewport {
+		min-height: 0;
+	}
+
+	/* Focus stays on the field (aria-activedescendant), so the highlighted option cannot be
+	   :focus-visible. While the keyboard drives the list it gets the menu item's ring. */
+	.cui-listbox[data-keyboard] .cui-menu-item[data-highlighted] {
+		outline: var(--cui-border-width-focus) solid var(--cui-focus-ring);
+		outline-offset: calc(-1 * var(--cui-border-width-focus));
+	}
+
+	.cui-listbox-empty {
+		padding: var(--cui-space-2) var(--cui-space-3);
+		color: var(--cui-text-muted);
+	}
+}

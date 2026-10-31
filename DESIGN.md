@@ -250,8 +250,9 @@ surface (Live Wall, IoT fullscreen) is below 16px. Captions at 12px are for meta
   checkbox, radio, outline buttons (D3) and the accent line.
 - **Flat or float.** Only things that float get a shadow: `shadow.menu` (menus, popovers, toasts,
   tooltips) and `shadow.dialog`. Cards at rest have a border, never a shadow or a hover lift.
-- **Stacking order:** base 0, raised 1, sticky 10, header 100, dropdown 1000, overlay 1100,
-  dialog 1200, toast 1300, tooltip 1400. Nothing above that.
+- **Stacking order:** base 0, raised 1, sticky 10, header 100, overlay 1100, dialog 1200,
+  dropdown 1250 (menus, select lists and popovers open from inside dialogs, so they sit above
+  them), toast 1300, tooltip 1400. Nothing above that.
 
 ## Focus and interaction
 
@@ -274,18 +275,20 @@ surface (Live Wall, IoT fullscreen) is below 16px. Captions at 12px are for meta
   `prefers-reduced-motion: reduce` everything is instant except the spinner, which keeps turning
   slowly. JS transitions use the library's `prefersReducedMotion` helper. No `transition: all`.
 
-## Components (Wave 1 and the pilot)
+## Components (Waves 1 and 2)
 
 All components: Svelte 5 runes, snippets, callback props; no built-in text (composites take a
 `labels` prop with German defaults); every state (default, hover, focus, active, disabled,
 loading, error) visible in Storybook; WCAG 2.1 AA checked with addon-a11y plus keyboard and
 screen reader.
 
-Built in Wave 1 (`src/lib/components/`, each with an overview story of all states, Do/Don't and
+Built in Waves 1 and 2 (`src/lib/components/`, each with an overview story of all states, Do/Don't and
 "use instead", plus Vitest tests of roles, names, keyboard and focus). Composites with a fixed
 word take it as a prop with a German default (`closeLabel="Schließen"`,
 `cancelLabel="Abbrechen"`). Component CSS sits in `@layer calliope.components`; elements that
 bits-ui renders are styled by `.cui-*` class from a plain CSS file next to the component.
+`Rezepte/IoT-Dashboard` in Storybook assembles the IoT dashboard from Wave 1 and 2 parts as the
+blueprint for its migration in Campus.
 
 ### Icon
 
@@ -370,6 +373,16 @@ Help text is linked with `aria-describedby`, never nested inside the control.
   start / end. Off: 2px `border.control` outline with a 16px knob in the same colour on the left.
   On: `control.on` fill with a 20px `control.on-mark` knob on the right, so position and size
   carry the state as well as fill.
+- Checkbox (built): bits-ui Checkbox with `label`, `hint`, `error`, `indeterminate` (bar mark,
+  `aria-checked="mixed"`), `required`, `name`/`value`. 2px `border.control`, `radius.sm`; checked
+  fills with `control.on` and draws the mark in `control.on-mark`; error turns the boundary red
+  and adds the FieldHint disc. Groups use a native `fieldset` + `legend`.
+- RadioGroup + Radio (built): bits-ui RadioGroup with a visible group `label` (`aria-labelledby`),
+  `hint`, `error`, `orientation`. Radio: `value`, `label`, optional `hint` line, `disabled`.
+  Checked = `control.on` ring and a 12px dot. `variant="swatch"` makes 32px colour discs
+  (`swatch`: any CSS colour, typically `data.series-*`; `glyph` for one or two characters on the
+  outlined "automatic" disc); the label names the disc for assistive tech and as its title, and
+  the selection is a 2px `control.on` ring outside a 2px surface gap, so it reads on any fill.
 
 ### TextField, Label, FieldHint
 
@@ -383,21 +396,96 @@ red icon disc with a black mark.
   sits in an always-present `aria-live="polite"` region and the field gets a 2px red boundary.
   `Label` and `FieldHint` (`tone="error"` draws the disc) are exported for custom controls.
 
-### Badge, StatusDot
+### Select, Combobox
 
-Badge: `radius.md` (a non-interactive badge is never a pill), caption or label size, fill +
-paired text. StatusDot: 8px dot plus a visible
-word (or a distinct shape plus visually hidden text); `title` alone is not allowed. On teacher and
-projected surfaces the word is at least 14 / 16px.
+Both look like the TextField (40px, `border.control`, `radius.md`, label, hint, error) and open
+the menu surface (`.cui-menu`, `.cui-menu-item`) with a check on the chosen item. Focus stays on
+the field (`aria-activedescendant`), so the keyboard-highlighted option gets the focus ring while
+the keyboard drives the list. The list is portalled to `<body>` and copies `data-theme` from the
+field, so it stays dark inside a dark area.
+
+- Select: bits-ui Select, `items` (`{ value, label, disabled? }`), `value` (bindable,
+  undefined until chosen), `placeholder`, `hint`, `error`, `required` (`aria-required` on the
+  trigger), `name` (hidden input). For about 4–15 fixed options.
+- Combobox: bits-ui Combobox for long lists picked by typing (room-code words). The default
+  filter is case-insensitive "contains" with start-of-word matches first; `filter` replaces it.
+  `emptyLabel` ("Keine Treffer") shows in the list and is announced by a polite live region.
+  Typing the full label and leaving the field picks that item; clearing the text clears the value.
+
+### Slider, ProgressBar
+
+Track 4px (slider, `border.control`) or 8px (progress, `surface.subtle`), fill `control.on`,
+`radius.full`. Never a status or identity colour for the fill.
+
+- Slider: bits-ui Slider (single), visible `label` naming the thumb (`aria-labelledby`), `min`,
+  `max`, `step`, `showValue` (tabular, at the end of the label row), `formatValue` (also the
+  `aria-valuetext`), `onValueCommit` for expensive effects (sending to devices), `hint`, `name`
+  (hidden input). Thumb 20px `control.on` with a 2px surface ring; 24px hit area.
+- ProgressBar: bits-ui Progress, `label`, `value` (`null` = indeterminate: a sliding 30 %
+  segment, a static dashed full-width fill under reduced motion), `max`, `showValue`,
+  `formatValue` (default `formatPercent`, "42 %"), `hint`.
+
+### Tabs, SegmentedControl
+
+Tabs switch panels of content; SegmentedControl picks a mode or value from two to four options
+and changes the view at once.
+
+- Tabs: compound `Tabs` (`value` bindable, required) > `TabList` (`label`) > `Tab` (`value`,
+  `icon`, `disabled`) and `TabPanel`. 40px tabs, label type, inactive `text.muted`; the active tab
+  carries the 2px `accent.line` marker. The list scrolls sideways when it does not fit (no
+  scrollbar shown); the focus ring sits inside the tab. Arrow keys activate.
+- SegmentedControl: bits-ui RadioGroup (one tab stop, arrows move and select). `label`
+  (accessible name; `labelVisible` shows it), `options` (`{ value, label, icon?, disabled? }`),
+  `size` s / m / l (default l, 40px), `fullWidth`. `radius.md` frame with 1px `border.control`
+  and 2px inset; the chosen segment fills with `control.on` and `control.on-mark` text.
+
+### Badge, Chip, StatusDot
+
+- Badge (built): `radius.md` (a non-interactive badge is never a pill), `tone` neutral
+  (`surface.subtle`) · success · warning · error · info · highlight · identity (+ `identity`),
+  each fill with its paired text. `size` s (12px caption) / m (14px label), optional `icon` and
+  `swatch` (8px colour marker for a device colour).
+- Chip (built): the pill that is pressed. With `selected` (bindable) it is a filter toggle
+  (`aria-pressed`, selected = `control.on` fill with a check); with `onRemove` it is a value with
+  a 24px remove button named "<label> entfernen" (`removeLabel`). Optional `icon`, `swatch`.
+- StatusDot (built): dot plus a visible word (`label`, required). Each status has its own shape:
+  success circle, warning diamond, error square, info circle, neutral ring. `hideLabel` keeps
+  the word for assistive tech only (tables with a "Status" column). `size` s / m / l = 12 / 14 /
+  16px text; on teacher and projected surfaces at least m / l.
 
 ### Spinner, Banner, EmptyState, Toast
 
 Spinner: `role="status"` with a label prop, optional delay (`delay={300}`), one shared keyframe;
 without a label it is decorative (inside a busy button). No track ring (it would be a new
-shade). Banner:
-`role="status"` or `role="alert"` by severity, status fill as a 4px side stripe or icon disc plus
-`text.default` (no tinted backgrounds). EmptyState: title, text, optional primary action.
-Toast: thin wrapper around svelte-sonner with the same severities.
+shade).
+
+- Banner (built): `tone` info · success · warning · error, `title`, message as children,
+  `actions` snippet, `onDismiss` + `dismissLabel`. `role="alert"` for errors, `role="status"`
+  otherwise, `live="none"` for a banner present from page load. Neutral surface with a 1px
+  `border.subtle` frame, a 4px status stripe on the left and a 24px status icon disc with the
+  paired mark colour; text stays `text.default`.
+- EmptyState (built): `title` (heading of `level` 2–4), `description`, `icon` on a neutral
+  `surface.subtle` disc, `actions` snippet, `compact` (left-aligned, no icon) for tables and small
+  panels. No status colour: an empty list is not an error.
+- Toast (built): `<Toaster />` once in the layout wraps svelte-sonner unstyled; `toast()` and
+  `toast.success/info/warning/error/promise` are re-exported. Same anatomy as the Banner on
+  `surface.raised` with `shadow.menu`; neutral toasts have no stripe colour. Action and cancel
+  look like Button s secondary / ghost. Errors should pass `duration: Infinity`. Props:
+  `position` (bottom-right), `duration` (5s), `closeButton`, `closeLabel`, `label` (region name).
+
+### Popover
+
+bits-ui Popover with the consumer's own trigger (`trigger` snippet), optional `title` (also the
+dialog's name), `showClose`, `side`, `align`, `size` s / m / l (16 / 20 / 24rem). Surface like the
+menu (`surface.raised`, `radius.lg`, `shadow.menu`), 16px padding. May hold fields and buttons,
+unlike the Tooltip; focus moves in and returns to the trigger.
+
+### VisuallyHidden, LiveRegion
+
+VisuallyHidden keeps text in the accessibility tree only (clip-path, not `display: none`).
+LiveRegion is present from the first render and puts its `message` in one frame later, so every
+change is announced; `politeness` polite (`role="status"`) or assertive (`role="alert"`),
+`visible` shows the text too.
 
 ## Do and don't
 
