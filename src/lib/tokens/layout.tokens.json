@@ -14,15 +14,16 @@
 		"header": {
 			"$value": 100
 		},
-		"dropdown": {
-			"$value": 1000
-		},
 		"overlay": {
 			"$value": 1100,
 			"$description": "Iframe overlays, multi-tab warning"
 		},
 		"dialog": {
 			"$value": 1200
+		},
+		"dropdown": {
+			"$value": 1250,
+			"$description": "Menus, select lists, popovers. Above dialogs, because they open from inside them"
 		},
 		"toast": {
 			"$value": 1300

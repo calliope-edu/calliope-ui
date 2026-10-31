@@ -250,8 +250,9 @@ surface (Live Wall, IoT fullscreen) is below 16px. Captions at 12px are for meta
   checkbox, radio, outline buttons (D3) and the accent line.
 - **Flat or float.** Only things that float get a shadow: `shadow.menu` (menus, popovers, toasts,
   tooltips) and `shadow.dialog`. Cards at rest have a border, never a shadow or a hover lift.
-- **Stacking order:** base 0, raised 1, sticky 10, header 100, dropdown 1000, overlay 1100,
-  dialog 1200, toast 1300, tooltip 1400. Nothing above that.
+- **Stacking order:** base 0, raised 1, sticky 10, header 100, overlay 1100, dialog 1200,
+  dropdown 1250 (menus, select lists and popovers open from inside dialogs, so they sit above
+  them), toast 1300, tooltip 1400. Nothing above that.
 
 ## Focus and interaction
 

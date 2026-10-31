@@ -7,7 +7,7 @@
 		raised: 'Überlappende Teile einer Karte',
 		sticky: 'Mitlaufende Leisten',
 		header: 'App-Header',
-		dropdown: 'Menüs und Popover',
+		dropdown: 'Menüs, Auswahllisten und Popover, auch über Dialogen',
 		overlay: 'Überlagerung von Editor-Iframes, Hinweis auf mehrere Tabs',
 		dialog: 'Dialoge mit Abdunklung',
 		toast: 'Kurze Meldungen',
