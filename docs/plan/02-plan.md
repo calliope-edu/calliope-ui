@@ -24,8 +24,9 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
   (breakdown in section 4.1)
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
-- [ ] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
-  Chakra/LESS, nur bei konkretem Bedarf
+- [x] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
+  Chakra/LESS, nur bei konkretem Bedarf. **Deferred (2026-10-31), not built:** no React host
+  (Python editor, Blocks, ml-trainer) and not umo needs it yet. Reopen as a new card once one does
 
 ---
 
@@ -206,7 +207,7 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 | **3 Welle 2** | Formulare, Status, Navigation | **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
 | **4 Widget** | mini-connection-widget nutzt calliope-ui. Dubletten mit Campus aufgelöst | Eine Verbindungs-UI in einer Quelle |
 | **5 Welle 3 + Ausrollen** | Patterns, Header. Danach calliope-docs, ML/Teachable (Svelte-5-Upgrade vorausgesetzt) | Weitere Apps im gemeinsamen Stand |
-| **6 optional** | Custom-Element-Build (`/elements`) für React-Hosts, z. B. Connect-Button im Python-Editor oder in Blocks. Token-Export für Chakra/LESS | Nur bei konkretem Bedarf |
+| **6 optional** | Custom-Element-Build (`/elements`) für React-Hosts, z. B. Connect-Button im Python-Editor oder in Blocks. Token-Export für Chakra/LESS | Nur bei konkretem Bedarf. Deferred 2026-10-31 (no consumer yet) |
 
 Migration immer schrittweise: Alt und Neu können nebeneinander laufen, weil die neuen Tokens
 zunächst auf die alten Werte gemappt werden. Visuelle Änderungen kommen bewusst in eigenen PRs.
