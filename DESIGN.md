@@ -282,8 +282,9 @@ bits-ui renders are styled by `.cui-*` class from a plain CSS file next to the c
 `<Icon name="download" size="s|m|l" />` with semantic names (16 / 20 / 24px), decorative unless
 it gets a `label`. The SVG bodies are baked in by `pnpm icons` (`scripts/build-icons.js`), so
 apps need no icon plugin. The library ships Material Symbols Rounded for now (as Campus today);
-Foundations/Icons compares it with PrimeIcons for the 28 draft icons plus the Wave 1 needs. The
-set is still to be decided; switching is one constant in the script.
+the set is still to be decided after the PrimeIcons comparison in Storybook (Foundations/Icons);
+switching is one constant in the script, and the map there already names the PrimeIcons
+equivalent of every semantic name.
 
 ### Button
 

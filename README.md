@@ -31,7 +31,7 @@ pnpm package          # library build into dist/ (svelte-package + publint)
 - `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`),
   icons (`icons/`), components (`components/<Name>/`, each with its stories and tests beside it)
 - `src/stories/` – Foundations pages (colours, typography, spacing, shape, elevation, sizes,
-  motion, icons) and the shared frame of the component overview stories
+  motion) and the shared frame of the component overview stories
 - `scripts/build-tokens.js` – the token pipeline
 - `scripts/build-icons.js` – semantic icon names → SVG bodies from an Iconify set
 

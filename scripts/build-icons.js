@@ -2,9 +2,9 @@
  * Icon pipeline: semantic icon names → SVG bodies, baked into TypeScript at build time.
  *
  * Run with `pnpm icons`. Consumers need no icon plugin: `src/lib/icons/icons.ts` holds the
- * SVG bodies of the active set. The second set is written for the Storybook comparison only
- * (`src/stories/foundations/icons.compare.ts`), so the choice stays cheap to change: swap
- * `ACTIVE` and rerun (docs/plan/02-plan.md, 2.6).
+ * SVG bodies of the active set. The set is still to be decided (docs/plan/02-plan.md, 2.6;
+ * compared on the Foundations/Icons page); switching is a change of `ACTIVE` and a rerun,
+ * since components only use the semantic names.
  *
  * Both sets come from Iconify JSON packages and use a 24×24 grid.
  */
@@ -25,7 +25,6 @@ const SETS = {
 };
 
 const ACTIVE = 'material';
-const COMPARE = 'prime';
 
 /**
  * Semantic name → icon per set. The first block is the 28 icons of the design draft
@@ -114,22 +113,4 @@ await write(
 		`/** SVG bodies on a 24×24 viewBox, keyed by semantic name. */\n` +
 		`export const icons = ${JSON.stringify(active, null, '\t')} as const;\n\n` +
 		`export type IconName = keyof typeof icons;\n`
-);
-
-const compare = await bodies(COMPARE);
-await write(
-	fileURLToPath(new URL('../src/stories/foundations/icons.compare.ts', import.meta.url)),
-	HEADER(COMPARE) +
-		`import type { IconName } from '../../lib/icons/icons.js';\n\n` +
-		`/** Storybook comparison only (docs/plan/02-plan.md, 2.6). */\n` +
-		`export const compareSet = ${JSON.stringify(SETS[COMPARE].label)};\n\n` +
-		`export const compareIcons: Record<IconName, string> = ${JSON.stringify(compare, null, '\t')};\n\n` +
-		`/** Source icon names per set, for the comparison table. */\n` +
-		`export const sourceNames: Record<IconName, { active: string; compare: string }> = ${JSON.stringify(
-			Object.fromEntries(
-				Object.entries(ICONS).map(([n, s]) => [n, { active: s[ACTIVE], compare: s[COMPARE] }])
-			),
-			null,
-			'\t'
-		)};\n`
 );
