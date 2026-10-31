@@ -288,7 +288,8 @@ word take it as a prop with a German default (`closeLabel="Schließen"`,
 `cancelLabel="Abbrechen"`). Component CSS sits in `@layer calliope.components`; elements that
 bits-ui renders are styled by `.cui-*` class from a plain CSS file next to the component.
 `Rezepte/IoT-Dashboard` in Storybook assembles the IoT dashboard from Wave 1 and 2 parts as the
-blueprint for its migration in Campus.
+blueprint for its migration in Campus. `Rezepte/Verbindungs-Widget` does the same for the dialogs
+and banners of mini-connection-widget (W4).
 
 ### Icon
 
@@ -297,7 +298,8 @@ it gets a `label`. The SVG bodies are baked in by `pnpm icons` (`scripts/build-i
 apps need no icon plugin. The library ships Material Symbols Rounded for now (as Campus today);
 the set is still to be decided after the PrimeIcons comparison in Storybook (Foundations/Icons);
 switching is one constant in the script, and the map there already names the PrimeIcons
-equivalent of every semantic name.
+equivalent of every semantic name. PrimeIcons has no Bluetooth and no USB glyph (`null` in the
+map), which the connection widget needs; choosing PrimeIcons means drawing those two.
 
 ### Button
 
@@ -479,6 +481,18 @@ bits-ui Popover with the consumer's own trigger (`trigger` snippet), optional `t
 dialog's name), `showClose`, `side`, `align`, `size` s / m / l (16 / 20 / 24rem). Surface like the
 menu (`surface.raised`, `radius.lg`, `shadow.menu`), 16px padding. May hold fields and buttons,
 unlike the Tooltip; focus moves in and returns to the trigger.
+
+### ChoiceList (W4)
+
+`ChoiceList` (a `role="group"`, optional `label`) holds two to four `ChoiceItem` tiles. Each
+tile is a button: the click is the choice, there is no confirm step. `title` names it, `detail`
+(one sentence) describes it, `icon` sits on the left and a muted chevron on the right. Rounded
+rectangle (`radius.lg`), hairline `border.control` (the control boundary, WCAG 1.4.11), at least
+64px high; hover darkens the border to `border.strong` over `action.hover`. Neutral like every
+control (D2): the ways differ by icon and words, never by colour, so the widget's old transport
+colours (USB green, BLE blue) do not come back. Cancel is not a tile but a secondary Button in
+the dialog footer. Built for the widget's "how should the program get there" dialogs
+(ConnectionChoiceModal, Mini2FlashFallbackModal, Mini12VersionModal).
 
 ### VisuallyHidden, LiveRegion
 

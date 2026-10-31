@@ -132,6 +132,16 @@ export {
 	type PopoverSide
 } from './components/Popover/Popover.svelte';
 
+// W4: what the connection widget needs on top
+export {
+	default as ChoiceList,
+	type ChoiceListProps
+} from './components/ChoiceList/ChoiceList.svelte';
+export {
+	default as ChoiceItem,
+	type ChoiceItemProps
+} from './components/ChoiceList/ChoiceItem.svelte';
+
 // Wave 2: accessibility helpers
 export { default as VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.svelte';
 export { default as LiveRegion, type Politeness } from './components/LiveRegion/LiveRegion.svelte';

@@ -22,6 +22,7 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 - [ ] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
   Bibliothekskomponenten
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
+  (breakdown in section 4.1)
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
 - [ ] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
   Chakra/LESS, nur bei konkretem Bedarf
@@ -208,6 +209,44 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 
 Migration immer schrittweise: Alt und Neu können nebeneinander laufen, weil die neuen Tokens
 zunächst auf die alten Werte gemappt werden. Visuelle Änderungen kommen bewusst in eigenen PRs.
+
+### 4.1 W4 breakdown (2026-10-31)
+
+State: Campus (`rc-v1.1.3`) pins calliope-ui for `tokens.css` only and the widget at `c988e9c`.
+The widget UI is about 4,900 lines in 15 Svelte files with about 300 hard-coded hex values and
+its own backdrop, card and buttons in every modal. Banner and the six modals hard-code German.
+
+**Duplicates with Campus**
+
+| Piece | Campus | Widget | Resolution |
+|---|---|---|---|
+| `ConnectionChoiceModal` | fork (2026-06) for Paraglide and the Campus modal look | original, German only | one source in the widget, on calliope-ui `Dialog` + `ChoiceList`, with a label hook; Campus deletes its fork |
+| `MakeCodeShareModal` | on Campus `Modal`, toast store | self-contained, `labels` prop, not used by Campus | owner decision (W4 widget card) |
+| `MakeCodeToolbar` | newer, built into Campus `EditorHeader` (shared with IoT) | older (2026-08), not used by Campus | owner decision (W4 widget card) |
+| MakeCode `driver.ts` | own copy | `/makecode` subpath, not used by Campus | resolved together with the toolbar |
+| `Popover` (makecode) / `Dropdown` | Campus `Dropdown` | own popover | calliope-ui `Menu` / `Popover` in both |
+
+**Widget component → calliope-ui**
+
+| Widget | calliope-ui |
+|---|---|
+| the six modals, `MakeCodeShareModal` | `Dialog` (focus trap, Escape, scrim); "how" choices as `ChoiceList`/`ChoiceItem`; footer `Button` |
+| `ConnectionBanner` | `Banner` look (status stripe and icon, no tint) inside the widget's own fixed positioning |
+| `ConnectButton` + `ConnectionPanel` | `Button`/`IconButton` trigger, `Popover` for the dropdown; `StatusDot` + word for each transport; `ProgressBar`/`Spinner` while flashing |
+| `CommsPanel` | `Tabs` (stream / rows / graph), `IconButton` (pause, clear) |
+| inline SVG icons | `Icon` (`bluetooth`, `usb`, `retry`, `download`, `share`, `copy`, `qr-code`, `link` added for W4) |
+| hex values | `--cui-*` tokens; transport colours (USB green, BLE blue) become neutral, since green and blue are status colours |
+
+`Rezepte/Verbindungs-Widget` in Storybook shows the modals and banners rebuilt this way.
+
+**Steps** (each a card in its repository)
+
+1. Widget: a `setConnectLabels()` registry so banner and modals can be translated (needs no
+   calliope-ui; README roadmap item 5).
+2. Widget: UI on calliope-ui as above; `@calliope-edu/ui` becomes a peer dependency, the host
+   loads `tokens.css` and `styles.css`. Teachable, the other host, must load them too.
+3. Campus: bump both pins, drop its `ConnectionChoiceModal` fork, pass Paraglide labels, resolve
+   the MakeCode toolbar/share/driver duplicates as decided in step 2.
 
 ---
 
