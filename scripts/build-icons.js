@@ -73,7 +73,14 @@ const ICONS = {
 	warning: { material: 'warning-rounded', prime: 'exclamation-triangle' },
 	menu: { material: 'menu-rounded', prime: 'bars' },
 	search: { material: 'search-rounded', prime: 'search' },
-	minus: { material: 'remove-rounded', prime: 'minus' }
+	minus: { material: 'remove-rounded', prime: 'minus' },
+
+	bluetooth: { material: 'bluetooth-rounded', prime: null },
+	usb: { material: 'usb-rounded', prime: null },
+	retry: { material: 'refresh-rounded', prime: 'refresh' },
+	share: { material: 'share-rounded', prime: 'share-alt' },
+	'qr-code': { material: 'qr-code-rounded', prime: 'qrcode' },
+	link: { material: 'link-rounded', prime: 'link' }
 };
 
 /** @param {keyof typeof SETS} set */
@@ -83,6 +90,7 @@ async function bodies(set) {
 	const out = {};
 	for (const [name, sources] of Object.entries(ICONS)) {
 		let id = sources[set];
+		if (id === null) throw new Error(`${set}: has no icon for "${name}" (null in the map)`);
 		id = json.aliases?.[id]?.parent ?? id;
 		const icon = json.icons[id];
 		if (!icon) throw new Error(`${set}: no icon "${sources[set]}" for "${name}"`);
