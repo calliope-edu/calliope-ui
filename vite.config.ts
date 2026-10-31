@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { svelteTesting } from '@testing-library/svelte/vite';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
@@ -9,9 +10,13 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			}
-		})
+		}),
+		// Browser export conditions and automatic cleanup for component tests.
+		svelteTesting()
 	],
 	test: {
-		include: ['src/**/*.test.ts']
+		include: ['src/**/*.test.ts'],
+		environment: 'happy-dom',
+		setupFiles: ['./vitest.setup.ts']
 	}
 });

@@ -16,6 +16,7 @@
 		"deploy": "pnpm build-storybook && wrangler pages deploy",
 		"tokens": "node scripts/build-tokens.js",
 		"tokens:check": "node scripts/build-tokens.js && git diff --exit-code -- src/lib/tokens",
+		"icons": "node scripts/build-icons.js",
 		"test": "svelte-kit sync && vitest run",
 		"package": "pnpm tokens && svelte-kit sync && svelte-package && publint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -25,9 +26,11 @@
 	"files": [
 		"src/lib",
 		"!src/lib/**/*.test.*",
+		"!src/lib/**/*.stories.*",
 		"dist",
 		"!dist/**/*.test.*",
-		"!dist/**/*.spec.*"
+		"!dist/**/*.spec.*",
+		"!dist/**/*.stories.*"
 	],
 	"sideEffects": [
 		"**/*.css"
@@ -83,6 +86,10 @@
 		"@sveltejs/kit": "^3.1.0",
 		"@sveltejs/package": "^3.0.1",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"@testing-library/jest-dom": "^7.0.1",
+		"@testing-library/svelte": "^5.4.2",
+		"@testing-library/user-event": "^14.6.8",
+		"happy-dom": "^21.0.4",
 		"prettier": "^3.9.10",
 		"prettier-plugin-svelte": "^4.1.1",
 		"publint": "^0.3.25",
@@ -103,5 +110,8 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/*": "./src/lib/*"
+	},
+	"dependencies": {
+		"bits-ui": "^2.20.2"
 	}
 }

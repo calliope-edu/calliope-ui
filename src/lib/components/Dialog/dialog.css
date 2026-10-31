@@ -1,0 +1,82 @@
+/*
+ * Dialog surface and scrim, shared by Dialog and ConfirmDialog (bits-ui renders these
+ * elements, so they are styled by class rather than through scoped component CSS).
+ */
+
+@layer calliope.components {
+	.cui-dialog-scrim {
+		position: fixed;
+		inset: 0;
+		z-index: var(--cui-z-index-dialog);
+		background-color: var(--cui-surface-scrim);
+		animation: cui-dialog-fade var(--cui-duration-slow) var(--cui-easing-standard);
+	}
+
+	.cui-dialog {
+		--_width: 37.5rem;
+
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		z-index: var(--cui-z-index-dialog);
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-4);
+		width: min(var(--_width), calc(100vw - 2 * var(--cui-space-4)));
+		max-height: calc(100dvh - 2 * var(--cui-space-4));
+		padding: var(--cui-space-6);
+		overflow: auto;
+		border-radius: var(--cui-radius-dialog);
+		background-color: var(--cui-surface-raised);
+		box-shadow: var(--cui-shadow-dialog);
+		color: var(--cui-text-default);
+		font-family: var(--cui-typography-body-font-family);
+		font-size: var(--cui-typography-body-font-size);
+		line-height: var(--cui-typography-body-line-height);
+		transform: translate(-50%, -50%);
+		animation: cui-dialog-in var(--cui-duration-slow) var(--cui-easing-enter);
+	}
+
+	.cui-dialog[data-size='s'] {
+		--_width: 25rem;
+	}
+
+	.cui-dialog[data-size='l'] {
+		--_width: 50rem;
+	}
+
+	.cui-dialog-title {
+		margin: 0;
+		font-family: var(--cui-typography-h2-font-family);
+		font-size: var(--cui-typography-h2-font-size);
+		font-weight: var(--cui-typography-h2-font-weight);
+		line-height: var(--cui-typography-h2-line-height);
+	}
+
+	.cui-dialog-description {
+		margin: 0;
+		color: var(--cui-text-muted);
+	}
+
+	.cui-dialog-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: var(--cui-space-3);
+		margin-top: var(--cui-space-2);
+	}
+
+	@keyframes cui-dialog-fade {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes cui-dialog-in {
+		from {
+			opacity: 0;
+			transform: translate(-50%, calc(-50% + var(--cui-space-2)));
+		}
+	}
+}
