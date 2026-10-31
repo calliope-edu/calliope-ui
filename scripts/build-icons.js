@@ -28,7 +28,7 @@ const ACTIVE = 'material';
 
 /**
  * Semantic name → icon per set. The first block is the 28 icons of the design draft
- * (docs/input/icons.txt), the second what Wave 1 and 2 components need on top.
+ * (docs/input/icons.txt), the second what Wave 1 and 2 components need on top, then W4 and Wave 3 additions.
  */
 const ICONS = {
 	wifi: { material: 'wifi-rounded', prime: 'wifi' },
@@ -80,7 +80,12 @@ const ICONS = {
 	retry: { material: 'refresh-rounded', prime: 'refresh' },
 	share: { material: 'share-rounded', prime: 'share-alt' },
 	'qr-code': { material: 'qr-code-rounded', prime: 'qrcode' },
-	link: { material: 'link-rounded', prime: 'link' }
+	link: { material: 'link-rounded', prime: 'link' },
+
+	language: { material: 'language', prime: 'globe' },
+	person: { material: 'person-rounded', prime: 'user' },
+	login: { material: 'login-rounded', prime: 'sign-in' },
+	logout: { material: 'logout-rounded', prime: 'sign-out' }
 };
 
 /** @param {keyof typeof SETS} set */

@@ -181,7 +181,8 @@ wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl
 `Slider`, `ProgressBar`, `VisuallyHidden`/`LiveRegion`.
 
 **Welle 3 – Patterns und Chrome**
-`Card`, `AppHeader` (aus BrandedHeader), `LocaleSwitcher`, `Avatar`, `Toolbar`. Danach
+`Card`, `AppHeader` (aus BrandedHeader), `AccountMenu`, `LocaleSwitcher`, `Avatar`, `Toolbar`
+(built 2026-10-31, see 4.2). Danach
 Chart-Basis: svelteplot or own SVG, including an accessible chart pattern (hidden data table,
 keyboard cursor).
 
@@ -249,6 +250,24 @@ its own backdrop, card and buttons in every modal. Banner and the six modals har
    the MakeCode toolbar/share/driver duplicates as decided in step 2.
 
 ---
+
+### 4.2 W5 breakdown (2026-10-31)
+
+Wave 3 in calliope-ui: `Card`, `Avatar`, `AccountMenu` (the user menu of `BrandedHeader`, added
+to the backlog), `LocaleSwitcher`, `Toolbar`/`ToolbarSeparator` and `AppHeader`, each with an
+overview story and tests (DESIGN.md, Components). Icons `language`, `person`, `login`, `logout`
+added. Avatars drop Campus' random hue per user: a neutral fill for everyone, a person's own
+colour only as a ring (`swatch`).
+
+Still open, each a card in its repository:
+
+1. calliope-ui: chart base with the accessible chart pattern (svelteplot or own SVG, hidden data
+   table, keyboard cursor), the last Wave 3 item.
+2. Campus: `BrandedHeader` → `AppHeader` + `AccountMenu` + `LocaleSwitcher`; `UserAvatar` →
+   `Avatar`; drop the unused `ui/Card` and `LocaleSwitcher`.
+3. calliope-docs (Svelte 5 already): load `tokens.css`/`styles.css`, header and cards from
+   calliope-ui.
+4. ml-machine (Teachable): Svelte 4 → 5 upgrade first, then tokens and AppHeader.
 
 ## 5. Einsatz von Design-Tools (impeccable / intent-Familie)
 

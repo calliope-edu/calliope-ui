@@ -7,7 +7,8 @@ Status: Welle 1 (Phase 2): Icon, Button, IconButton, Spinner, TextField, Switch,
 ConfirmDialog, Menu und Tooltip. Welle 2 (Phase 3): Checkbox, Radio (mit Farbfeldern), Select,
 Combobox, Slider, SegmentedControl, Tabs, Badge, Chip, StatusDot, Banner, EmptyState, Toast,
 ProgressBar, Popover, VisuallyHidden und LiveRegion, alle mit Stories und Tests. Die Umstellung
-des IoT-Dashboards in Campus folgt (Vorlage: Storybook, Rezepte/IoT-Dashboard).
+des IoT-Dashboards in Campus folgt (Vorlage: Storybook, Rezepte/IoT-Dashboard). Welle 3
+(Phase 5): Card, Avatar, AccountMenu, LocaleSwitcher, Toolbar und AppHeader.
 
 - `docs/input/` – vorhandene Konzept-/Vorab-Dokumente
 - `docs/01-bestandsaufnahme.md` – Analyse der bestehenden UI über alle Projekte

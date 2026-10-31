@@ -275,14 +275,14 @@ surface (Live Wall, IoT fullscreen) is below 16px. Captions at 12px are for meta
   `prefers-reduced-motion: reduce` everything is instant except the spinner, which keeps turning
   slowly. JS transitions use the library's `prefersReducedMotion` helper. No `transition: all`.
 
-## Components (Waves 1 and 2)
+## Components (Waves 1 to 3)
 
 All components: Svelte 5 runes, snippets, callback props; no built-in text (composites take a
 `labels` prop with German defaults); every state (default, hover, focus, active, disabled,
 loading, error) visible in Storybook; WCAG 2.1 AA checked with addon-a11y plus keyboard and
 screen reader.
 
-Built in Waves 1 and 2 (`src/lib/components/`, each with an overview story of all states, Do/Don't and
+Built in Waves 1 to 3 (`src/lib/components/`, each with an overview story of all states, Do/Don't and
 "use instead", plus Vitest tests of roles, names, keyboard and focus). Composites with a fixed
 word take it as a prop with a German default (`closeLabel="Schließen"`,
 `cancelLabel="Abbrechen"`). Component CSS sits in `@layer calliope.components`; elements that
@@ -493,6 +493,60 @@ control (D2): the ways differ by icon and words, never by colour, so the widget'
 colours (USB green, BLE blue) do not come back. Cancel is not a tile but a secondary Button in
 the dialog footer. Built for the widget's "how should the program get there" dialogs
 (ConnectionChoiceModal, Mini2FlashFallbackModal, Mini12VersionModal).
+
+### Card (Wave 3)
+
+Flat surface for one thing (a program, a room, a lesson): `surface.default`, 1px `border.subtle`,
+`radius.lg`, no shadow and no hover lift. Optional `eyebrow` (caption, muted), `title` (heading of
+`level` 2–4, h3 style), `description`, free content, `media` (full bleed on top) and an `actions`
+row; `padding` m (16) / l (24). `identity` draws a 4px line in the identity fill along the top
+edge; the surface itself is never tinted. With `href` the title becomes the card's only link and
+its hit area stretches over the card (one tab stop, name = title); the focus ring goes around the
+card, hover darkens the border to `border.strong` over `action.hover`, actions stay clickable
+above the link. A card is never a button: a choice between ways is a ChoiceList.
+
+### Avatar, AccountMenu (Wave 3)
+
+Avatar: picture or up to two initials (first and last word), else the person icon. `size` s / m
+/ l / xl = 24 / 32 / 40 / 64px. The fill is `surface.subtle` with `text.default` for everyone:
+Campus' random hues per user are dropped, because colour carries status and identity, not people.
+Where a person already has a colour (cursor colour), `swatch` shows it as a 2px ring. Named after
+the person (`role="img"` or the picture's alt); `decorative` when the name is written next to it.
+A broken picture falls back to the initials.
+
+AccountMenu: the account entry at the end of the header. The trigger is a 40px round button
+around a 32px Avatar, named "<label>: <name>" (signed out: the person icon, named "<label>"); the
+menu shows the name on top, then the app's own items (settings, a MenuRadioGroup for the
+language, sign out last).
+
+### LocaleSwitcher (Wave 3)
+
+A Menu with a MenuRadioGroup: each language in its own name and with `lang` on its item; the
+current one has the check mark and is never disabled. Trigger: Button (ghost, s by default) with
+the `language` icon, the code and a chevron; its accessible name "<label>: <name>, <code>"
+contains the visible code (WCAG 2.5.3). The library changes nothing itself: the app sets the
+locale in `onValueChange` (Paraglide in Campus). No flags.
+
+### Toolbar (Wave 3)
+
+`role="toolbar"` with a required `label` and `orientation`. Roving tabindex: one tab stop, arrow
+keys (left/right, or up/down when vertical) move and wrap, Home/End jump to the ends, natively
+disabled controls are skipped, the last item visited stays the tab stop. Text fields keep their
+arrow keys; composite widgets inside (a SegmentedControl) keep their own tab stop and arrows.
+`ToolbarSeparator` is a 1px `border.subtle` rule across the bar. No surface of its own.
+
+### AppHeader (Wave 3)
+
+Replaces Campus' `BrandedHeader` and is the header for calliope-docs and Teachable. Always a
+`data-theme="dark"` band (`surface.default`, so ink in the light theme), `size.header` (56px)
+high, 32px side padding (16 below 768px). Brand on the left: the Calliope figure (or `logo`) at
+24px and the app name in condensed 16/600, linking to `href` (`null`: no link). The app name is
+never a heading; the page owns its h1. Snippets `start` (after the brand: room, breadcrumb),
+`center` (kept centred by two equal side columns; drops to its own row when the header is
+narrower than 640px) and `end` (actions, LocaleSwitcher, AccountMenu). Below 480px only the mark
+stays visible, the name remains its accessible name. `sticky` pins it with `z-index.header`;
+`skipLink` adds a "skip to content" link as the first tab stop, visible on focus. Menus opened
+from the header render in a portal and keep the page theme.
 
 ### VisuallyHidden, LiveRegion
 
