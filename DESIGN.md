@@ -271,6 +271,20 @@ All components: Svelte 5 runes, snippets, callback props; no built-in text (comp
 loading, error) visible in Storybook; WCAG 2.1 AA checked with addon-a11y plus keyboard and
 screen reader.
 
+Built in Wave 1 (`src/lib/components/`, each with an overview story of all states, Do/Don't and
+"use instead", plus Vitest tests of roles, names, keyboard and focus). Composites with a fixed
+word take it as a prop with a German default (`closeLabel="Schließen"`,
+`cancelLabel="Abbrechen"`). Component CSS sits in `@layer calliope.components`; elements that
+bits-ui renders are styled by `.cui-*` class from a plain CSS file next to the component.
+
+### Icon
+
+`<Icon name="download" size="s|m|l" />` with semantic names (16 / 20 / 24px), decorative unless
+it gets a `label`. The SVG bodies are baked in by `pnpm icons` (`scripts/build-icons.js`), so
+apps need no icon plugin. The library ships Material Symbols Rounded for now (as Campus today);
+Foundations/Icons compares it with PrimeIcons for the 28 draft icons plus the Wave 1 needs. The
+set is still to be decided; switching is one constant in the script.
+
 ### Button
 
 `variant`: primary (ink fill, white text; dark theme: white fill, ink text) ·
@@ -286,11 +300,18 @@ underline until hover or focus). `tone`: neutral · positive · negative · iden
 - `pressed` turns it into a toggle (`aria-pressed`) with a stable label; the room pause control
   becomes "Raum pausieren" pressed/unpressed plus a separate `status.warning` badge "Pausiert".
 - `loading` keeps the width, shows the Spinner, sets `aria-busy`.
+- Built API: `icon` / `iconEnd` (icon names), `href` renders an `<a>`, `fullWidth`,
+  `focusableWhenDisabled` (keeps a disabled button in the tab order with `aria-disabled` so a
+  Tooltip can give the reason), `ref`. `tone` applies to `variant="primary"` only; with
+  `tone="identity"`, `identity` picks the fill. Hover on tone fills layers the fixed
+  `action.hover` tint instead of a lighter shade.
 
 ### IconButton
 
 Required `label` (becomes `aria-label` and the optional Tooltip). Icon is `aria-hidden`. Same
-sizes as Button, circular, hit area never below 24px.
+sizes as Button, circular, hit area never below 24px. Variants ghost (default), secondary,
+primary. `tooltip` defaults to true and shows the label; turn it off where the meaning is
+obvious in context (the dialog's close button). Works as a Menu trigger with its tooltip.
 
 ### Dialog, ConfirmDialog (pilot)
 
@@ -300,12 +321,32 @@ trigger, Escape closes from anywhere, unique `aria-labelledby`. Surface `surface
 ConfirmDialog replaces every `window.confirm/alert/prompt`, has a destructive tone and a verb on
 the confirm button ("Löschen", not "OK").
 
+- Dialog: `open` (bindable) or an optional `trigger` snippet, `title`, `description`,
+  `size` s / m / l, `actions` snippet (primary action last), `dismissible={false}` blocks Escape
+  and scrim for required choices, `showClose`, `closeLabel`. Focus goes to `initialFocus`, else
+  the first form field of the body, else the first focusable element.
+- ConfirmDialog is a bits-ui AlertDialog (`role="alertdialog"`), 400px wide. `tone="negative"`
+  makes the confirm button red with black text and starts focus on cancel. `onConfirm` may
+  return a promise: the button shows the spinner and the dialog closes when it resolves (stays
+  open if it rejects). `cancelLabel={null}` gives a one-button notice (`alert`); children add
+  content such as a TextField (`prompt`).
+- `confirmDialog(options): Promise<boolean>` is the drop-in for `window.confirm`; it needs one
+  `<ConfirmDialogHost />` in the app layout and queues concurrent requests.
+
 ### Menu, Tooltip
 
 bits-ui DropdownMenu and Tooltip. The trigger is the consumer's own button. Arrow keys,
 Home/End, typeahead, Escape returns focus. Selection is `menuitemradio` with a check, never the
 disabled style. Tooltip opens on hover and focus, is dismissible with Escape, never holds
 interactive content, and never names an icon-only button on its own.
+
+- Menu: `trigger` snippet (spread `props` onto a Button or IconButton), `side`, `align`. Children
+  are `MenuItem` (`icon`, `onSelect`, `disabled`, `tone="negative"`: red icon, ink text),
+  `MenuRadioGroup` (`value` bindable, visible `label`) with `MenuRadioItem`, `MenuGroup`
+  (`label`) and `MenuSeparator`. Items are 36px high, `label` type, hover and keyboard highlight
+  share `action.hover`.
+- Tooltip: `text`, `trigger` snippet, `side`, `delay` (400ms hover; keyboard focus opens it at
+  once). Surface `surface.inverse`, label type (14px, back-row rule), `radius.md`.
 
 ### Switch, Checkbox, Radio
 
@@ -314,12 +355,22 @@ radio 24px, 2px `border.control`. Checked, on and slider fill use `control.on` (
 light, white on dark).
 Help text is linked with `aria-describedby`, never nested inside the control.
 
+- Switch (built): bits-ui Switch with a visible `label` and optional `hint`; `labelPosition`
+  start / end. Off: 2px `border.control` outline with a 16px knob in the same colour on the left.
+  On: `control.on` fill with a 20px `control.on-mark` knob on the right, so position and size
+  carry the state as well as fill.
+
 ### TextField, Label, FieldHint
 
 Visible label required (placeholder is never the label). 40px high, `surface.default`, 1px
 `border.control`, `radius.md`. Hint and error linked via `aria-describedby`; error sets
 `aria-invalid` and is announced politely; error text is `text.error` (ink / white) next to a
 red icon disc with a black mark.
+
+- Built: `label` (required), `value` (bindable), `type`, `hint`, `error`, an `end` snippet for an
+  adornment (show-password IconButton), `ref`; other attributes go to the `<input>`. The error
+  sits in an always-present `aria-live="polite"` region and the field gets a 2px red boundary.
+  `Label` and `FieldHint` (`tone="error"` draws the disc) are exported for custom controls.
 
 ### Badge, StatusDot
 
@@ -330,7 +381,9 @@ projected surfaces the word is at least 14 / 16px.
 
 ### Spinner, Banner, EmptyState, Toast
 
-Spinner: `role="status"` with a label prop, optional 300 ms delay, one shared keyframe. Banner:
+Spinner: `role="status"` with a label prop, optional delay (`delay={300}`), one shared keyframe;
+without a label it is decorative (inside a busy button). No track ring (it would be a new
+shade). Banner:
 `role="status"` or `role="alert"` by severity, status fill as a 4px side stripe or icon disc plus
 `text.default` (no tinted backgrounds). EmptyState: title, text, optional primary action.
 Toast: thin wrapper around svelte-sonner with the same severities.

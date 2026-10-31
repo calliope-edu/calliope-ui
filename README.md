@@ -3,8 +3,8 @@
 Gemeinsame Svelte-Komponentenbibliothek (inkl. Storybook) für die Calliope-Editoren und -Apps
 (Campus, IoT-Dashboard, Teachable, ML Trainer, …).
 
-Status: Fundament (Phase 1): Token-Pipeline, Storybook mit Foundations-Seiten, CI, Einbindung per
-gepinntem SHA. Komponenten folgen ab Welle 1.
+Status: Welle 1 (Phase 2): Icon, Button, IconButton, Spinner, TextField, Switch, Dialog,
+ConfirmDialog, Menu und Tooltip mit Stories und Tests. Der Pilot in Campus folgt.
 
 - `docs/input/` – vorhandene Konzept-/Vorab-Dokumente
 - `docs/01-bestandsaufnahme.md` – Analyse der bestehenden UI über alle Projekte
@@ -21,16 +21,19 @@ pnpm install
 pnpm storybook        # Storybook on http://localhost:6006
 pnpm build-storybook  # static Storybook in storybook-static/
 pnpm tokens           # regenerate tokens.css / tokens.scss / tokens.ts from the JSON source
-pnpm test             # Vitest (token contrast and decision checks)
+pnpm icons            # regenerate the baked-in icon set (src/lib/icons/icons.ts)
+pnpm test             # Vitest: token contrast and decision checks, component tests (happy-dom)
 pnpm lint             # Prettier
 pnpm check            # svelte-check
 pnpm package          # library build into dist/ (svelte-package + publint)
 ```
 
-- `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`)
-- `src/stories/` – Storybook pages, starting with Foundations (colours, typography, spacing,
-  shape, elevation, sizes, motion)
+- `src/lib/` – the library (`@calliope-edu/ui`): tokens (`tokens/`), base styles (`styles/`),
+  icons (`icons/`), components (`components/<Name>/`, each with its stories and tests beside it)
+- `src/stories/` – Foundations pages (colours, typography, spacing, shape, elevation, sizes,
+  motion, icons) and the shared frame of the component overview stories
 - `scripts/build-tokens.js` – the token pipeline
+- `scripts/build-icons.js` – semantic icon names → SVG bodies from an Iconify set
 
 CI (`.github/workflows/ci.yml`) runs on every push to `main` and every pull request: generated
 tokens up to date, lint, svelte-check, tests, library build, Storybook build.
@@ -82,6 +85,19 @@ import '@calliope-edu/ui/tokens.css'; // custom properties only, changes nothing
 // later, once the app adopts the base styles:
 // import '@calliope-edu/ui/styles.css';
 ```
+
+Components need the tokens loaded and are imported from the package root:
+
+```svelte
+<script>
+	import { Button, ConfirmDialog, confirmDialog, Menu, MenuItem } from '@calliope-edu/ui';
+</script>
+
+<Button tone="negative" icon="delete" onclick={remove}>Löschen</Button>
+```
+
+Overlays (Dialog, Menu, Tooltip) are built on [bits-ui](https://bits-ui.com), a dependency of the
+package. `confirmDialog()` needs one `<ConfirmDialogHost />` in the app's root layout.
 
 `tokens.css` only defines `--cui-*` properties inside `@layer calliope.tokens`, so including it
 has no visual effect until something uses them. `styles.css` adds base styles (page colours,

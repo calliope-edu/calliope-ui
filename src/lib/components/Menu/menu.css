@@ -1,0 +1,89 @@
+/*
+ * Menu surface and items. bits-ui renders these elements, so they are styled by class
+ * rather than through scoped component CSS.
+ */
+
+@layer calliope.components {
+	.cui-menu {
+		z-index: var(--cui-z-index-dropdown);
+		box-sizing: border-box;
+		min-width: 12rem;
+		max-width: min(20rem, calc(100vw - 2 * var(--cui-space-2)));
+		padding: var(--cui-space-1);
+		border: var(--cui-border-width-hairline) solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-lg);
+		background-color: var(--cui-surface-raised);
+		box-shadow: var(--cui-shadow-menu);
+		color: var(--cui-text-default);
+		font-family: var(--cui-typography-label-font-family);
+		font-size: var(--cui-typography-label-font-size);
+		font-weight: var(--cui-typography-label-font-weight);
+		line-height: var(--cui-typography-label-line-height);
+		animation: cui-menu-in var(--cui-duration-fast) var(--cui-easing-enter);
+	}
+
+	.cui-menu-item {
+		display: flex;
+		align-items: center;
+		gap: var(--cui-space-2);
+		min-height: var(--cui-size-control-m);
+		padding: 0 var(--cui-space-3) 0 var(--cui-space-2);
+		border-radius: var(--cui-radius-md);
+		outline: none;
+		cursor: pointer;
+		user-select: none;
+	}
+
+	/* Keyboard and pointer highlight share the hover tint; keyboard also gets the ring. */
+	.cui-menu-item[data-highlighted] {
+		background-color: var(--cui-action-hover);
+	}
+
+	.cui-menu-item:focus-visible {
+		outline: var(--cui-border-width-focus) solid var(--cui-focus-ring);
+		outline-offset: calc(-1 * var(--cui-border-width-focus));
+	}
+
+	.cui-menu-item[data-disabled] {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.cui-menu-item-icon {
+		display: inline-grid;
+		flex: none;
+		place-items: center;
+		width: var(--cui-size-icon-m);
+		height: var(--cui-size-icon-m);
+	}
+
+	.cui-menu-item[data-tone='negative'] .cui-menu-item-icon {
+		color: var(--cui-status-error-fill);
+	}
+
+	.cui-menu-item-label {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.cui-menu-heading {
+		padding: var(--cui-space-2) var(--cui-space-3) var(--cui-space-1);
+		color: var(--cui-text-muted);
+		font-size: var(--cui-typography-caption-font-size);
+		font-weight: var(--cui-font-weight-semibold);
+		letter-spacing: var(--cui-font-tracking-caps);
+		text-transform: uppercase;
+	}
+
+	.cui-menu-separator {
+		height: var(--cui-border-width-hairline);
+		margin: var(--cui-space-1) calc(-1 * var(--cui-space-1));
+		background-color: var(--cui-border-subtle);
+	}
+
+	@keyframes cui-menu-in {
+		from {
+			opacity: 0;
+		}
+	}
+}
