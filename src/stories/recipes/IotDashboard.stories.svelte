@@ -97,13 +97,13 @@
 	function exportCsv() {
 		exporting = 0;
 		const timer = setInterval(() => {
-			exporting = (exporting ?? 0) + 20;
+			exporting = (exporting ?? 0) + 10;
 			if (exporting >= 100) {
 				clearInterval(timer);
 				exporting = null;
 				toast.success('CSV heruntergeladen', { description: '3 Feeds, 1 248 Werte' });
 			}
-		}, 300);
+		}, 450);
 	}
 
 	function saveWidget() {
