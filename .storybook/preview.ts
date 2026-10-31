@@ -32,6 +32,7 @@ const preview: Preview = {
 						'Formen und Rahmen',
 						'Schatten und Ebenen',
 						'Größen',
+						'Icons',
 						'Bewegung'
 					],
 					'Primitives',
