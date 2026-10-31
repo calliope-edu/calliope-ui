@@ -109,6 +109,7 @@
 		background: var(--cui-action-primary-bg);
 		color: var(--cui-action-primary-fg);
 		font: inherit;
+		font-family: var(--cui-typography-action-font-family);
 		font-size: var(--cui-typography-action-font-size);
 		font-weight: var(--cui-typography-action-font-weight);
 		letter-spacing: var(--cui-typography-action-letter-spacing);

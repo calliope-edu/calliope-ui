@@ -306,6 +306,7 @@
 
 	h1 {
 		margin: 0.25rem 0 1rem;
+		font-family: var(--cui-typography-display-font-family);
 		font-size: var(--cui-font-size-display);
 		font-weight: var(--cui-font-weight-bold);
 		line-height: var(--cui-typography-display-line-height);
@@ -327,6 +328,7 @@
 		margin: 0 0 0.5rem;
 		padding-bottom: 0.5rem;
 		border-bottom: 2px solid var(--cui-brand-strong);
+		font-family: var(--cui-typography-h1-font-family);
 		font-size: var(--cui-font-size-2xl);
 		font-weight: var(--cui-font-weight-semibold);
 		line-height: var(--cui-font-line-height-tight);
@@ -334,6 +336,7 @@
 
 	h3 {
 		margin: 2.5rem 0 0.25rem;
+		font-family: var(--cui-typography-h2-font-family);
 		font-size: var(--cui-font-size-xl);
 		font-weight: var(--cui-font-weight-semibold);
 		line-height: var(--cui-font-line-height-tight);

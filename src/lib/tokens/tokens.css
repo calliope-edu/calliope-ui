@@ -29,10 +29,10 @@
 		--cui-palette-green: #3fc663; /** Status: success */
 		--cui-palette-red: #e53f4b; /** Status: error. Errors only. Too light for text on white (4.08:1): error text stays ink next to a red icon */
 		--cui-font-family-sans:
-			'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif; /** Roboto Variable is the family name @fontsource-variable/roboto registers; Campus registers the same files as Roboto */
+			'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif; /** Body text, labels, captions. Roboto Variable is the family name @fontsource-variable/roboto registers; Campus registers the same files as Roboto */
 		--cui-font-family-condensed:
 			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
-			sans-serif; /** Comparison only: Roboto Condensed for H1/H2 and uppercase buttons is tested in Storybook before it is adopted */
+			sans-serif; /** Headings (display, h1-h3) and button labels. Roboto Condensed Variable is the family name @fontsource-variable/roboto-condensed registers; apps load it beside Roboto */
 		--cui-font-family-mono:
 			ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; /** One mono stack for code, serial output, room codes (Campus has 10 today) */
 		--cui-font-size-xs: 0.75rem;
@@ -122,22 +122,28 @@
 		--cui-size-switch-height: 1.75rem;
 		--cui-size-header: 3.5rem; /** App header band (Campus --branded-header-height 3.5rem) */
 		--cui-typography-display-font-family:
-			'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif; /** Entry surfaces only, once per page */
+			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
+			sans-serif; /** Entry surfaces only, once per page */
 		--cui-typography-display-font-weight: 700; /** Entry surfaces only, once per page */
 		--cui-typography-display-line-height: 1.1; /** Entry surfaces only, once per page */
 		--cui-typography-display-letter-spacing: -0.01em; /** Entry surfaces only, once per page */
 		--cui-typography-h1-font-family:
-			'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif; /** Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first */
-		--cui-typography-h1-font-size: 1.5rem; /** Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first */
-		--cui-typography-h1-font-weight: 600; /** Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first */
-		--cui-typography-h1-line-height: 1.2; /** Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first */
-		--cui-typography-h1-letter-spacing: 0em; /** Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first */
-		--cui-typography-h2-font-family: 'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif;
+			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
+			sans-serif; /** Page title */
+		--cui-typography-h1-font-size: 1.5rem; /** Page title */
+		--cui-typography-h1-font-weight: 600; /** Page title */
+		--cui-typography-h1-line-height: 1.2; /** Page title */
+		--cui-typography-h1-letter-spacing: 0em; /** Page title */
+		--cui-typography-h2-font-family:
+			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
+			sans-serif;
 		--cui-typography-h2-font-size: 1.25rem;
 		--cui-typography-h2-font-weight: 600;
 		--cui-typography-h2-line-height: 1.2;
 		--cui-typography-h2-letter-spacing: 0em;
-		--cui-typography-h3-font-family: 'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif;
+		--cui-typography-h3-font-family:
+			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
+			sans-serif;
 		--cui-typography-h3-font-size: 1.125rem;
 		--cui-typography-h3-font-weight: 600;
 		--cui-typography-h3-line-height: 1.2;
@@ -172,7 +178,8 @@
 		--cui-typography-caption-line-height: 1.4; /** Badges, timestamps, hints. Not for anything read from a distance */
 		--cui-typography-caption-letter-spacing: 0em; /** Badges, timestamps, hints. Not for anything read from a distance */
 		--cui-typography-action-font-family:
-			'Roboto Variable', Roboto, system-ui, 'Segoe UI', sans-serif; /** Button label at size m (s uses xs, l uses md). Uppercase */
+			'Roboto Condensed Variable', 'Roboto Condensed', 'Roboto Variable', Roboto, system-ui,
+			sans-serif; /** Button label at size m (s uses xs, l uses md). Uppercase */
 		--cui-typography-action-font-size: 0.875rem; /** Button label at size m (s uses xs, l uses md). Uppercase */
 		--cui-typography-action-font-weight: 600; /** Button label at size m (s uses xs, l uses md). Uppercase */
 		--cui-typography-action-line-height: 1.2; /** Button label at size m (s uses xs, l uses md). Uppercase */

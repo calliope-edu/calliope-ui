@@ -5,7 +5,7 @@
 			"$type": "fontFamily",
 			"sans": {
 				"$value": ["Roboto Variable", "Roboto", "system-ui", "Segoe UI", "sans-serif"],
-				"$description": "Roboto Variable is the family name @fontsource-variable/roboto registers; Campus registers the same files as Roboto"
+				"$description": "Body text, labels, captions. Roboto Variable is the family name @fontsource-variable/roboto registers; Campus registers the same files as Roboto"
 			},
 			"condensed": {
 				"$value": [
@@ -16,12 +16,7 @@
 					"system-ui",
 					"sans-serif"
 				],
-				"$description": "Comparison only: Roboto Condensed for H1/H2 and uppercase buttons is tested in Storybook before it is adopted",
-				"$extensions": {
-					"calliope": {
-						"status": "comparison"
-					}
-				}
+				"$description": "Headings (display, h1-h3) and button labels. Roboto Condensed Variable is the family name @fontsource-variable/roboto-condensed registers; apps load it beside Roboto"
 			},
 			"mono": {
 				"$value": ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
@@ -128,7 +123,7 @@
 		"$type": "typography",
 		"display": {
 			"$value": {
-				"fontFamily": "{font.family.sans}",
+				"fontFamily": "{font.family.condensed}",
 				"fontSize": "{font.size.display}",
 				"fontWeight": 700,
 				"lineHeight": 1.1,
@@ -141,7 +136,7 @@
 		},
 		"h1": {
 			"$value": {
-				"fontFamily": "{font.family.sans}",
+				"fontFamily": "{font.family.condensed}",
 				"fontSize": "{font.size.2xl}",
 				"fontWeight": 600,
 				"lineHeight": 1.2,
@@ -150,11 +145,11 @@
 					"unit": "em"
 				}
 			},
-			"$description": "Draft: Roboto Condensed 26 uppercase. Condensed is tested in Storybook first"
+			"$description": "Page title"
 		},
 		"h2": {
 			"$value": {
-				"fontFamily": "{font.family.sans}",
+				"fontFamily": "{font.family.condensed}",
 				"fontSize": "{font.size.xl}",
 				"fontWeight": 600,
 				"lineHeight": 1.2,
@@ -166,7 +161,7 @@
 		},
 		"h3": {
 			"$value": {
-				"fontFamily": "{font.family.sans}",
+				"fontFamily": "{font.family.condensed}",
 				"fontSize": "{font.size.lg}",
 				"fontWeight": 600,
 				"lineHeight": 1.2,
@@ -242,7 +237,7 @@
 		},
 		"action": {
 			"$value": {
-				"fontFamily": "{font.family.sans}",
+				"fontFamily": "{font.family.condensed}",
 				"fontSize": "{font.size.sm}",
 				"fontWeight": 600,
 				"lineHeight": 1.2,

@@ -115,6 +115,7 @@
 
 	.card .card-title {
 		margin-bottom: var(--cui-space-2);
+		font-family: var(--cui-typography-h3-font-family);
 		font-size: var(--cui-typography-h3-font-size);
 		font-weight: var(--cui-typography-h3-font-weight);
 	}

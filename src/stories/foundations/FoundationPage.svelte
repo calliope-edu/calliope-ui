@@ -33,6 +33,7 @@
 
 	h1 {
 		margin: var(--cui-space-1) 0 var(--cui-space-4);
+		font-family: var(--cui-typography-display-font-family);
 		font-size: var(--cui-typography-display-font-size);
 		font-weight: var(--cui-typography-display-font-weight);
 		line-height: var(--cui-typography-display-line-height);
@@ -54,6 +55,7 @@
 		margin: 0 0 var(--cui-space-2);
 		padding-bottom: var(--cui-space-2);
 		border-bottom: var(--cui-border-width-accent) solid var(--cui-brand-strong);
+		font-family: var(--cui-typography-h1-font-family);
 		font-size: var(--cui-typography-h1-font-size);
 		font-weight: var(--cui-typography-h1-font-weight);
 		line-height: var(--cui-typography-h1-line-height);
@@ -61,6 +63,7 @@
 
 	.page :global(h3) {
 		margin: var(--cui-space-10) 0 var(--cui-space-1);
+		font-family: var(--cui-typography-h2-font-family);
 		font-size: var(--cui-typography-h2-font-size);
 		font-weight: var(--cui-typography-h2-font-weight);
 		line-height: var(--cui-typography-h2-line-height);
