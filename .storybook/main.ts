@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/sveltekit';
+import { iconComparison } from './icon-comparison.js';
 
 const config: StorybookConfig = {
 	stories: ['../src/**/*.stories.@(js|ts|svelte)'],
@@ -19,7 +20,8 @@ const config: StorybookConfig = {
 	features: {
 		sidebarOnboardingChecklist: false,
 		menuOnboardingChecklist: false
-	}
+	},
+	viteFinal: (config) => ({ ...config, plugins: [...(config.plugins ?? []), iconComparison()] })
 };
 
 export default config;
