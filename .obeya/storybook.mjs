@@ -36,13 +36,20 @@ function isAlive(pid) {
 	}
 }
 
-function portFree(port) {
+// Storybook listens on 127.0.0.1 only. A bare listen(port) binds `::`, which on Windows succeeds
+// even while another Storybook holds 127.0.0.1:port, so probe 127.0.0.1 itself, and `::` for
+// anything else that would answer on localhost. A host without IPv6 counts as free there.
+function canListen(port, host) {
 	return new Promise((resolve) => {
 		const server = createServer()
-			.once('error', () => resolve(false))
+			.once('error', (err) => resolve(err.code === 'EAFNOSUPPORT' || err.code === 'EADDRNOTAVAIL'))
 			.once('listening', () => server.close(() => resolve(true)))
-			.listen(port);
+			.listen({ port, host });
 	});
+}
+
+async function portFree(port) {
+	return (await canListen(port, '127.0.0.1')) && (await canListen(port, '::'));
 }
 
 async function freePort(from) {
@@ -73,11 +80,22 @@ async function start() {
 	child.unref();
 	writeFileSync(stateFile, JSON.stringify({ pid: child.pid, port, url }, null, '\t'));
 
+	// An answer on the port alone proves nothing: if ours lost the port in a race, another workspace's
+	// Storybook answers there while ours exits. So wait for our own log to report it ready on this
+	// port, and check that it is still alive once the port answers.
+	const ready = new RegExp(`Local:\\s+http://127\\.0\\.0\\.1:${port}/`);
 	const deadline = Date.now() + 180_000;
 	while (Date.now() < deadline) {
-		if (!isAlive(child.pid)) throw new Error(`Storybook exited, see ${logFile}`);
+		if (!isAlive(child.pid)) {
+			rmSync(stateFile, { force: true });
+			throw new Error(`Storybook exited, see ${logFile}`);
+		}
 		try {
-			if ((await fetch(url)).ok) {
+			if (
+				ready.test(readFileSync(logFile, 'utf8')) &&
+				(await fetch(`http://127.0.0.1:${port}/`)).ok &&
+				isAlive(child.pid)
+			) {
 				console.log(`Storybook running (pid ${child.pid}): ${url}`);
 				return;
 			}
