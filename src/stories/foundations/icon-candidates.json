@@ -1,0 +1,45 @@
+[
+	{ "label": "WLAN", "prime": "wifi", "material": "wifi-rounded" },
+	{
+		"label": "Verkleinern",
+		"prime": "arrow-down-left-and-arrow-up-right-to-center",
+		"material": "close-fullscreen-rounded"
+	},
+	{
+		"label": "Vergrößern",
+		"prime": "arrow-up-right-and-arrow-down-left-from-center",
+		"material": "open-in-full-rounded"
+	},
+	{ "label": "Erledigt", "prime": "check", "material": "check-rounded" },
+	{ "label": "Erfolg", "prime": "check-circle", "material": "check-circle-outline-rounded" },
+	{ "label": "Zwischenablage", "prime": "clipboard", "material": "content-paste-rounded" },
+	{ "label": "Einstellungen", "prime": "cog", "material": "settings-outline-rounded" },
+	{ "label": "Herunterladen", "prime": "download", "material": "download-rounded" },
+	{ "label": "Mehr", "prime": "ellipsis-h", "material": "more-horiz-rounded" },
+	{
+		"label": "Fehler, Warnung",
+		"prime": "exclamation-circle",
+		"material": "error-outline-rounded"
+	},
+	{ "label": "Vollbild", "prime": "expand", "material": "fullscreen-rounded" },
+	{ "label": "Extern öffnen", "prime": "external-link", "material": "open-in-new-rounded" },
+	{ "label": "Anzeigen", "prime": "eye", "material": "visibility-outline-rounded" },
+	{ "label": "Ausblenden", "prime": "eye-slash", "material": "visibility-off-outline-rounded" },
+	{ "label": "Filtern", "prime": "filter", "material": "filter-alt-outline-rounded" },
+	{
+		"label": "Filter aufheben",
+		"prime": "filter-slash",
+		"material": "filter-alt-off-outline-rounded"
+	},
+	{ "label": "Info", "prime": "info-circle", "material": "info-outline-rounded" },
+	{ "label": "Gerät", "prime": "microchip", "material": "memory-outline-rounded" },
+	{ "label": "Pause", "prime": "pause-circle", "material": "pause-circle-outline-rounded" },
+	{ "label": "Bearbeiten", "prime": "pencil", "material": "edit-outline-rounded" },
+	{ "label": "Start", "prime": "play-circle", "material": "play-circle-outline-rounded" },
+	{ "label": "Hinzufügen", "prime": "plus", "material": "add-rounded" },
+	{ "label": "Hilfe", "prime": "question-circle", "material": "help-outline-rounded" },
+	{ "label": "Stopp", "prime": "stop-circle", "material": "stop-circle-outline-rounded" },
+	{ "label": "Schließen", "prime": "times", "material": "close-rounded" },
+	{ "label": "Entfernen", "prime": "times-circle", "material": "cancel-outline-rounded" },
+	{ "label": "Hochladen", "prime": "upload", "material": "upload-rounded" }
+]
