@@ -53,4 +53,11 @@ describe('Dialog', () => {
 		await userEvent.keyboard('{Escape}');
 		expect(screen.getByRole('dialog')).toBeInTheDocument();
 	});
+
+	it('marks the size and the fill layout on the surface', async () => {
+		render(Harness, { size: 'xl', fill: true });
+		const dialog = await openDialog();
+		expect(dialog).toHaveAttribute('data-size', 'xl');
+		expect(dialog).toHaveAttribute('data-fill');
+	});
 });

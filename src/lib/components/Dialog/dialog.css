@@ -46,6 +46,30 @@
 		--_width: 50rem;
 	}
 
+	.cui-dialog[data-size='xl'] {
+		--_width: 75rem;
+	}
+
+	.cui-dialog[data-size='full'] {
+		--_width: 100vw;
+
+		height: calc(100dvh - 2 * var(--cui-space-4));
+	}
+
+	/* The body fills the height and hands scrolling to its content. */
+	.cui-dialog[data-fill] {
+		height: calc(100dvh - 2 * var(--cui-space-4));
+		overflow: hidden;
+	}
+
+	.cui-dialog[data-fill] > .cui-dialog-body {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		min-height: 0;
+		overflow: hidden;
+	}
+
 	.cui-dialog-title {
 		margin: 0;
 		font-family: var(--cui-typography-h2-font-family);
