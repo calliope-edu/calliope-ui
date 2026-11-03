@@ -2,11 +2,13 @@
  * Icon pipeline: semantic icon names → SVG bodies, baked into TypeScript at build time.
  *
  * Run with `pnpm icons`. Consumers need no icon plugin: `src/lib/icons/icons.ts` holds the
- * SVG bodies of the active set. The set is still to be decided (docs/plan/02-plan.md, 2.6;
- * compared on the Foundations/Icons page); switching is a change of `ACTIVE` and a rerun,
- * since components only use the semantic names.
+ * SVG bodies of the active set. The set is PrimeIcons (decided by the owner on 2026-11-03 after
+ * the comparison on the Foundations/Icons page). The Material Symbols names stay in the map so
+ * switching back remains a change of `ACTIVE` and a rerun, since components only use the
+ * semantic names.
  *
- * Both sets come from Iconify JSON packages and use a 24×24 grid.
+ * Both sets come from Iconify JSON packages and use a 24×24 grid. Where a set has no glyph for a
+ * semantic name, the map holds `null` and `DRAWN` supplies one drawn in the style of that set.
  */
 
 import { readFile, writeFile } from 'node:fs/promises';
@@ -24,7 +26,7 @@ const SETS = {
 	prime: { label: 'PrimeIcons', package: '@iconify-json/prime/icons.json' }
 };
 
-const ACTIVE = 'material';
+const ACTIVE = 'prime';
 
 /**
  * Semantic name → icon per set. The first block is the 28 icons of the design draft
@@ -88,6 +90,27 @@ const ICONS = {
 	logout: { material: 'logout-rounded', prime: 'sign-out' }
 };
 
+/*
+ * Glyphs a set lacks, drawn on its grid in its style. PrimeIcons draws with a 1.5px line and
+ * round ends and joins; its glyphs span about 3 to 21 on the 24px grid.
+ */
+const PRIME_LINE =
+	'fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"';
+const DRAWN = {
+	prime: {
+		// The rune ᛒ: a stem with two arrow loops on the right, crossed by two diagonals.
+		bluetooth: `<path ${PRIME_LINE} d="M7.25 7.75l9.5 8.5L12 20.5v-17l4.75 4.25l-9.5 8.5"/>`,
+		// The USB trident: arrowhead on top, round and square ends on the arms, a dot at the foot.
+		usb: [
+			`<path ${PRIME_LINE} d="M12 6.25v10.5M12 14.75l-5-3v-1.5M12 12.75l5-2.75V8.75"/>`,
+			`<path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="1.5" d="M12 3.25l2.25 3h-4.5z"/>`,
+			'<circle cx="12" cy="18.75" r="2" fill="currentColor"/>',
+			'<circle cx="7" cy="8.75" r="1.5" fill="currentColor"/>',
+			'<rect width="3" height="3" x="15.5" y="5.75" fill="currentColor" rx=".5"/>'
+		].join('')
+	}
+};
+
 /** @param {keyof typeof SETS} set */
 async function bodies(set) {
 	const json = JSON.parse(await readFile(require.resolve(SETS[set].package), 'utf8'));
@@ -95,7 +118,12 @@ async function bodies(set) {
 	const out = {};
 	for (const [name, sources] of Object.entries(ICONS)) {
 		let id = sources[set];
-		if (id === null) throw new Error(`${set}: has no icon for "${name}" (null in the map)`);
+		if (id === null) {
+			const drawn = DRAWN[set]?.[name];
+			if (!drawn) throw new Error(`${set}: has no icon for "${name}" (null in the map, not drawn)`);
+			out[name] = drawn;
+			continue;
+		}
 		id = json.aliases?.[id]?.parent ?? id;
 		const icon = json.icons[id];
 		if (!icon) throw new Error(`${set}: no icon "${sources[set]}" for "${name}"`);
