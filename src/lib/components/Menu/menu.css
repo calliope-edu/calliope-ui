@@ -57,6 +57,20 @@
 		height: var(--cui-size-icon-m);
 	}
 
+	/*
+	 * The icon column only takes space when an item of the menu has an icon or can show a check
+	 * (radio items); otherwise the labels sit flush, as far in as the group headings.
+	 */
+	.cui-menu:not(:has(.cui-menu-item[data-icon], [role='menuitemradio'], [role='menuitemcheckbox']))
+		.cui-menu-item {
+		padding-left: var(--cui-space-3);
+	}
+
+	.cui-menu:not(:has(.cui-menu-item[data-icon], [role='menuitemradio'], [role='menuitemcheckbox']))
+		.cui-menu-item-icon {
+		display: none;
+	}
+
 	.cui-menu-item[data-tone='negative'] .cui-menu-item-icon {
 		color: var(--cui-status-error-fill);
 	}

@@ -295,11 +295,20 @@ and banners of mini-connection-widget (W4).
 
 `<Icon name="download" size="s|m|l" />` with semantic names (16 / 20 / 24px), decorative unless
 it gets a `label`. The SVG bodies are baked in by `pnpm icons` (`scripts/build-icons.js`), so
-apps need no icon plugin. The library ships Material Symbols Rounded for now (as Campus today);
-the set is still to be decided after the PrimeIcons comparison in Storybook (Foundations/Icons);
-switching is one constant in the script, and the map there already names the PrimeIcons
-equivalent of every semantic name. PrimeIcons has no Bluetooth and no USB glyph (`null` in the
-map), which the connection widget needs; choosing PrimeIcons means drawing those two.
+apps need no icon plugin. The set is **PrimeIcons** (decided by the owner on 2026-11-03, after
+the comparison with Material Symbols in Storybook, Foundations/Icons): one line weight (1.5px,
+round ends), unfilled, from the design draft. PrimeIcons has no Bluetooth and no USB glyph
+(`null` in the map); both are drawn in its style in the script (`DRAWN`), so the connection
+widget keeps them. The map still names the Material Symbols equivalent of every semantic name,
+so switching back stays one constant and a rerun.
+
+Icons beside a text label are the exception. Menu items and buttons carry their text alone;
+icons belong on icon-only buttons (IconButton), status (Banner, Toast, EmptyState) and the
+choices of a ChoiceList. A row of the same small glyph before every label adds noise for
+pupils reading at a distance without helping them find the entry, since the word does that
+already. Button `icon` / `iconEnd` and MenuItem `icon` stay for the few cases where the glyph
+carries meaning the word lacks (an editor logo, the `chevron-down` of a menu trigger, an
+established action such as "Raum-URL kopieren").
 
 ### Button
 
@@ -360,7 +369,8 @@ interactive content, and never names an icon-only button on its own.
   are `MenuItem` (`icon`, `onSelect`, `disabled`, `tone="negative"`: red icon, ink text),
   `MenuRadioGroup` (`value` bindable, visible `label`) with `MenuRadioItem`, `MenuGroup`
   (`label`) and `MenuSeparator`. Items are 36px high, `label` type, hover and keyboard highlight
-  share `action.hover`.
+  share `action.hover`. The icon column only takes space when an item of the menu has an icon or
+  the menu has radio items (their check); otherwise the labels sit flush with the headings.
 - Tooltip: `text`, `trigger` snippet, `side`, `delay` (400ms hover; keyboard focus opens it at
   once). Surface `surface.inverse`, label type (14px, back-row rule), `radius.md`.
 
@@ -570,6 +580,7 @@ change is announced; `politeness` polite (`role="status"`) or assertive (`role="
 - Use tints, shades, `color-mix()` or opacity to make new colours. The only exception are the
   fixed alpha neutrals (`text.muted`, `border.control`, `action.hover`, `surface.scrim`).
 - Use `outline: none` without an equivalent visible ring.
+- Put an icon before every menu item or button label; the word stands alone.
 - Underline links at rest, or colour error text red.
 - Use identity colours for state or status colours for identity.
 - Put text below 14px on anything a teacher reads at distance.
@@ -593,3 +604,4 @@ change is announced; `politeness` polite (`role="status"`) or assertive (`role="
 | –   | Error red                                    | `#E53F4B` (the draft's red). Too light for text on white (4.08:1): error text stays ink next to a red icon, the destructive button has black text (5.1:1)                                                   |
 | D5  | Wave order                                   | Wave 1 = tokens, Button/IconButton, Icon, Spinner, Dialog/ConfirmDialog, Menu, Tooltip, TextField, Switch. Checkbox, Radio, Badge move to Wave 2; Combobox, LiveRegion and a chart pattern join the backlog |
 | D6  | Minimum touch target                         | 24×24px everywhere (WCAG 2.5.8); pupil-facing views default to size l (40px)                                                                                                                                |
+| –   | Icon set (2026-11-03)                        | PrimeIcons; Bluetooth and USB drawn in its style. Icons beside a text label are the exception: menu items and buttons carry their text alone, icons mainly on icon-only buttons                             |

@@ -55,7 +55,26 @@
 
 		<section>
 			<h2>Aktionen</h2>
-			<Row label="Mit Button">
+			<p class="section-intro">
+				Einträge tragen ihren Text allein. Hat kein Eintrag ein Icon, stehen die Beschriftungen
+				bündig; sobald einer eins hat, rücken alle in dieselbe Spalte.
+			</p>
+			<Row label="Ohne Icons">
+				<Menu>
+					{#snippet trigger({ props })}
+						<Button {...props} variant="secondary" iconEnd="chevron-down">Programm</Button>
+					{/snippet}
+					<MenuItem onSelect={() => (lastAction = 'Umbenennen')}>Umbenennen</MenuItem>
+					<MenuItem onSelect={() => (lastAction = 'Duplizieren')}>Duplizieren</MenuItem>
+					<MenuItem onSelect={() => (lastAction = 'Teilen')}>Teilen</MenuItem>
+					<MenuGroup label="Exportieren">
+						<MenuItem onSelect={() => (lastAction = 'Als .hex')}>Als .hex</MenuItem>
+						<MenuItem onSelect={() => (lastAction = 'Als .zip')}>Als .zip</MenuItem>
+					</MenuGroup>
+				</Menu>
+				<span class="muted">zuletzt gewählt: {lastAction}</span>
+			</Row>
+			<Row label="Mit Icons">
 				<Menu>
 					{#snippet trigger({ props })}
 						<Button {...props} variant="secondary" iconEnd="chevron-down">Aktionen</Button>
@@ -71,7 +90,6 @@
 						Löschen
 					</MenuItem>
 				</Menu>
-				<span class="muted">zuletzt gewählt: {lastAction}</span>
 			</Row>
 			<Row label="Mit IconButton">
 				<Menu align="end">
@@ -106,7 +124,7 @@
 			<Row label="Gruppen">
 				<Menu>
 					{#snippet trigger({ props })}
-						<Button {...props} variant="secondary" icon="settings">Konto</Button>
+						<Button {...props} variant="secondary" iconEnd="chevron-down">Konto</Button>
 					{/snippet}
 					<MenuGroup label="Konto">
 						<MenuItem icon="edit">Name ändern</MenuItem>
@@ -125,6 +143,7 @@
 			<Guidelines
 				dos={[
 					'Einträge als Verben („Umbenennen“), höchstens etwa sieben.',
+					'Einträge in der Regel ohne Icon; ein Icon nur, wo es die Bedeutung wirklich stützt.',
 					'Endgültige Einträge ans Ende, hinter einen Trenner, mit tone="negative".'
 				]}
 				donts={[

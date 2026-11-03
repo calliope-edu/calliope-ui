@@ -28,6 +28,7 @@
 <DropdownMenu.Item
 	class="cui-menu-item"
 	data-tone={tone}
+	data-icon={icon ? '' : undefined}
 	{disabled}
 	{closeOnSelect}
 	{onSelect}

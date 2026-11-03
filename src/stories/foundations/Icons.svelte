@@ -1,6 +1,12 @@
 <script lang="ts">
 	import icons, { type IconCandidate, type IconSvg } from 'virtual:icon-comparison';
+	import Icon from '../../lib/components/Icon/Icon.svelte';
+	import { icons as shipped, iconSet, type IconName } from '../../lib/icons/icons.js';
 	import FoundationPage from './FoundationPage.svelte';
+
+	const shippedNames = Object.keys(shipped) as IconName[];
+	// PrimeIcons has no glyph for these; they are drawn in its style (scripts/build-icons.js).
+	const drawn: IconName[] = ['bluetooth', 'usb'];
 
 	type SetId = 'prime' | 'material';
 	type Theme = 'light' | 'dark';
@@ -71,13 +77,34 @@
 
 <FoundationPage title="Icons">
 	{#snippet lead()}
-		Noch offen: Welches Icon-Set nutzt die Bibliothek? Hier stehen beide Kandidaten nebeneinander,
-		mit den Icons aus dem Entwurf, in den drei Icon-Größen, auf Hell und Dunkel, neben Text und in
-		Buttons.
+		Die Bibliothek nutzt PrimeIcons (entschieden am 3. November 2026). Icons stehen vor allem in
+		Icon-Buttons; neben einer Beschriftung sind sie die Ausnahme, Menüeinträge und Buttons tragen
+		ihren Text allein. Weiter unten steht der Vergleich mit Material Symbols, der zur Entscheidung
+		geführt hat.
 	{/snippet}
 
+	<section aria-labelledby="shipped">
+		<h2 id="shipped">Ausgeliefert: {iconSet}</h2>
+		<p class="section-intro">
+			Alle {shippedNames.length} semantischen Namen, die <code>&lt;Icon name="…" /&gt;</code> kennt, in
+			den Größen s, m und l. Bluetooth und USB gibt es in PrimeIcons nicht; sie sind im selben Stil gezeichnet
+			(1,5 px Linie, runde Enden).
+		</p>
+		<ul class="shipped">
+			{#each shippedNames as name (name)}
+				<li class:drawn={drawn.includes(name)}>
+					<span class="shipped-glyphs">
+						{#each sizes as size (size)}<Icon {name} {size} />{/each}
+					</span>
+					<code>{name}</code>
+					{#if drawn.includes(name)}<span class="muted">gezeichnet</span>{/if}
+				</li>
+			{/each}
+		</ul>
+	</section>
+
 	<section aria-labelledby="candidates">
-		<h2 id="candidates">Die Kandidaten</h2>
+		<h2 id="candidates">Der Vergleich: die Kandidaten</h2>
 		<table class="facts">
 			<thead>
 				<tr>
@@ -110,8 +137,8 @@
 			</tbody>
 		</table>
 		<p class="section-intro">
-			Die Komponenten bekommen später semantische Namen (<code>&lt;Icon name="download" /&gt;</code
-			>). Das Set lässt sich also auch nach der Entscheidung noch tauschen.
+			Die Komponenten nutzen semantische Namen (<code>&lt;Icon name="download" /&gt;</code>). Das
+			Set lässt sich also auch nach der Entscheidung noch tauschen.
 		</p>
 	</section>
 
@@ -257,6 +284,38 @@
 		display: block;
 		flex: none;
 		fill: currentColor;
+	}
+
+	.shipped {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+		gap: var(--cui-space-2) var(--cui-space-4);
+		margin: 0 0 var(--cui-space-10);
+		padding: 0;
+		list-style: none;
+		font-size: var(--cui-font-size-sm);
+	}
+
+	.shipped li {
+		display: grid;
+		gap: var(--cui-space-1);
+		padding: var(--cui-space-3);
+		border: var(--cui-border-width-hairline) solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-md);
+	}
+
+	.shipped li.drawn {
+		border-color: var(--cui-border-strong);
+	}
+
+	.shipped-glyphs {
+		display: flex;
+		align-items: flex-end;
+		gap: var(--cui-space-3);
+	}
+
+	.shipped code {
+		font-size: 0.75rem;
 	}
 
 	.facts {
