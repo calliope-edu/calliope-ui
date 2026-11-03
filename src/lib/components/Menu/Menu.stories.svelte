@@ -144,7 +144,7 @@
 				dos={[
 					'Einträge als Verben („Umbenennen“), höchstens etwa sieben.',
 					'Einträge in der Regel ohne Icon; ein Icon nur, wo es die Bedeutung wirklich stützt.',
-					'Endgültige Einträge ans Ende, hinter einen Trenner, mit tone="negative".'
+					'Endgültige Einträge ans Ende, hinter einen Trenner, mit tone="negative" und ihrem Icon (auch in Menüs ohne Icons; das Icon trägt das Rot).'
 				]}
 				donts={[
 					'Kein Menü als Tooltip oder Hinweis missbrauchen.',

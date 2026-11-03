@@ -308,7 +308,9 @@ choices of a ChoiceList. A row of the same small glyph before every label adds n
 pupils reading at a distance without helping them find the entry, since the word does that
 already. Button `icon` / `iconEnd` and MenuItem `icon` stay for the few cases where the glyph
 carries meaning the word lacks (an editor logo, the `chevron-down` of a menu trigger, an
-established action such as "Raum-URL kopieren").
+established action such as "Raum-URL kopieren"). A destructive menu item (`tone="negative"`)
+always keeps its icon (`delete`): the red sits only in the icon, because red text fails contrast,
+so without it "Löschen" would look like any other entry (owner, 2026-11-03).
 
 ### Button
 
@@ -580,7 +582,8 @@ change is announced; `politeness` polite (`role="status"`) or assertive (`role="
 - Use tints, shades, `color-mix()` or opacity to make new colours. The only exception are the
   fixed alpha neutrals (`text.muted`, `border.control`, `action.hover`, `surface.scrim`).
 - Use `outline: none` without an equivalent visible ring.
-- Put an icon before every menu item or button label; the word stands alone.
+- Put an icon before every menu item or button label; the word stands alone. The exception is
+  a destructive menu item, which keeps its red icon.
 - Underline links at rest, or colour error text red.
 - Use identity colours for state or status colours for identity.
 - Put text below 14px on anything a teacher reads at distance.
