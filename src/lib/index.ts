@@ -166,6 +166,22 @@ export {
 	type AccountMenuProps
 } from './components/AccountMenu/AccountMenu.svelte';
 export { default as AppHeader, type AppHeaderProps } from './components/AppHeader/AppHeader.svelte';
+export {
+	default as LineChart,
+	lineChartLabels,
+	type LineChartLabels,
+	type LineChartPoint,
+	type LineChartPointInfo,
+	type LineChartProps,
+	type LineChartSeries,
+	type LineChartSummary
+} from './components/LineChart/LineChart.svelte';
+export {
+	assignSeriesSlots,
+	seriesShapes,
+	type SeriesShape,
+	type SeriesSlot
+} from './components/LineChart/chart.js';
 
 // Wave 2: accessibility helpers
 export { default as VisuallyHidden } from './components/VisuallyHidden/VisuallyHidden.svelte';

@@ -184,8 +184,8 @@ wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl
 **Welle 3 – Patterns und Chrome**
 `Card`, `AppHeader` (aus BrandedHeader), `AccountMenu`, `LocaleSwitcher`, `Avatar`, `Toolbar`
 (built 2026-10-31, see 4.2). Danach
-Chart-Basis: svelteplot or own SVG, including an accessible chart pattern (hidden data table,
-keyboard cursor).
+Chart-Basis, built 2026-11-03: `LineChart`, own SVG (decided 2026-11-03 over svelteplot), with the accessible
+chart pattern (summary, keyboard cursor with LiveRegion, hidden data table).
 
 Touch targets (D6, decided 2026-10-29): at least 24×24px everywhere (WCAG 2.5.8); pupil-facing
 views use size l (40px) as default.
@@ -262,8 +262,8 @@ colour only as a ring (`swatch`).
 
 Still open, each a card in its repository:
 
-1. calliope-ui: chart base with the accessible chart pattern (svelteplot or own SVG, hidden data
-   table, keyboard cursor), the last Wave 3 item.
+1. ~~calliope-ui: chart base with the accessible chart pattern~~ Done 2026-11-03: `LineChart`
+   on own SVG (DESIGN.md, Components). Campus' `IotChart` can move onto it.
 2. Campus: `BrandedHeader` → `AppHeader` + `AccountMenu` + `LocaleSwitcher`; `UserAvatar` →
    `Avatar`; drop the unused `ui/Card` and `LocaleSwitcher`.
 3. calliope-docs (Svelte 5 already): load `tokens.css`/`styles.css`, header and cards from
