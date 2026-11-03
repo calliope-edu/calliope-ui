@@ -560,6 +560,38 @@ stays visible, the name remains its accessible name. `sticky` pins it with `z-in
 `skipLink` adds a "skip to content" link as the first tab stop, visible on focus. Menus opened
 from the header render in a portal and keep the page theme.
 
+### LineChart (Wave 3)
+
+The history of a feed, one line per device, for the dark IoT widget cards (and later apps). Own
+SVG without a chart library: owner decision 2026-11-03 after a prototype comparison with
+svelteplot (about 85 kB gzip against 1.5 kB, no help with the accessible pattern, axes and grid
+only stylable by overriding its classes).
+
+- Series (D4): `series` is `{ id, name, points: { t, v }[], slot? }`. `slot` 1–6 picks
+  `data.series-1…6` and a marker shape (circle, square, triangle, diamond, cross, star); without
+  it series take the slots in order. Apps assign slots by serial with `assignSeriesSlots(serials,
+previous)`, which keeps every known serial's slot and gives a new one the next free slot.
+  Never more than six series at once; status and identity colours are never series colours. Only
+  on dark areas (`data-theme="dark"`), which the six colours are chosen for.
+- Drawing: 2px lines, markers on about a dozen points per line counted back from the newest (a
+  lone point always has one), a gap of more than 2.5 typical intervals breaks the line. Value ticks
+  on 1/2/5 steps, time ticks on round steps (minutes, quarter hours, hours) in local time. Grid
+  `border.subtle`, tick text caption `text.muted` tabular. `yMin`/`yMax` fix the range; values
+  outside are drawn at the edge. The legend (shape + name, label type) wraps long names.
+- Accessible pattern: the plot is one tab stop, `role="application"` with
+  `aria-roledescription="Diagramm"`, named by `label` and described by a text summary (time span;
+  per series lowest, highest and last value; `summary` replaces it, `showSummary` shows it) plus
+  the key hint. Left/Right move along a series, Up/Down change series at the nearest moment,
+  Home/End and PageUp/PageDown jump, Escape removes the cursor. Each point is announced through a
+  polite LiveRegion ("Calliope 2, 15:45: 21,4 °C. Punkt 22 von 24.") and shown in a readout
+  (`surface.raised`, `shadow.menu`) at the top of the plot. The pointer shows the nearest point
+  the same way without announcing it. A visually hidden table holds every value (one row per
+  time, one column per series). Empty is a `role="img"` "<label>: Noch keine Werte"; loading
+  shows the Spinner with "<label>: Werte werden geladen" and sets `aria-busy`.
+- Motion: the cursor glides with `duration.fast`; under reduced motion it jumps.
+- Texts come from `labels` (German defaults in `lineChartLabels`, including the summary and
+  announcement templates); `unit`, `locale`, `formatValue` and `formatTime` shape the values.
+
 ### VisuallyHidden, LiveRegion
 
 VisuallyHidden keeps text in the accessibility tree only (clip-path, not `display: none`).
