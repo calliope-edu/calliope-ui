@@ -44,11 +44,17 @@ describe.each(['light', 'dark'] as const)('colour roles (%s)', (theme) => {
 	it('pair every status and identity fill with readable text (4.5:1)', () => {
 		for (const name of Object.keys(colors[theme]) as (keyof (typeof colors)['light'])[]) {
 			const fill = /^(status|identity)-(.+)-fill$/.exec(name);
-			if (!fill) continue;
+			if (!fill || name === 'identity-iot-fill') continue;
 			const on = `${fill[1]}-${fill[2]}-on` as keyof (typeof colors)['light'];
 			const ratio = contrastRatio(role(theme, name), role(theme, on));
 			expect(ratio, `${name} with ${on}`).toBeGreaterThanOrEqual(4.5);
 		}
+	});
+
+	it('give IoT indigo white text, the one exception to 4.5:1 (3.8:1, APCA Lc 70)', () => {
+		expect(role(theme, 'identity-iot-on')).toBe('#ffffff');
+		const ratio = contrastRatio(role(theme, 'identity-iot-fill'), role(theme, 'identity-iot-on'));
+		expect(ratio).toBeGreaterThanOrEqual(3);
 	});
 
 	it('keep text and links readable on the page (4.5:1) and the focus ring visible (3:1)', () => {

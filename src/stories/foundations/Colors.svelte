@@ -36,7 +36,8 @@
 		green: 'Nur als Fläche mit dunklem Text.',
 		orange: 'Als Fläche mit dunklem Text.',
 		blue: 'Als Fläche mit dunklem Text. Weiß nur für große Schrift.',
-		indigo: 'Als Fläche mit dunklem Text. Weiß nur für große Schrift.',
+		indigo:
+			'IoT-WiFi: Fläche mit weißem Text. Ausnahme: 3,8:1 nach WCAG 2, nach APCA aber besser lesbar als Schwarz.',
 		violet: 'Als Fläche mit schwarzem Text, sonst als Akzent (Rand, Icon).',
 		magenta: 'Auszeichnung: Fläche mit weißem Text.',
 		plum: 'Editor MakeCode: Fläche mit weißem Text.',

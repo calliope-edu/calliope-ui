@@ -273,7 +273,9 @@
 		--cui-identity-teachable-fill: var(--cui-palette-yellow); /** Product Teachable */
 		--cui-identity-teachable-on: var(--cui-palette-ink);
 		--cui-identity-iot-fill: var(--cui-palette-indigo); /** Product IoT-WiFi */
-		--cui-identity-iot-on: var(--cui-palette-black);
+		--cui-identity-iot-on: var(
+			--cui-palette-white
+		); /** White although WCAG 2 gives 3.8:1 (black 5.6:1): APCA Lc 70 vs 39, owner decision 2026-11-04 */
 		--cui-identity-robotik-fill: var(--cui-palette-orange); /** Product Robotik */
 		--cui-identity-robotik-on: var(--cui-palette-black);
 		--cui-identity-makecode-fill: var(--cui-palette-plum); /** Editor MakeCode */
@@ -371,7 +373,9 @@
 		--cui-identity-teachable-fill: var(--cui-palette-yellow); /** Product Teachable */
 		--cui-identity-teachable-on: var(--cui-palette-ink);
 		--cui-identity-iot-fill: var(--cui-palette-indigo); /** Product IoT-WiFi */
-		--cui-identity-iot-on: var(--cui-palette-black);
+		--cui-identity-iot-on: var(
+			--cui-palette-white
+		); /** White although WCAG 2 gives 3.8:1 (black 5.6:1): APCA Lc 70 vs 39, owner decision 2026-11-04 */
 		--cui-identity-robotik-fill: var(--cui-palette-orange); /** Product Robotik */
 		--cui-identity-robotik-on: var(--cui-palette-black);
 		--cui-identity-makecode-fill: var(--cui-palette-plum); /** Editor MakeCode */

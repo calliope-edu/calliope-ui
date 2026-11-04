@@ -181,12 +181,17 @@ fill:
 | Fill                                   | Text on it          | Ratio       |
 | -------------------------------------- | ------------------- | ----------- |
 | teal, lime, cyan, yellow, amber, green | ink `#1B1C1D`       | 7.7–15.5    |
-| blue, indigo, violet, orange, red      | **black** `#000000` | 5.1–6.3     |
+| blue, violet, orange, red              | **black** `#000000` | 5.1–6.3     |
 | plum, magenta                          | white               | 6.2 / 4.6   |
+| indigo (IoT-WiFi)                      | white               | 3.8 ¹       |
 | ink, graphite                          | white               | 17.1 / 12.7 |
 
 Black, not ink, goes on the mid tones because ink on violet is only 4.46:1. This lets
 the Python identity carry normal-size text, which the earlier contrast table ruled out.
+
+¹ The one exception to 4.5:1. Black reaches 5.6:1 on indigo by the WCAG 2 formula, but reads
+worse: APCA (the WCAG 3 draft method) gives white Lc 70 and black Lc 39. Owner decision
+2026-11-04; the token test checks this pair against 3:1 only.
 
 ### Rules
 
