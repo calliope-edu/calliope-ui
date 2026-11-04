@@ -143,7 +143,7 @@ $cui-action-primary-bg-hover: #323334; // Primary button hover
 $cui-action-primary-fg: #ffffff; // Primary button label
 $cui-action-hover: #1b1c1d14; // Hover tint for ghost buttons and menu items
 $cui-status-success-fill: #3fc663; // Success / online / connected
-$cui-status-success-on: #1b1c1d;
+$cui-status-success-on: #000000; // Black, not ink: APCA Lc 61 vs 59, owner decision 2026-11-04
 $cui-status-warning-fill: #f8c526; // Warning / paused
 $cui-status-warning-on: #1b1c1d;
 $cui-status-error-fill: #e53f4b; // Error / offline / destructive

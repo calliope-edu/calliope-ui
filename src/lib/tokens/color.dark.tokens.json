@@ -202,7 +202,8 @@
 				},
 				"on": {
 					"$type": "color",
-					"$value": "{palette.ink}"
+					"$value": "{palette.black}",
+					"$description": "Black, not ink: APCA Lc 61 vs 59, owner decision 2026-11-04"
 				}
 			},
 			"warning": {
