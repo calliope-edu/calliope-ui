@@ -1,9 +1,23 @@
 import { describe, expect, it } from 'vitest';
-import { contrastRatio } from './contrast.js';
+import { apcaContrast, contrastRatio } from './contrast.js';
 import { colors, palette, tokens } from './tokens.js';
 
 const hex = new Map<string, string>(palette.map((c) => [c.name, c.hex.toLowerCase()]));
 const HEX = /^#[0-9a-f]{6}([0-9a-f]{2})?$/;
+
+/** APCA as second check (DESIGN.md, Colour): Lc 60 for text on fills. */
+const APCA_MIN = 60;
+/**
+ * Red, blue, orange and violet: white would reach Lc 64–72 but fails WCAG 2 (3.3–4.1:1), which
+ * binds. Black stays, so these pairs only keep a floor of Lc 35.
+ */
+const APCA_MID_TONES = new Set([
+	'status-error-fill',
+	'status-info-fill',
+	'identity-robotik-fill',
+	'identity-python-fill'
+]);
+const APCA_MIN_MID_TONE = 35;
 
 /** Resolve a CSS value like "var(--cui-palette-ink)" or "var(--cui-surface-inverse)". */
 function resolve(theme: keyof typeof colors, value: string): string {
@@ -57,6 +71,17 @@ describe.each(['light', 'dark'] as const)('colour roles (%s)', (theme) => {
 		expect(ratio).toBeGreaterThanOrEqual(3);
 	});
 
+	it('reach APCA Lc 60 on every fill, Lc 35 on the four mid tones where WCAG 2 forces black', () => {
+		for (const name of Object.keys(colors[theme]) as (keyof (typeof colors)['light'])[]) {
+			const fill = /^(status|identity)-(.+)-fill$/.exec(name);
+			if (!fill) continue;
+			const on = `${fill[1]}-${fill[2]}-on` as keyof (typeof colors)['light'];
+			const lc = Math.abs(apcaContrast(role(theme, on), role(theme, name)));
+			const min = APCA_MID_TONES.has(name) ? APCA_MIN_MID_TONE : APCA_MIN;
+			expect(lc, `${on} on ${name}`).toBeGreaterThanOrEqual(min);
+		}
+	});
+
 	it('keep text and links readable on the page (4.5:1) and the focus ring visible (3:1)', () => {
 		const page = role(theme, 'surface-page');
 		expect(contrastRatio(role(theme, 'text-default'), page)).toBeGreaterThanOrEqual(4.5);
@@ -78,6 +103,10 @@ describe('decisions', () => {
 
 	it('give the destructive fill black text, not white (5.1:1)', () => {
 		expect(role('light', 'status-error-on')).toBe('#000000');
+	});
+
+	it('give the success fill black text, not ink (APCA Lc 61 vs 59)', () => {
+		expect(role('light', 'status-success-on')).toBe('#000000');
 	});
 
 	it('use 2px for outline buttons at every size (D3) and 24px touch targets (D6)', () => {

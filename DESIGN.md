@@ -178,20 +178,33 @@ The palette follows `Calliope_UX_UI` with three owner decisions (2026-10-29): `#
 Every fill has a paired `.on` text token. The pairs are fixed; nothing else goes on a coloured
 fill:
 
-| Fill                                   | Text on it          | Ratio       |
-| -------------------------------------- | ------------------- | ----------- |
-| teal, lime, cyan, yellow, amber, green | ink `#1B1C1D`       | 7.7–15.5    |
-| blue, violet, orange, red              | **black** `#000000` | 5.1–6.3     |
-| plum, magenta                          | white               | 6.2 / 4.6   |
-| indigo (IoT-WiFi)                      | white               | 3.8 ¹       |
-| ink, graphite                          | white               | 17.1 / 12.7 |
+| Fill                            | Text on it          | WCAG 2      | APCA         |
+| ------------------------------- | ------------------- | ----------- | ------------ |
+| teal, lime, cyan, yellow, amber | ink `#1B1C1D`       | 8.4–15.5    | Lc 63–97     |
+| green                           | **black** `#000000` | 9.5         | Lc 61        |
+| blue, violet, orange, red       | **black** `#000000` | 5.1–6.3     | Lc 37–45 ²   |
+| plum, magenta                   | white               | 6.2 / 4.6   | Lc 85 / 75   |
+| indigo (IoT-WiFi)               | white               | 3.8 ¹       | Lc 70        |
+| ink, graphite                   | white               | 17.1 / 12.7 | Lc 106 / 102 |
 
 Black, not ink, goes on the mid tones because ink on violet is only 4.46:1. This lets
-the Python identity carry normal-size text, which the earlier contrast table ruled out.
+the Python identity carry normal-size text, which the earlier contrast table ruled out. Green
+takes black too, because ink on green reaches only Lc 59 (owner decision 2026-11-04).
 
 ¹ The one exception to 4.5:1. Black reaches 5.6:1 on indigo by the WCAG 2 formula, but reads
 worse: APCA (the WCAG 3 draft method) gives white Lc 70 and black Lc 39. Owner decision
 2026-11-04; the token test checks this pair against 3:1 only.
+
+² The exceptions to Lc 60. On these mid tones white would reach Lc 64–72 but fails WCAG 2
+(3.3–4.1:1), and WCAG 2 binds. Black stays; the token test checks these pairs against Lc 35.
+
+**Two checks.** WCAG 2 (4.5:1 for text, 3:1 for large text and UI elements) is the binding check,
+because BITV 2.0 and EN 301 549 refer to it. APCA (APCA-W3 0.0.98G, `apcaContrast()` in
+`src/lib/tokens/contrast.ts`) is the second check: it tells light-on-dark from dark-on-light and
+rates mid tones closer to what the eye sees. Every text-on-fill pair has to reach Lc 60, the APCA
+level for text from 16 px bold or 24 px regular, the sizes of badges, buttons and banner titles.
+Where the two disagree, WCAG 2 wins (footnote ²), unless the owner decides otherwise for a single
+pair (footnote ¹). The Foundations colour page shows both values for every palette colour.
 
 ### Rules
 

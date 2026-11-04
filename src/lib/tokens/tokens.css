@@ -259,7 +259,9 @@
 		); /** On / checked / filled state of switch, checkbox, radio, slider, progress (D2) */
 		--cui-control-on-mark: var(--cui-palette-white); /** Check mark and switch knob on control.on */
 		--cui-status-success-fill: var(--cui-palette-green); /** Success / online / connected */
-		--cui-status-success-on: var(--cui-palette-ink);
+		--cui-status-success-on: var(
+			--cui-palette-black
+		); /** Black, not ink: APCA Lc 61 vs 59, owner decision 2026-11-04 */
 		--cui-status-warning-fill: var(--cui-palette-amber); /** Warning / paused */
 		--cui-status-warning-on: var(--cui-palette-ink);
 		--cui-status-error-fill: var(--cui-palette-red); /** Error / offline / destructive */
@@ -359,7 +361,9 @@
 		); /** On / checked / filled state of switch, checkbox, radio, slider, progress (D2) */
 		--cui-control-on-mark: var(--cui-palette-ink); /** Check mark and switch knob on control.on */
 		--cui-status-success-fill: var(--cui-palette-green); /** Success / online / connected */
-		--cui-status-success-on: var(--cui-palette-ink);
+		--cui-status-success-on: var(
+			--cui-palette-black
+		); /** Black, not ink: APCA Lc 61 vs 59, owner decision 2026-11-04 */
 		--cui-status-warning-fill: var(--cui-palette-amber); /** Warning / paused */
 		--cui-status-warning-on: var(--cui-palette-ink);
 		--cui-status-error-fill: var(--cui-palette-red); /** Error / offline / destructive */

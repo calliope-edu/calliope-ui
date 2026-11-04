@@ -1,7 +1,14 @@
 <script lang="ts">
 	import type { Attachment } from 'svelte/attachments';
 	import { palette, type PaletteGroup, type PaletteName } from '#lib/tokens/index.js';
-	import { contrastRatio, formatRatio, rate, type Rating } from '#lib/tokens/contrast.js';
+	import {
+		apcaContrast,
+		contrastRatio,
+		formatLc,
+		formatRatio,
+		rate,
+		type Rating
+	} from '#lib/tokens/contrast.js';
 
 	const INK = '#1B1C1D';
 	const WHITE = '#FFFFFF';
@@ -181,7 +188,10 @@
 		<h2 id="palette">Palette</h2>
 		<p class="section-intro">
 			Basis-Tokens <code>--cui-palette-*</code>. Jede Karte zeigt, wie gut dunkler und weißer Text
-			auf der Farbe lesbar ist (WCAG 2.1 AA: 4,5 für Text, 3 für große Schrift und Icons).
+			auf der Farbe lesbar ist. Verbindlich ist WCAG 2.1 AA (4,5 für Text, 3 für große Schrift und
+			Icons). Daneben steht als zweite Prüfung der APCA-Wert Lc aus dem Entwurf für WCAG 3: Er
+			unterscheidet helle Schrift auf Dunkel von dunkler Schrift auf Hell und bewertet mittlere Töne
+			näher am Augenschein.
 		</p>
 
 		{#each groups as group (group.id)}
@@ -204,11 +214,13 @@
 								<div>
 									<dt>Dunkler Text</dt>
 									<dd class="ratio">{formatRatio(onInk)}</dd>
+									<dd class="lc">{formatLc(apcaContrast(INK, color.hex))}</dd>
 									<dd class="rating rating-{rate(onInk)}">{ratingLabel[rate(onInk)]}</dd>
 								</div>
 								<div>
 									<dt>Weißer Text</dt>
 									<dd class="ratio">{formatRatio(onWhite)}</dd>
+									<dd class="lc">{formatLc(apcaContrast(WHITE, color.hex))}</dd>
 									<dd class="rating rating-{rate(onWhite)}">{ratingLabel[rate(onWhite)]}</dd>
 								</div>
 							</dl>
@@ -357,7 +369,7 @@
 
 	.swatches {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
 		gap: 1rem;
 		margin: 0;
 		padding: 0;
@@ -418,7 +430,7 @@
 
 	.ratios div {
 		display: grid;
-		grid-template-columns: 1fr auto 5rem;
+		grid-template-columns: 1fr auto 3.25rem 5rem;
 		align-items: center;
 		gap: 0.5rem;
 	}
@@ -429,7 +441,8 @@
 		white-space: nowrap;
 	}
 
-	.ratio {
+	.ratio,
+	.lc {
 		font-variant-numeric: tabular-nums;
 		text-align: right;
 	}
