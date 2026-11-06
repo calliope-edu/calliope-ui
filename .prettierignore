@@ -4,3 +4,5 @@ pnpm-lock.yaml
 storybook-static
 docs
 .obeya/run
+# shared verbatim with the other Calliope repositories; copy, do not reformat
+.obeya/theme.css
