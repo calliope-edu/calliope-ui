@@ -68,6 +68,7 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
+		gap: var(--cui-space-4);
 		min-height: 0;
 		/* Room for the focus ring of content at the edge, which the scroll box would clip. */
 		margin: calc(-1 * var(--cui-space-1));
