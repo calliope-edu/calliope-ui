@@ -6,8 +6,7 @@
 	import Button from '../Button/Button.svelte';
 	import TextField from '../TextField/TextField.svelte';
 	import ConfirmDialog from './ConfirmDialog.svelte';
-	import ConfirmDialogHost from './ConfirmDialogHost.svelte';
-	import { confirmDialog } from './confirm.svelte.js';
+	import ConfirmDialogHost, { confirmDialog } from './ConfirmDialogHost.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Overlays/ConfirmDialog',
