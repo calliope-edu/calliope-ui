@@ -75,4 +75,13 @@ describe('Button', () => {
 		});
 		expect(container.querySelector('.cui-button')).not.toHaveAttribute('data-tone');
 	});
+
+	// Layout itself is checked in Storybook (Button › Breite); happy-dom has no layout.
+	it('keeps its content width unless fullWidth asks it to fill the row', () => {
+		const { container, rerender } = render(Button, { children: text('Einstellungen') });
+		const button = container.querySelector('.cui-button');
+		expect(button).not.toHaveAttribute('data-full-width');
+		rerender({ children: text('Einstellungen'), fullWidth: true });
+		expect(button).toHaveAttribute('data-full-width');
+	});
 });

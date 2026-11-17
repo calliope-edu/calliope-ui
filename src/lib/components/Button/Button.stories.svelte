@@ -138,6 +138,25 @@
 		</section>
 
 		<section>
+			<h2>Breite</h2>
+			<p class="section-intro">
+				Ein Button ist so breit wie seine Beschriftung, auch in Spalten (Karten, Dialoge), die ihre
+				Kinder sonst auf volle Breite ziehen. Die ganze Zeile füllt er nur mit
+				<code>fullWidth</code>.
+			</p>
+			<Row label="In einer Spalte">
+				<div class="stack">
+					<span>Raum „Klasse 6b“</span>
+					<Button variant="secondary">Einstellungen</Button>
+				</div>
+				<div class="stack">
+					<span>Mit fullWidth</span>
+					<Button fullWidth>Beitreten</Button>
+				</div>
+			</Row>
+		</section>
+
+		<section>
 			<h2>Rahmenstärke (D3)</h2>
 			<p class="section-intro">
 				Entschieden: 2 px in jeder Größe (oben). Zum Vergleich darunter ein Rahmen, der mit der
@@ -194,6 +213,16 @@
 </Story>
 
 <style>
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-3);
+		width: 16rem;
+		padding: var(--cui-space-4);
+		border: var(--cui-border-width-hairline) solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-md);
+	}
+
 	.scaled {
 		--cui-button-border-width-s: var(--cui-border-width-button-scaled-s);
 		--cui-button-border-width-m: var(--cui-border-width-button-scaled-m);

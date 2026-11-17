@@ -29,6 +29,7 @@
 	let requiredOpen = $state(false);
 	let sizeOpen = $state<'s' | 'm' | 'l' | 'xl' | 'full' | null>(null);
 	let fillOpen = $state(false);
+	let fullOpen = $state(false);
 	let roomName = $state('');
 </script>
 
@@ -100,6 +101,28 @@
 		</section>
 
 		<section>
+			<h2>Vorschau im ganzen Fenster</h2>
+			<p class="section-intro">
+				<code>size="full"</code>: Kopf und Aktionen bleiben stehen, der Inhalt füllt die Höhe
+				dazwischen als Spalte und scrollt selbst, wenn er höher wird. Was wachsen soll (eine
+				Vorschau, ein Editor), bekommt <code>flex: 1</code>.
+			</p>
+			<Row label="full">
+				<Button variant="secondary" icon="fullscreen" onclick={() => (fullOpen = true)}>
+					Programm-Vorschau
+				</Button>
+			</Row>
+			<Dialog bind:open={fullOpen} size="full" title="Vorschau: Ampel">
+				<p style="margin: 0">Version vom 12. November, 10:42</p>
+				<div class="preview">Vorschau füllt die restliche Höhe</div>
+				{#snippet actions()}
+					<Button variant="secondary" onclick={() => (fullOpen = false)}>Schließen</Button>
+					<Button onclick={() => (fullOpen = false)}>Wiederherstellen</Button>
+				{/snippet}
+			</Dialog>
+		</section>
+
+		<section>
 			<h2>Mit eigenen Spalten</h2>
 			<p class="section-intro">
 				<code>fill</code>: Der Dialog nimmt die ganze Höhe, der Inhalt füllt sie und scrollt seine
@@ -167,6 +190,17 @@
 </Story>
 
 <style>
+	.preview {
+		display: grid;
+		flex: 1;
+		place-items: center;
+		min-height: 12rem;
+		border: var(--cui-border-width-hairline) dashed var(--cui-border-strong);
+		border-radius: var(--cui-radius-md);
+		background-color: var(--cui-surface-subtle);
+		color: var(--cui-text-muted);
+	}
+
 	.columns {
 		display: grid;
 		flex: 1;
