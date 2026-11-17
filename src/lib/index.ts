@@ -43,8 +43,11 @@ export {
 	type ConfirmDialogProps,
 	type ConfirmTone
 } from './components/ConfirmDialog/ConfirmDialog.svelte';
-export { default as ConfirmDialogHost } from './components/ConfirmDialog/ConfirmDialogHost.svelte';
-export { confirmDialog, type ConfirmOptions } from './components/ConfirmDialog/confirm.svelte.js';
+export {
+	default as ConfirmDialogHost,
+	confirmDialog,
+	type ConfirmOptions
+} from './components/ConfirmDialog/ConfirmDialogHost.svelte';
 export { default as Menu, type MenuProps } from './components/Menu/Menu.svelte';
 export { default as MenuItem } from './components/Menu/MenuItem.svelte';
 export { default as MenuGroup } from './components/Menu/MenuGroup.svelte';

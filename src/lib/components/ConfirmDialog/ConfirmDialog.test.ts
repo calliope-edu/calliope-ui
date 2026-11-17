@@ -2,8 +2,7 @@ import { render, screen, waitFor } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import ConfirmDialog from './ConfirmDialog.svelte';
-import ConfirmDialogHost from './ConfirmDialogHost.svelte';
-import { confirmDialog } from './confirm.svelte.js';
+import ConfirmDialogHost, { confirmDialog } from './ConfirmDialogHost.svelte';
 
 const base = {
 	open: true,
