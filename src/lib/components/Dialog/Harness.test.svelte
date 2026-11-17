@@ -1,14 +1,18 @@
 <script lang="ts">
 	import Button from '../Button/Button.svelte';
 	import TextField from '../TextField/TextField.svelte';
-	import Dialog from './Dialog.svelte';
+	import Dialog, { type DialogSize } from './Dialog.svelte';
 
 	let {
 		dismissible = true,
 		withField = true,
+		size,
+		fill,
 		onOpenChange
 	}: {
 		dismissible?: boolean;
+		size?: DialogSize;
+		fill?: boolean;
 		withField?: boolean;
 		onOpenChange?: (open: boolean) => void;
 	} = $props();
@@ -16,7 +20,15 @@
 	let open = $state(false);
 </script>
 
-<Dialog bind:open title="Raum erstellen" description="Mit Raumcode" {dismissible} {onOpenChange}>
+<Dialog
+	bind:open
+	title="Raum erstellen"
+	description="Mit Raumcode"
+	{dismissible}
+	{size}
+	{fill}
+	{onOpenChange}
+>
 	{#snippet trigger({ props })}
 		<Button {...props}>Öffnen</Button>
 	{/snippet}

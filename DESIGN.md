@@ -87,10 +87,11 @@ spacing:
 
 ## Overview
 
-calliope-ui serves Campus (with the IoT dashboard), the device connection widget, calliope-docs
-and ml-machine. Its users are teachers running a 45-minute lesson and pupils from about ten years
-up, on school laptops, Chromebooks, tablets, and a beamer at the front of the room. Three things
-follow from that, and every rule below comes back to one of them:
+calliope-ui serves Campus (with the IoT dashboard), the device connection widget, calliope-docs,
+Teachable and, once it is on Svelte 5, ml-machine. Its users are teachers running a 45-minute
+lesson and pupils from about ten years up, on school laptops, Chromebooks, tablets, and a beamer
+at the front of the room. Three things follow from that, and every rule below comes back to one
+of them:
 
 1. **Legible from the back row.** Text and status must survive projection and washed-out light.
    WCAG 2.1 AA (BITV 2.0) is the floor, not the goal.

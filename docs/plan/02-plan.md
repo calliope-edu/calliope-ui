@@ -3,7 +3,7 @@
 ## Ziel
 
 Eine Svelte-5-Komponentenbibliothek mit Storybook, die Campus (inkl. IoT), das
-Verbindungs-Widget und weitere Svelte-Apps (calliope-docs, ML/Teachable) auf einen gemeinsamen
+Verbindungs-Widget und weitere Svelte-Apps (calliope-docs, Teachable, später ml-machine) auf einen gemeinsamen
 Stand bringt. PXT nutzt sie nicht. React-Apps sind optionale Konsumenten, die
 Svelte-Komponenten als Custom Elements einbinden können. Umgekehrt kommen keine React-Komponenten
 in die Bibliothek.
@@ -23,7 +23,7 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
   Bibliothekskomponenten
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
   (breakdown in section 4.1)
-- [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und ML/Teachable
+- [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable
 - [x] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
   Chakra/LESS, nur bei konkretem Bedarf. **Deferred (2026-10-31), not built:** no React host
   (Python editor, Blocks, ml-trainer) and not umo needs it yet. Reopen as a new card once one does
@@ -206,7 +206,7 @@ calliope-ui-Primitives nutzt. Die doppelten `MakeCodeToolbar`, `MakeCodeShareMod
 | **2 Welle 1** | Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests | Pilot: Campus ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` |
 | **3 Welle 2** | Formulare, Status, Navigation | **IoT-Dashboard** komplett auf Tokens und Bibliothekskomponenten |
 | **4 Widget** | mini-connection-widget nutzt calliope-ui. Dubletten mit Campus aufgelöst | Eine Verbindungs-UI in einer Quelle |
-| **5 Welle 3 + Ausrollen** | Patterns, Header. Danach calliope-docs, ML/Teachable (Svelte-5-Upgrade vorausgesetzt) | Weitere Apps im gemeinsamen Stand |
+| **5 Welle 3 + Ausrollen** | Patterns, Header. Danach calliope-docs und Teachable (beide schon Svelte 5). ml-machine erst nach seinem Svelte-5-Upgrade | Weitere Apps im gemeinsamen Stand |
 | **6 optional** | Custom-Element-Build (`/elements`) für React-Hosts, z. B. Connect-Button im Python-Editor oder in Blocks. Token-Export für Chakra/LESS | Nur bei konkretem Bedarf. Deferred 2026-10-31 (no consumer yet) |
 
 Migration immer schrittweise: Alt und Neu können nebeneinander laufen, weil die neuen Tokens
@@ -268,7 +268,13 @@ Still open, each a card in its repository:
    `Avatar`; drop the unused `ui/Card` and `LocaleSwitcher`.
 3. calliope-docs (Svelte 5 already): load `tokens.css`/`styles.css`, header and cards from
    calliope-ui.
-4. ml-machine (Teachable): Svelte 4 → 5 upgrade first, then tokens and AppHeader.
+4. Teachable (`calliope-edu/Teachable-Calliope-Svelte`, Svelte 5, submodule `editors/teachable`
+   in calliope-dev): consumer without an upgrade. Tokens mapped onto `--cui-*` without a visible
+   change, own `ui/` copies, Toast and the delete dialog replaced by calliope-ui, `Header` →
+   `AppHeader` with the three views as a `SegmentedControl`. Its full-height model dialogs added
+   `size="xl"`/`"full"` and `fill` to `Dialog`.
+5. ml-machine (gesture training, Svelte 4 + WindiCSS) is a separate app, not Teachable. It keeps
+   running and is to be lifted to Svelte 5 later; only then does it become a consumer.
 
 ## 5. Einsatz von Design-Tools (impeccable / intent-Familie)
 
@@ -297,7 +303,8 @@ gebraucht wird), `measure`, `investigate` (erst für Nutzertests mit Lehrkräfte
 
 | Thema | Entscheidung |
 |---|---|
-| ML Trainer / Teachable | Sind dieselbe App: **`ml-machine`** (Svelte 4). Sie wird auf Svelte 5 gehoben und dann Konsument |
+| Teachable | **`calliope-edu/Teachable-Calliope-Svelte`**, schon Svelte 5. Konsument ohne Upgrade (korrigiert 2026-11-01: früher als `ml-machine` geführt) |
+| ml-machine | Eigene App für Gesten-Training (Svelte 4 + WindiCSS), nicht Teachable. Läuft weiter, soll später auf Svelte 5 gehoben werden und dann Konsument |
 | React-Apps | Die Bibliothek ist rein Svelte. React-Apps binden höchstens Svelte-Komponenten als Custom Elements ein |
 | PXT / MakeCode | außerhalb des Scopes |
 | Farben | feste Palette aus `Calliope_UX_UI`, keine abgeleiteten Skalen. 2026-10-29: error red `#E53F4B`, focus/link `#1D8286`, MakeCode `#A5289B`, `#E4007E` as highlight. Rollen siehe 2.2, Kontrastregeln siehe 2.3 |

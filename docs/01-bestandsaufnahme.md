@@ -5,8 +5,12 @@ den Editoren unter `calliope-dev/editors/*`, dem Vorgänger `D:\GIT\svelte\calli
 Repos in `github.com/calliope-edu`. Die Dateien in `docs/input/` sind als **Entwurf/Notizen** gelesen,
 nicht als Entscheidung.
 
-`C:\GIT\calliope-stack` bzw. `D:\GIT\calliope-stack` ist leer. ML Trainer und Teachable sind
-dieselbe App: `ml-machine` (Svelte 4, nur auf GitHub, nicht lokal geprüft).
+`C:\GIT\calliope-stack` bzw. `D:\GIT\calliope-stack` ist leer.
+
+Korrektur (2026-11-01): Teachable und ml-machine sind **zwei Apps**. Teachable ist
+`calliope-edu/Teachable-Calliope-Svelte` (SvelteKit 2, Svelte 5, fast durchgehend Runes, in
+`calliope-dev` als Submodul `editors/teachable`). ml-machine ist eine eigene App für
+Gesten-Training (Svelte 4 + WindiCSS); sie läuft weiter und soll später auf Svelte 5 gehoben werden.
 
 ## 1. Wer kommt als Konsument in Frage?
 
@@ -15,7 +19,8 @@ dieselbe App: `ml-machine` (Svelte 4, nur auf GitHub, nicht lokal geprüft).
 | **calliope-campus** (inkl. IoT-Dashboard) | SvelteKit 2, Svelte 5 (Runes durchgängig) | SCSS + CSS-Custom-Properties (HSL-Tripel), `@layer` | **Hauptkonsument, Quelle der meisten Komponenten** |
 | **mini-connection-widget** | Svelte 5 + framework-agnostischer TS-Store | Scoped CSS, viele harte Hex-Werte, `--mkc-*` nur im MakeCode-Teil | **Konsument + Quelle** der Geräte-Verbindungs-UI |
 | **calliope-docs** (GitHub) | SvelteKit, Svelte 5, Storybook 9 | – (nicht lokal geprüft) | Konsument |
-| **ml-machine** = ML Trainer / Teachable (GitHub) | Svelte **4** | – | Konsument nach Svelte-5-Upgrade |
+| **Teachable** (`calliope-edu/Teachable-Calliope-Svelte`) | SvelteKit 2, Svelte 5 (fast durchgehend Runes) | SCSS + CSS-Custom-Properties (`--md-*` RGB-Tripel, `--color-*` HSL aus Campus) | Konsument, ohne Svelte-Upgrade |
+| **ml-machine** (Gesten-Training, GitHub) | Svelte **4** + WindiCSS | WindiCSS | Konsument erst nach einem späteren Svelte-5-Upgrade |
 | pxt-iot-sim | Vanilla TS + Vite | CSS-Vars | nur Tokens (kann Svelte mounten) |
 | umo (Vue-Fork) | Vue 3 + TDesign | LESS, `--umo-*` | höchstens Tokens |
 | Python-Editor, scratch-gui (Blocks), ml-trainer (React-Variante) | React | Chakra / CSS-Modules | **optional**: Svelte-Komponenten als Custom Element einbinden; keine React-Komponenten in der Bibliothek |

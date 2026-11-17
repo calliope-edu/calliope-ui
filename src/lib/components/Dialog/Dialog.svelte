@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	import type { Snippet } from 'svelte';
 
-	export type DialogSize = 's' | 'm' | 'l';
+	export type DialogSize = 's' | 'm' | 'l' | 'xl' | 'full';
 
 	export type DialogProps = {
 		open?: boolean;
@@ -11,8 +11,13 @@
 		title: string;
 		/** Optional lead text under the title (aria-describedby). */
 		description?: string;
-		/** 400 / 600 / 800px wide. */
+		/** 400 / 600 / 800 / 1200px wide; full takes the whole viewport less a margin. */
 		size?: DialogSize;
+		/**
+		 * The dialog takes the full viewport height and the body fills it without scrolling
+		 * itself: for content with its own columns that scroll on their own (charts, comparisons).
+		 */
+		fill?: boolean;
 		/** Accessible name of the close button (no built-in text: pass the app's translation). */
 		closeLabel?: string;
 		/** Show the close button in the header. */
@@ -40,6 +45,7 @@
 		title,
 		description,
 		size = 'm',
+		fill = false,
 		closeLabel = 'Schließen',
 		showClose = true,
 		dismissible = true,
@@ -77,6 +83,7 @@
 		<Dialog.Content
 			class="cui-dialog"
 			data-size={size}
+			data-fill={fill || undefined}
 			escapeKeydownBehavior={dismissible ? 'close' : 'ignore'}
 			interactOutsideBehavior={dismissible ? 'close' : 'ignore'}
 			onOpenAutoFocus={handleOpenAutoFocus}

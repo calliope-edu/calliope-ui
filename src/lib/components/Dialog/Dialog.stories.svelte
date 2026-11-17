@@ -20,14 +20,15 @@
 			dismissible: true,
 			showClose: true
 		},
-		argTypes: { size: { control: 'inline-radio', options: ['s', 'm', 'l'] } }
+		argTypes: { size: { control: 'inline-radio', options: ['s', 'm', 'l', 'xl', 'full'] } }
 	});
 </script>
 
 <script lang="ts">
 	let createOpen = $state(false);
 	let requiredOpen = $state(false);
-	let sizeOpen = $state<'s' | 'm' | 'l' | null>(null);
+	let sizeOpen = $state<'s' | 'm' | 'l' | 'xl' | 'full' | null>(null);
+	let fillOpen = $state(false);
 	let roomName = $state('');
 </script>
 
@@ -77,9 +78,12 @@
 
 		<section>
 			<h2>Breiten</h2>
-			<p class="section-intro">400 / 600 / 800 px, auf kleinen Bildschirmen volle Breite.</p>
+			<p class="section-intro">
+				400 / 600 / 800 / 1200 px, <code>full</code> nimmt den ganzen Bildschirm bis auf einen Rand. Auf
+				kleinen Bildschirmen immer volle Breite.
+			</p>
 			<Row label="size">
-				{#each ['s', 'm', 'l'] as const as size (size)}
+				{#each ['s', 'm', 'l', 'xl', 'full'] as const as size (size)}
 					<Button variant="secondary" onclick={() => (sizeOpen = size)}>Größe {size}</Button>
 				{/each}
 			</Row>
@@ -92,6 +96,27 @@
 				<p style="margin: 0">
 					Kurze Rückfragen sind schmal, Formulare mittel, Vorschauen und Tabellen breit.
 				</p>
+			</Dialog>
+		</section>
+
+		<section>
+			<h2>Mit eigenen Spalten</h2>
+			<p class="section-intro">
+				<code>fill</code>: Der Dialog nimmt die ganze Höhe, der Inhalt füllt sie und scrollt seine
+				Spalten selbst. Für Auswertungen und Vergleiche mit Diagrammen.
+			</p>
+			<Row label="fill">
+				<Button variant="secondary" onclick={() => (fillOpen = true)}>Modell-Details</Button>
+			</Row>
+			<Dialog bind:open={fillOpen} size="xl" fill title="Modell-Details">
+				<div class="columns">
+					<div class="column">
+						{#each { length: 30 } as _, i (i)}<p>Epoche {i + 1}</p>{/each}
+					</div>
+					<div class="column">
+						{#each { length: 12 } as _, i (i)}<p>Klasse {i + 1}</p>{/each}
+					</div>
+				</div>
 			</Dialog>
 		</section>
 
@@ -142,6 +167,25 @@
 </Story>
 
 <style>
+	.columns {
+		display: grid;
+		flex: 1;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--cui-space-4);
+		min-height: 0;
+	}
+
+	.column {
+		overflow-y: auto;
+		padding: var(--cui-space-2);
+		border-radius: var(--cui-radius-sm);
+		background-color: var(--cui-surface-subtle);
+	}
+
+	.column p {
+		margin: 0 0 var(--cui-space-2);
+	}
+
 	.form {
 		display: flex;
 		flex-direction: column;
