@@ -346,6 +346,8 @@ underline until hover or focus). `tone`: neutral · positive · negative · iden
 - `pressed` turns it into a toggle (`aria-pressed`) with a stable label; the room pause control
   becomes "Raum pausieren" pressed/unpressed plus a separate `status.warning` badge "Pausiert".
 - `loading` keeps the width, shows the Spinner, sets `aria-busy`.
+- Width: the label's width (`width: max-content`, capped at the row), also in flex columns and
+  grids that would stretch it (cards, dialog bodies). `fullWidth` is the one way to fill the row.
 - Built API: `icon` / `iconEnd` (icon names), `href` renders an `<a>`, `fullWidth`,
   `focusableWhenDisabled` (keeps a disabled button in the tab order with `aria-disabled` so a
   Tooltip can give the reason), `ref`. `tone` applies to `variant="primary"` only; with
@@ -363,14 +365,20 @@ obvious in context (the dialog's close button). Works as a Menu trigger with its
 
 bits-ui Dialog: focus moves in on open, is trapped, background is inert, focus returns to the
 trigger, Escape closes from anywhere, unique `aria-labelledby`. Surface `surface.raised`,
-`radius.dialog`, `shadow.dialog`, scrim `surface.scrim`. Widths 400 / 600 / 800px.
+`radius.dialog`, `shadow.dialog`, scrim `surface.scrim`. Widths 400 / 600 / 800 / 1200px and
+full (the window less a margin).
 ConfirmDialog replaces every `window.confirm/alert/prompt`, has a destructive tone and a verb on
 the confirm button ("Löschen", not "OK").
 
 - Dialog: `open` (bindable) or an optional `trigger` snippet, `title`, `description`,
-  `size` s / m / l, `actions` snippet (primary action last), `dismissible={false}` blocks Escape
+  `size` s / m / l / xl / full, `fill`, `actions` snippet (primary action last),
+  `dismissible={false}` blocks Escape
   and scrim for required choices, `showClose`, `closeLabel`. Focus goes to `initialFocus`, else
   the first form field of the body, else the first focusable element.
+- `size="full"` (previews, editors, revision history) and `fill` take the whole height: header
+  and actions stay put, the body fills the height between them as a flex column (the part that
+  should grow gets `flex: 1`). A full body scrolls itself when its content is taller; with `fill`
+  it does not, for content that scrolls its own columns (charts, comparisons).
 - ConfirmDialog is a bits-ui AlertDialog (`role="alertdialog"`), 400px wide. `tone="negative"`
   makes the confirm button red with black text and starts focus on cancel. `onConfirm` may
   return a promise: the button shows the spinner and the dialog closes when it resolves (stays
@@ -379,9 +387,9 @@ the confirm button ("Löschen", not "OK").
 - `confirmDialog(options): Promise<boolean>` is the drop-in for `window.confirm`; it needs one
   `<ConfirmDialogHost />` in the app layout and queues concurrent requests.
 
-### Menu, Tooltip
+### Menu, ContextMenu, Tooltip
 
-bits-ui DropdownMenu and Tooltip. The trigger is the consumer's own button. Arrow keys,
+bits-ui DropdownMenu, ContextMenu and Tooltip. The trigger is the consumer's own button. Arrow keys,
 Home/End, typeahead, Escape returns focus. Selection is `menuitemradio` with a check, never the
 disabled style. Tooltip opens on hover and focus, is dismissible with Escape, never holds
 interactive content, and never names an icon-only button on its own.
@@ -392,6 +400,12 @@ interactive content, and never names an icon-only button on its own.
   (`label`) and `MenuSeparator`. Items are 36px high, `label` type, hover and keyboard highlight
   share `action.hover`. The icon column only takes space when an item of the menu has an icon or
   the menu has radio items (their check); otherwise the labels sit flush with the headings.
+- ContextMenu: the same surface and the same item components, opened by right click (long press
+  on touch) at the pointer. `trigger` snippet: spread `props` onto the area, usually a whole list;
+  each row notes in its own `oncontextmenu` which entry was hit (it runs before the menu opens).
+  `disabled` gives the browser's menu back. A right click is a shortcut only: every action in it
+  is also reachable from a visible Menu (a ⋮ IconButton on the row) for keyboard, touch and
+  newcomers.
 - Tooltip: `text`, `trigger` snippet, `side`, `delay` (400ms hover; keyboard focus opens it at
   once). Surface `surface.inverse`, label type (14px, back-row rule), `radius.md`.
 

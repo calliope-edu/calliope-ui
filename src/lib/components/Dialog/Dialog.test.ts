@@ -60,4 +60,12 @@ describe('Dialog', () => {
 		expect(dialog).toHaveAttribute('data-size', 'xl');
 		expect(dialog).toHaveAttribute('data-fill');
 	});
+
+	it('gives the full size a body to fill, without the fill layout', async () => {
+		render(Harness, { size: 'full' });
+		const dialog = await openDialog();
+		expect(dialog).toHaveAttribute('data-size', 'full');
+		expect(dialog).not.toHaveAttribute('data-fill');
+		expect(dialog.querySelector(':scope > .cui-dialog-body')).not.toBeNull();
+	});
 });

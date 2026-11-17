@@ -55,6 +55,10 @@ export { default as MenuRadioGroup } from './components/Menu/MenuRadioGroup.svel
 export { default as MenuRadioItem } from './components/Menu/MenuRadioItem.svelte';
 export { default as MenuSeparator } from './components/Menu/MenuSeparator.svelte';
 export {
+	default as ContextMenu,
+	type ContextMenuProps
+} from './components/ContextMenu/ContextMenu.svelte';
+export {
 	default as Tooltip,
 	type TooltipProps,
 	type TooltipSide

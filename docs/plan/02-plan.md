@@ -176,6 +176,21 @@ Tokens + Styles, `Icon`, `Button`/`IconButton`, `Spinner`, `Dialog` (replaces Mo
 trap), `ConfirmDialog` (replaces `window.confirm/alert/prompt`), `Menu`/`Dropdown`, `Tooltip`
 (Dropdown is misused as a tooltip today), `TextField`/`Label`/`FieldHint`, `Switch` (from Toggle).
 
+Gaps from the Campus pilot, closed 2026-11-17: Dialog `size="full"` (body fills the height),
+Button keeps its content width in flex columns, and `ContextMenu` (right click, same items as
+Menu). Once Campus pins a calliope-ui SHA that has `ContextMenu`, these Campus workarounds can go:
+
+- `src/scss/app.scss`: the rule `.cui-button:not([data-full-width]) { width: max-content; }`.
+- `src/scss/app.scss`: the rule `.cui-dialog:has(> .cui-dialog-body > .dialog-fullscreen)`. The
+  four dialogs that use it (program preview, revision history, admin settings, stats preview)
+  pass `size="full"` instead; their `.dialog-fullscreen` wrapper keeps only
+  `flex: 1; display: flex; flex-direction: column; min-height: 0` (or the dialog takes `fill`
+  where the content scrolls its own columns).
+- `src/lib/components/admin/UserContextMenu.svelte` and `ContextMenuManager.svelte`: a
+  `ContextMenu` around the user list in `UserList.svelte`, each `UserListItem` noting in its
+  `oncontextmenu` which user was hit, with `MenuItem`s for block/unblock, set password and make
+  room admin.
+
 **Welle 2 – Formulare, Status und Navigation**
 `Checkbox`, `Radio` (incl. swatch variant), `Badge`/`Chip`/`StatusDot`, `Popover`, `Toast` (thin
 wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl`

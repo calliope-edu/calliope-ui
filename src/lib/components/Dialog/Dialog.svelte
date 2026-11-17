@@ -11,7 +11,10 @@
 		title: string;
 		/** Optional lead text under the title (aria-describedby). */
 		description?: string;
-		/** 400 / 600 / 800 / 1200px wide; full takes the whole viewport less a margin. */
+		/**
+		 * 400 / 600 / 800 / 1200px wide. full takes the whole viewport less a margin; its body
+		 * fills the height between header and actions as a flex column and scrolls itself.
+		 */
 		size?: DialogSize;
 		/**
 		 * The dialog takes the full viewport height and the body fills it without scrolling

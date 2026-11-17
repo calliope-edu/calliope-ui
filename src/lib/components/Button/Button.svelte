@@ -144,6 +144,9 @@
 			align-items: center;
 			justify-content: center;
 			gap: var(--cui-space-2);
+			/* Content width everywhere, also where a flex column or grid would stretch it;
+			   fullWidth is the one way to fill the row. */
+			width: max-content;
 			min-width: var(--cui-size-touch-min);
 			max-width: 100%;
 			height: var(--_height);
