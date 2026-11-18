@@ -87,6 +87,7 @@ export {
 	default as SegmentedControl,
 	type SegmentedControlProps,
 	type SegmentedControlSize,
+	type SegmentedControlVariant,
 	type SegmentedOption
 } from './components/SegmentedControl/SegmentedControl.svelte';
 

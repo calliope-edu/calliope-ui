@@ -16,6 +16,17 @@
 		{ value: 'code', label: 'Programmieren' }
 	];
 
+	const languages: SegmentedOption[] = [
+		{ value: 'blocks', label: 'Blöcke' },
+		{ value: 'js', label: 'JavaScript' },
+		{ value: 'py', label: 'Python' }
+	];
+
+	const codeViews: SegmentedOption[] = [
+		{ value: 'svg', label: 'Blöcke' },
+		{ value: 'ts', label: 'Code' }
+	];
+
 	const { Story } = defineMeta({
 		title: 'Primitives/SegmentedControl',
 		component: SegmentedControl,
@@ -27,16 +38,22 @@
 			options: modes,
 			value: 'train',
 			size: 'l',
+			variant: 'frame',
 			fullWidth: false,
 			disabled: false
 		},
-		argTypes: { size: { control: 'inline-radio', options: ['s', 'm', 'l'] } }
+		argTypes: {
+			size: { control: 'inline-radio', options: ['s', 'm', 'l'] },
+			variant: { control: 'inline-radio', options: ['frame', 'pill'] }
+		}
 	});
 </script>
 
 <script lang="ts">
 	let view = $state('dashboard');
 	let mode = $state('train');
+	let pillView = $state('dashboard');
+	let language = $state('blocks');
 </script>
 
 <Story name="Spielwiese" />
@@ -47,6 +64,22 @@
 			Wählt einen Modus oder eine Ansicht aus zwei bis vier Optionen (<code>radiogroup</code>). Die
 			Wahl gilt sofort. Ein Tab-Stopp für die ganze Gruppe; Pfeiltasten wechseln die Option.
 		{/snippet}
+
+		<section>
+			<h2>Varianten</h2>
+			<p class="section-intro">
+				Zwei Varianten, vorerst beide: <code>frame</code> (Standard) ist das Rechteck mit Rahmen,
+				<code>pill</code> die schwarze Pille mit weißer Wahl, der Ansichts-Umschalter aus Campus
+				(Editor-Kopf, IoT-Dashboard, MakeCode-Leiste, Live Wall). Beide sind dieselbe
+				<code>radiogroup</code> mit denselben Größen; die Pille kehrt sich im dunklen Theme um.
+			</p>
+			<Row label="frame (Standard)">
+				<SegmentedControl label="Ansicht" options={views} bind:value={view} />
+			</Row>
+			<Row label="pill">
+				<SegmentedControl label="Ansicht" variant="pill" options={views} bind:value={view} />
+			</Row>
+		</section>
 
 		<section>
 			<h2>Zustände</h2>
@@ -95,6 +128,62 @@
 			</Row>
 		</section>
 
+		<section>
+			<h2>Pille</h2>
+			<p class="section-intro">
+				Die Spur trägt die Füllung von <code>control.on</code>, die gewählte Option springt in
+				<code>control.on-mark</code> heraus, wie Knopf und Spur eines Switches. Halbfette Schrift. Der
+				Fokusring liegt um die ganze Spur auf der Seitenfläche, nicht auf der dunklen Spur; der Fokus
+				steht immer auf der gewählten Option.
+			</p>
+			<Row label="IoT-Dashboard">
+				<SegmentedControl label="Ansicht" variant="pill" options={views} bind:value={pillView} />
+			</Row>
+			<Row label="MakeCode-Leiste">
+				<SegmentedControl
+					label="Programmiersprache"
+					variant="pill"
+					options={languages}
+					bind:value={language}
+				/>
+			</Row>
+			<Row label="Live Wall">
+				<SegmentedControl label="Ansicht" variant="pill" options={codeViews} value="svg" />
+			</Row>
+			<Row label="Mit Icons">
+				<SegmentedControl
+					label="Ansicht"
+					variant="pill"
+					value="dashboard"
+					options={[
+						{ value: 'dashboard', label: 'Dashboard', icon: 'device' },
+						{ value: 'feeds', label: 'Feeds', icon: 'wifi' }
+					]}
+				/>
+			</Row>
+			<Row label="Größen s / m / l">
+				<SegmentedControl label="Ansicht" variant="pill" size="s" options={views} value="feeds" />
+				<SegmentedControl label="Ansicht" variant="pill" size="m" options={views} value="feeds" />
+				<SegmentedControl label="Ansicht" variant="pill" size="l" options={views} value="feeds" />
+			</Row>
+			<Row label="Volle Breite">
+				<div style="width: 28rem; max-width: 100%">
+					<SegmentedControl label="Modus" variant="pill" fullWidth options={modes} value="code" />
+				</div>
+			</Row>
+			<Row label="Option deaktiviert">
+				<SegmentedControl
+					label="Modus"
+					variant="pill"
+					value="train"
+					options={[modes[0], { ...modes[1], disabled: true }, modes[2]]}
+				/>
+			</Row>
+			<Row label="Deaktiviert">
+				<SegmentedControl label="Modus" variant="pill" disabled options={modes} value="train" />
+			</Row>
+		</section>
+
 		<section data-theme="dark" class="dark-band">
 			<h2>Auf dunklen Bereichen</h2>
 			<Row label="Drei Optionen">
@@ -110,6 +199,15 @@
 					]}
 				/>
 			</Row>
+			<Row label="Pille">
+				<SegmentedControl label="Ansicht" variant="pill" options={views} value="dashboard" />
+				<SegmentedControl
+					label="Programmiersprache"
+					variant="pill"
+					options={languages}
+					value="js"
+				/>
+			</Row>
 		</section>
 
 		<section>
@@ -119,6 +217,7 @@
 					'Zwei bis vier kurze Optionen, die sich gegenseitig ausschließen: „Dashboard / Feeds“.',
 					'Immer einen Namen für die Gruppe (label), auch wenn er nicht sichtbar ist.',
 					'Eine Option ist immer gewählt; die Wahl gilt sofort.',
+					'Pille für den Ansichts-Umschalter in einer Kopf- oder Werkzeugleiste, Rahmen für eine Wahl in Formularen und Panels.',
 					'In Ansichten für Schülerinnen und Schüler Größe l (40px).'
 				]}
 				donts={[

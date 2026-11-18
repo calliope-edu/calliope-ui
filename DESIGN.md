@@ -489,6 +489,11 @@ and changes the view at once.
   (accessible name; `labelVisible` shows it), `options` (`{ value, label, icon?, disabled? }`),
   `size` s / m / l (default l, 40px), `fullWidth`. `radius.md` frame with 1px `border.control`
   and 2px inset; the chosen segment fills with `control.on` and `control.on-mark` text.
+  `variant="pill"` is the second look, Campus' view switch (EditorHeader, IoT dashboard,
+  MakeCode bar, Live Wall): a `radius.full` track filled with `control.on`, the chosen segment
+  in `control.on-mark` with `control.on` text, semibold labels, hover `surface.inverse-hover`;
+  the focus ring goes around the whole track. Both variants are kept for now (owner,
+  2026-11-18); the pill is the exception to "rounded rectangle means read me".
 
 ### Badge, Chip, StatusDot
 
