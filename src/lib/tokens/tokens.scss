@@ -141,6 +141,9 @@ $cui-control-on-mark: #ffffff; // Check mark and switch knob on control.on
 $cui-action-primary-bg: #1b1c1d; // Primary button fill
 $cui-action-primary-bg-hover: #323334; // Primary button hover
 $cui-action-primary-fg: #ffffff; // Primary button label
+$cui-action-bar-bg: #1b1c1d; // Bar button fill (editor bar): ink in both themes
+$cui-action-bar-fg: #ffffff; // Bar button label: white in both themes (17.1:1 on ink)
+$cui-action-bar-hover: #ffffff1f; // Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D)
 $cui-action-hover: #1b1c1d14; // Hover tint for ghost buttons and menu items
 $cui-status-success-fill: #3fc663; // Success / online / connected
 $cui-status-success-on: #000000; // Black, not ink: APCA Lc 61 vs 59, owner decision 2026-11-04

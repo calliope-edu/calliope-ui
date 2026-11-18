@@ -91,6 +91,14 @@ describe.each(['light', 'dark'] as const)('colour roles (%s)', (theme) => {
 		expect(
 			contrastRatio(role(theme, 'action-primary-fg'), role(theme, 'action-primary-bg'))
 		).toBeGreaterThanOrEqual(4.5);
+		expect(
+			contrastRatio(role(theme, 'action-bar-fg'), role(theme, 'action-bar-bg'))
+		).toBeGreaterThanOrEqual(4.5);
+	});
+
+	it('keep the bar button ink with white text, as on the Campus editor bar', () => {
+		expect(role(theme, 'action-bar-bg')).toBe(hex.get('ink'));
+		expect(role(theme, 'action-bar-fg')).toBe(hex.get('white'));
 	});
 });
 

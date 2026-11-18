@@ -3,13 +3,16 @@
 	import type { IconName } from '../../icons/icons.js';
 	import type { ButtonSize } from '../Button/Button.svelte';
 
-	export type IconButtonVariant = 'primary' | 'secondary' | 'ghost';
+	export type IconButtonVariant = 'primary' | 'secondary' | 'ghost' | 'bar';
 
 	export type IconButtonProps = {
 		icon: IconName;
 		/** Required accessible name (aria-label); also the tooltip text. */
 		label: string;
-		/** ghost (default) · secondary (2px outline) · primary (ink fill). */
+		/**
+		 * ghost (default) · secondary (2px outline) · primary (ink fill) · bar (the editor bar's
+		 * button: ink fill in both themes, 8px corners instead of a circle).
+		 */
 		variant?: IconButtonVariant;
 		/** s / m / l = 32 / 36 / 40px circle. The hit area never drops below 24px. */
 		size?: ButtonSize;
@@ -128,6 +131,14 @@
 			--_line: var(--cui-border-strong);
 		}
 
+		/* Bar: Button's bar variant without a label, e.g. Share on the MakeCode bar. */
+		.cui-icon-button[data-variant='bar'] {
+			--_bg: var(--cui-action-bar-bg);
+			--_fg: var(--cui-action-bar-fg);
+			border-width: 0;
+			border-radius: var(--cui-radius-lg);
+		}
+
 		@media (hover: hover) {
 			.cui-icon-button:not(:disabled, [aria-busy='true']):hover {
 				background-image: linear-gradient(var(--cui-action-hover), var(--cui-action-hover));
@@ -137,6 +148,10 @@
 				--_bg: var(--cui-action-primary-bg-hover);
 				background-image: none;
 			}
+
+			.cui-icon-button[data-variant='bar']:not(:disabled, [aria-busy='true']):hover {
+				background-image: linear-gradient(var(--cui-action-bar-hover), var(--cui-action-bar-hover));
+			}
 		}
 
 		.cui-icon-button[aria-pressed='true']:not([data-variant='primary']) {
@@ -144,6 +159,11 @@
 			--_fg: var(--cui-text-inverse);
 			--_line: var(--cui-surface-inverse);
 			background-image: none;
+		}
+
+		.cui-icon-button[data-variant='bar'][aria-pressed='true'] {
+			--_bg: var(--cui-action-bar-fg);
+			--_fg: var(--cui-action-bar-bg);
 		}
 
 		.cui-icon-button:disabled {

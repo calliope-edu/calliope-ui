@@ -336,8 +336,8 @@ so without it "Löschen" would look like any other entry (owner, 2026-11-03).
 
 `variant`: primary (ink fill, white text; dark theme: white fill, ink text) ·
 secondary (outline, 2px `border.strong`) · ghost (no border, hover tint) · link (`text.link`, no
-underline until hover or focus). `tone`: neutral · positive · negative · identity. `size`: s / m / l =
-32 / 36 / 40px high, action text 12 / 14 / 16.
+underline until hover or focus) · bar (the editor bar's button, below). `tone`: neutral · positive ·
+negative · identity. `size`: s / m / l = 32 / 36 / 40px high, action text 12 / 14 / 16.
 
 - Native `type` stays HTML and defaults to `"button"`.
 - Border: 2px at every size (D3). Storybook also shows the comparison variant
@@ -354,12 +354,20 @@ underline until hover or focus). `tone`: neutral · positive · negative · iden
   Tooltip can give the reason), `ref`. `tone` applies to `variant="primary"` only; with
   `tone="identity"`, `identity` picks the fill. Hover on tone fills layers the fixed
   `action.hover` tint instead of a lighter shade.
+- `variant="bar"` is Campus' `.bar-button` (EditorHeader): the actions on the right of the
+  MakeCode and IoT editor bars (Share, "n Erweiterungen", "Calliope mini n"). `action.bar.bg` fill
+  and `action.bar.fg` label, ink and white in both themes, so it reads the same on a light and a
+  dark bar; no frame, `radius.lg`, label type at semibold in normal case (no uppercase, no
+  tracking). Hover layers `action.bar.hover` (white 12 %, ink becomes about #3B3C3D); pressed flips
+  to a white fill with ink text. A second look kept beside the pill rule for now (owner,
+  2026-11-18), like SegmentedControl's pill.
 
 ### IconButton
 
 Required `label` (becomes `aria-label` and the optional Tooltip). Icon is `aria-hidden`. Same
 sizes as Button, circular, hit area never below 24px. Variants ghost (default), secondary,
-primary. `tooltip` defaults to true and shows the label; turn it off where the meaning is
+primary, and bar (Button's bar look without a label, `radius.lg` instead of a circle; Share on
+the MakeCode bar). `tooltip` defaults to true and shows the label; turn it off where the meaning is
 obvious in context (the dialog's close button). Works as a Menu trigger with its tooltip.
 
 ### Dialog, ConfirmDialog (pilot)

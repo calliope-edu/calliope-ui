@@ -181,6 +181,29 @@
 					"$description": "Primary button label"
 				}
 			},
+			"bar": {
+				"bg": {
+					"$type": "color",
+					"$value": "{color.surface.default}",
+					"$description": "Bar button fill (editor bar): ink in both themes"
+				},
+				"fg": {
+					"$type": "color",
+					"$value": "{color.text.default}",
+					"$description": "Bar button label: white in both themes (17.1:1 on ink)"
+				},
+				"hover": {
+					"$type": "color",
+					"$value": "#FFFFFF1F",
+					"$extensions": {
+						"calliope": {
+							"base": "palette.white",
+							"alpha": 0.12
+						}
+					},
+					"$description": "Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D)"
+				}
+			},
 			"hover": {
 				"$type": "color",
 				"$value": "#FFFFFF1F",
