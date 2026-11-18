@@ -2,7 +2,14 @@ import { render, screen, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import LineChart, { type LineChartSeries } from './LineChart.svelte';
-import { assignSeriesSlots, shapeOf, timeTicks, typicalInterval, valueTicks } from './chart.js';
+import {
+	assignSeriesSlots,
+	indexTicks,
+	shapeOf,
+	timeTicks,
+	typicalInterval,
+	valueTicks
+} from './chart.js';
 
 const start = Date.UTC(2026, 10, 2, 13, 0);
 const minute = 60_000;
@@ -122,6 +129,28 @@ describe('LineChart', () => {
 		expect(container.querySelector('.cui-line-chart')).toHaveAttribute('aria-busy', 'true');
 	});
 
+	it('counts by reading number in xMode index, so Down keeps the nth reading', async () => {
+		const user = userEvent.setup();
+		render(LineChart, { ...props, xMode: 'index' });
+		chart().focus();
+		await user.keyboard('{Home}{ArrowRight}');
+		await expect
+			.poll(() => status().textContent)
+			.toBe('Calliope 1, 5 min: 21,5 °C. Punkt 2 von 3.');
+		// By time the nearest would be the first point (0 min); by reading number it is the second.
+		await user.keyboard('{ArrowDown}');
+		await expect
+			.poll(() => status().textContent)
+			.toBe('Wetterstation, 10 min: 18 °C. Punkt 2 von 2.');
+	});
+
+	it('fills its container when the height is "fill"', () => {
+		const { container } = render(LineChart, { ...props, height: 'fill' });
+		const root = container.querySelector('.cui-line-chart')!;
+		expect(root).toHaveAttribute('data-fill');
+		expect(chart().style.height).toBe('');
+	});
+
 	it('takes labels for another language', () => {
 		render(LineChart, {
 			...props,
@@ -158,6 +187,12 @@ describe('chart helpers', () => {
 		const ticks = timeTicks(start + 2 * minute, start + 62 * minute, 4);
 		expect(ticks.every((t) => (t - ticks[0]) % (15 * minute) === 0)).toBe(true);
 		expect(ticks.length).toBeLessThanOrEqual(4);
+	});
+
+	it('puts reading-number ticks on whole, round steps', () => {
+		expect(indexTicks(0, 9, 4)).toEqual([0, 5]);
+		expect(indexTicks(0, 3, 10)).toEqual([0, 1, 2, 3]);
+		expect(indexTicks(0, 0, 4)).toEqual([0]);
 	});
 
 	it('takes the median spacing as the typical interval', () => {

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/svelte';
+import { render, screen, waitFor, within } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import Harness from './Harness.test.svelte';
@@ -83,5 +83,21 @@ describe('Select', () => {
 	it('submits the value through a hidden input', () => {
 		const { container } = render(Select, { label: 'Gerät', items, value: 'temp', name: 'metric' });
 		expect(container.querySelector('input[name="metric"]')).toHaveValue('temp');
+	});
+
+	it('puts items of the same group under a named group heading', async () => {
+		render(Select, {
+			label: 'Messwert',
+			items: [
+				{ value: 'temp', label: 'temperatur', group: 'Aus dem Programm' },
+				{ value: 'light', label: 'licht', group: 'Aus dem Programm' },
+				{ value: 'test', label: 'test', group: 'Schon empfangen' }
+			]
+		});
+		await userEvent.click(screen.getByRole('combobox', { name: 'Messwert' }));
+		const program = await screen.findByRole('group', { name: 'Aus dem Programm' });
+		expect(within(program).getAllByRole('option')).toHaveLength(2);
+		const seen = screen.getByRole('group', { name: 'Schon empfangen' });
+		expect(within(seen).getByRole('option', { name: 'test' })).toBeInTheDocument();
 	});
 });

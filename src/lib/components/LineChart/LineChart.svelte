@@ -36,6 +36,8 @@
 		loading: string;
 		/** Header of the time column of the hidden table. */
 		time: string;
+		/** Tick label of the reading-number axis (xMode "index"). */
+		reading: (n: number) => string;
 		table: (label: string) => string;
 		summary: (info: LineChartSummary) => string;
 		point: (info: LineChartPointInfo) => string;
@@ -48,6 +50,7 @@
 		empty: 'Noch keine Werte',
 		loading: 'Werte werden geladen',
 		time: 'Zeit',
+		reading: (n) => `${n}`,
 		table: (label) => `${label}: alle Werte`,
 		summary: ({ from, to, series }) =>
 			`Liniendiagramm mit ${series.length === 1 ? 'einer Reihe' : `${series.length} Reihen`}, ${from} bis ${to}. ` +
@@ -61,8 +64,20 @@
 		label: string;
 		series?: LineChartSeries[];
 		loading?: boolean;
-		/** Height of the plot in px; the width follows the container. */
-		height?: number;
+		/**
+		 * Height of the plot in px, or "fill": the chart (legend included) fills the height its
+		 * container gives it, so a taller card is a taller chart. The width always follows the container.
+		 */
+		height?: number | 'fill';
+		/**
+		 * What the x axis counts: "time" places readings at their real time (gaps stay visible),
+		 * "index" places the nth reading of each series at n, evenly spaced.
+		 */
+		xMode?: 'time' | 'index';
+		/** Caption of the x axis, at its right end ("Zeit", "Messung"). */
+		xLabel?: string;
+		/** Caption of the value axis, above it ("°C", "Lautstärke"). */
+		yLabel?: string;
 		/** Appended to values by the default value format ("°C"). */
 		unit?: string;
 		/** Fix the ends of the value axis (a sensor's range); values outside are drawn at the edge. */
@@ -86,6 +101,7 @@
 	import Spinner from '../Spinner/Spinner.svelte';
 	import {
 		colourOf,
+		indexTicks,
 		shapeOf,
 		shapePath,
 		slotAt,
@@ -99,6 +115,9 @@
 		series = [],
 		loading = false,
 		height = 240,
+		xMode = 'time',
+		xLabel,
+		yLabel,
 		unit,
 		yMin,
 		yMax,
@@ -116,17 +135,20 @@
 	const uid = $props.id();
 	let labels = $derived({ ...lineChartLabels, ...labelsProp });
 
-	type Pt = { t: number; v: number };
+	/** x is the time, or the reading number in xMode "index". */
+	type Pt = { t: number; v: number; x: number };
 	type Strand = { id: string; name: string; slot: SeriesSlot; pts: Pt[]; breaks: Set<number> };
 
 	let strands = $derived<Strand[]>(
 		series.map((s, i) => {
 			const pts = s.points
 				.filter((p) => Number.isFinite(p.v))
-				.map((p) => ({ t: +p.t, v: p.v }))
+				.map((p) => ({ t: +p.t, v: p.v, x: 0 }))
 				.sort((a, b) => a.t - b.t);
-			// A device that skipped more than a few readings gets a break, not a bridge.
-			const limit = typicalInterval(pts.map((p) => p.t)) * 2.5;
+			pts.forEach((p, j) => (p.x = xMode === 'index' ? j : p.t));
+			// A device that skipped more than a few readings gets a break, not a bridge. Counted by
+			// reading number, there is no gap to show.
+			const limit = xMode === 'index' ? 0 : typicalInterval(pts.map((p) => p.t)) * 2.5;
 			const breaks = new Set<number>();
 			if (limit > 0) pts.forEach((p, j) => j && p.t - pts[j - 1].t > limit && breaks.add(j));
 			return { id: s.id, name: s.name, slot: s.slot ?? slotAt(i), pts, breaks };
@@ -137,12 +159,12 @@
 
 	// ---------- formats ----------
 
-	let xFrom = $derived(Math.min(...all.map((p) => p.t)));
-	let xTo = $derived(Math.max(...all.map((p) => p.t)));
+	let tFrom = $derived(Math.min(...all.map((p) => p.t)));
+	let tTo = $derived(Math.max(...all.map((p) => p.t)));
 
 	let numberFormat = $derived(new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }));
 	let timeFormat = $derived.by(() => {
-		const span = xTo - xFrom;
+		const span = tTo - tFrom;
 		const options: Intl.DateTimeFormatOptions =
 			span <= 2 * 60_000
 				? { hour: '2-digit', minute: '2-digit', second: '2-digit' }
@@ -158,9 +180,12 @@
 	// ---------- scales ----------
 
 	let width = $state(0);
+	let measured = $state(0);
+	let fill = $derived(height === 'fill');
+	let h = $derived(height === 'fill' ? measured : height);
 	const padRight = 12;
-	const padTop = 12;
-	const padBottom = 28;
+	let padTop = $derived(yLabel ? 28 : 12);
+	let padBottom = $derived(xLabel ? 44 : 28);
 
 	let yTicks = $derived.by(() => {
 		const lo = yMin ?? Math.min(...all.map((p) => p.v));
@@ -176,22 +201,32 @@
 	/** Room for the longest tick label (digits are tabular, about 7px at 12px). */
 	let padLeft = $derived(Math.max(...yTicks.map((v) => numberFormat.format(v).length)) * 7 + 14);
 	let plotW = $derived(Math.max(10, width - padLeft - padRight));
-	let plotH = $derived(Math.max(10, height - padTop - padBottom));
-	let xSpan = $derived(xTo > xFrom ? [xFrom, xTo] : [xFrom - 60_000, xTo + 60_000]);
+	let plotH = $derived(Math.max(10, h - padTop - padBottom));
+	let xSpan = $derived.by(() => {
+		const lo = Math.min(...all.map((p) => p.x));
+		const hi = Math.max(...all.map((p) => p.x));
+		if (hi > lo) return [lo, hi];
+		return xMode === 'index' ? [lo - 1, hi + 1] : [lo - 60_000, hi + 60_000];
+	});
 
-	const sx = (t: number) => padLeft + ((t - xSpan[0]) / (xSpan[1] - xSpan[0])) * plotW;
+	const sx = (x: number) => padLeft + ((x - xSpan[0]) / (xSpan[1] - xSpan[0])) * plotW;
 	const sy = (v: number) => {
 		const c = Math.min(y1, Math.max(y0, v));
 		return padTop + (1 - (c - y0) / (y1 - y0 || 1)) * plotH;
 	};
 
-	let xTicks = $derived(timeTicks(xSpan[0], xSpan[1], Math.max(2, Math.floor(plotW / 90))));
+	let xTicks = $derived(
+		xMode === 'index'
+			? indexTicks(Math.max(0, xSpan[0]), xSpan[1], Math.max(2, Math.floor(plotW / 48)))
+			: timeTicks(xSpan[0], xSpan[1], Math.max(2, Math.floor(plotW / 90)))
+	);
+	const xTick = (x: number) => (xMode === 'index' ? labels.reading(x + 1) : time(x));
 
 	function path(s: Strand) {
 		return s.pts
 			.map(
 				(p, i) =>
-					`${i === 0 || s.breaks.has(i) ? 'M' : 'L'}${sx(p.t).toFixed(1)},${sy(p.v).toFixed(1)}`
+					`${i === 0 || s.breaks.has(i) ? 'M' : 'L'}${sx(p.x).toFixed(1)},${sy(p.v).toFixed(1)}`
 			)
 			.join('');
 	}
@@ -233,10 +268,10 @@
 		});
 	}
 
-	function nearest(s: Strand, t: number) {
+	function nearest(s: Strand, x: number) {
 		let best = 0;
 		s.pts.forEach((p, i) => {
-			if (Math.abs(p.t - t) < Math.abs(s.pts[best].t - t)) best = i;
+			if (Math.abs(p.x - x) < Math.abs(s.pts[best].x - x)) best = i;
 		});
 		return best;
 	}
@@ -272,7 +307,7 @@
 				const at = lines.indexOf(s);
 				const step = event.key === 'ArrowDown' ? 1 : -1;
 				const other = current ? lines[(at + step + lines.length) % lines.length] : s;
-				next = { s: other, index: current ? nearest(other, s.pts[i].t) : i };
+				next = { s: other, index: current ? nearest(other, s.pts[i].x) : i };
 				break;
 			}
 			case 'Escape':
@@ -296,7 +331,7 @@
 		for (const s of strands) {
 			for (let index = 0; index < s.pts.length; index++) {
 				const p = s.pts[index];
-				const d = Math.hypot(sx(p.t) - x, (sy(p.v) - y) * 0.5);
+				const d = Math.hypot(sx(p.x) - x, (sy(p.v) - y) * 0.5);
 				if (d < best.d) best = { id: s.id, index, d };
 			}
 		}
@@ -314,8 +349,8 @@
 		if (empty) return labels.empty;
 		return labels.summary({
 			label,
-			from: time(xFrom),
-			to: time(xTo),
+			from: time(tFrom),
+			to: time(tTo),
 			series: strands
 				.filter((s) => s.pts.length)
 				.map((s) => {
@@ -337,7 +372,12 @@
 	});
 </script>
 
-<div class={['cui-line-chart', className]} aria-busy={loading || undefined} {...rest}>
+<div
+	class={['cui-line-chart', className]}
+	data-fill={fill || undefined}
+	aria-busy={loading || undefined}
+	{...rest}
+>
 	{#if legend && strands.length > 0}
 		<ul class="legend">
 			{#each strands as s (s.id)}
@@ -352,11 +392,16 @@
 	{/if}
 
 	{#if loading && empty}
-		<div class="state" style:height="{height}px">
+		<div class="state" style:height={fill ? undefined : `${h}px`}>
 			<Spinner label="{label}: {labels.loading}" delay={300} />
 		</div>
 	{:else if empty}
-		<div class="state" style:height="{height}px" role="img" aria-label="{label}: {labels.empty}">
+		<div
+			class="state"
+			style:height={fill ? undefined : `${h}px`}
+			role="img"
+			aria-label="{label}: {labels.empty}"
+		>
 			<p>{labels.empty}</p>
 		</div>
 	{:else}
@@ -369,16 +414,20 @@
 			aria-label={label}
 			aria-describedby="{uid}-summary {uid}-hint"
 			tabindex="0"
-			style:height="{height}px"
+			style:height={fill ? undefined : `${h}px`}
 			bind:clientWidth={width}
+			bind:clientHeight={measured}
 			{onkeydown}
 			onblur={() => (cursorState = null)}
 			{onpointermove}
 			onpointerdown={onpointermove}
 			onpointerleave={clearPointer}
 		>
-			{#if width > 0}
-				<svg {width} {height} aria-hidden="true" focusable="false">
+			{#if width > 0 && h > 0}
+				<svg {width} height={h} aria-hidden="true" focusable="false">
+					{#if yLabel}
+						<text class="axis-label" x={padLeft} y={14}>{yLabel}</text>
+					{/if}
 					{#each yTicks as v (v)}
 						<line class="grid" x1={padLeft} x2={width - padRight} y1={sy(v)} y2={sy(v)} />
 						<text
@@ -391,26 +440,33 @@
 							{numberFormat.format(v)}
 						</text>
 					{/each}
-					{#each xTicks as t (t)}
-						<text class="tick" x={sx(t)} y={height - 8} text-anchor="middle">{time(t)}</text>
+					{#each xTicks as x (x)}
+						<text class="tick" x={sx(x)} y={h - padBottom + 20} text-anchor="middle">
+							{xTick(x)}
+						</text>
 					{/each}
+					{#if xLabel}
+						<text class="axis-label" x={width - padRight} y={h - 6} text-anchor="end">
+							{xLabel}
+						</text>
+					{/if}
 					{#each strands as s (s.id)}
 						<path class="line" d={path(s)} style:stroke={colourOf(s.slot)} />
-						{#each marked(s) as p (p.t)}
+						{#each marked(s) as p (p.x)}
 							<path
 								d={shapePath(shapeOf(s.slot), 3.5)}
-								transform="translate({sx(p.t)},{sy(p.v)})"
+								transform="translate({sx(p.x)},{sy(p.v)})"
 								style:fill={colourOf(s.slot)}
 							/>
 						{/each}
 					{/each}
 					{#if cursor}
-						<g class="cursor" style:transform="translate({sx(cursor.point.t)}px, 0)">
-							<line y1={padTop} y2={height - padBottom} />
+						<g class="cursor" style:transform="translate({sx(cursor.point.x)}px, 0)">
+							<line y1={padTop} y2={h - padBottom} />
 						</g>
 						<g
 							class="cursor"
-							style:transform="translate({sx(cursor.point.t)}px, {sy(cursor.point.v)}px)"
+							style:transform="translate({sx(cursor.point.x)}px, {sy(cursor.point.v)}px)"
 						>
 							<path class="ring" d={shapePath(shapeOf(cursor.strand.slot), 8)} />
 							<path
@@ -421,12 +477,12 @@
 					{/if}
 				</svg>
 				{#if cursor}
-					{@const right = sx(cursor.point.t) > padLeft + plotW / 2}
+					{@const right = sx(cursor.point.x) > padLeft + plotW / 2}
 					<div
 						class="readout"
 						aria-hidden="true"
-						style:left={right ? undefined : `${sx(cursor.point.t) + 12}px`}
-						style:right={right ? `${width - sx(cursor.point.t) + 12}px` : undefined}
+						style:left={right ? undefined : `${sx(cursor.point.x) + 12}px`}
+						style:right={right ? `${width - sx(cursor.point.x) + 12}px` : undefined}
 					>
 						<span class="readout-name">{cursor.strand.name}</span>
 						<span class="readout-time">{time(cursor.point.t)}</span>
@@ -475,6 +531,26 @@
 			min-width: 0;
 			color: var(--cui-text-default);
 			font-family: var(--cui-font-family-sans);
+		}
+
+		/* Fill: the plot takes what the legend leaves; its svg is laid over it, so it cannot push. */
+		.cui-line-chart[data-fill] {
+			display: flex;
+			flex: 1 1 auto;
+			flex-direction: column;
+			height: 100%;
+			min-height: 0;
+		}
+
+		[data-fill] > .plot,
+		[data-fill] > .state {
+			flex: 1 1 0;
+			min-height: 6rem;
+		}
+
+		[data-fill] > .plot svg {
+			position: absolute;
+			inset: 0;
 		}
 
 		.legend {
@@ -535,6 +611,12 @@
 			font-size: var(--cui-typography-caption-font-size);
 			font-weight: var(--cui-typography-caption-font-weight);
 			font-variant-numeric: tabular-nums;
+		}
+
+		.axis-label {
+			fill: var(--cui-text-muted);
+			font-size: var(--cui-typography-caption-font-size);
+			font-weight: var(--cui-font-weight-semibold);
 		}
 
 		.line {

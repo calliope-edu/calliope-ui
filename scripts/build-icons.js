@@ -30,7 +30,8 @@ const ACTIVE = 'prime';
 
 /**
  * Semantic name → icon per set. The first block is the 28 icons of the design draft
- * (docs/input/icons.txt), the second what Wave 1 and 2 components need on top, then W4 and Wave 3 additions.
+ * (docs/input/icons.txt), the second what Wave 1 and 2 components need on top, then W4 and Wave 3
+ * additions, then what the IoT dashboard needs (W3).
  */
 const ICONS = {
 	wifi: { material: 'wifi-rounded', prime: 'wifi' },
@@ -87,7 +88,11 @@ const ICONS = {
 	language: { material: 'language', prime: 'globe' },
 	person: { material: 'person-rounded', prime: 'user' },
 	login: { material: 'login-rounded', prime: 'sign-in' },
-	logout: { material: 'logout-rounded', prime: 'sign-out' }
+	logout: { material: 'logout-rounded', prime: 'sign-out' },
+
+	'fullscreen-exit': { material: 'fullscreen-exit-rounded', prime: null },
+	send: { material: 'send-rounded', prime: 'send' },
+	drag: { material: 'drag-indicator', prime: null }
 };
 
 /*
@@ -107,7 +112,15 @@ const DRAWN = {
 			'<circle cx="12" cy="18.75" r="2" fill="currentColor"/>',
 			'<circle cx="7" cy="8.75" r="1.5" fill="currentColor"/>',
 			'<rect width="3" height="3" x="15.5" y="5.75" fill="currentColor" rx=".5"/>'
-		].join('')
+		].join(''),
+		// The four corners of `fullscreen` (PrimeIcons "expand") turned inward.
+		'fullscreen-exit': `<path ${PRIME_LINE} d="M9 4v2.75A2.25 2.25 0 0 1 6.75 9H4M15 4v2.75A2.25 2.25 0 0 0 17.25 9H20M9 20v-2.75A2.25 2.25 0 0 0 6.75 15H4M15 20v-2.75A2.25 2.25 0 0 1 17.25 15H20"/>`,
+		// A grip of two columns of three dots, the dots of PrimeIcons "ellipsis-v".
+		drag: [9, 15]
+			.flatMap((x) =>
+				[5, 12, 19].map((y) => `<circle cx="${x}" cy="${y}" r="1.75" fill="currentColor"/>`)
+			)
+			.join('')
 	}
 };
 

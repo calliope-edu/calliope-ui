@@ -1,5 +1,11 @@
 <script lang="ts" module>
-	export type SelectItem = { value: string; label: string; disabled?: boolean };
+	export type SelectItem = {
+		value: string;
+		label: string;
+		disabled?: boolean;
+		/** Heading of the group the item belongs to; neighbouring items with the same group form one. */
+		group?: string;
+	};
 
 	export type SelectProps = {
 		/** Visible label. Required: a placeholder is never the label. */
@@ -58,6 +64,15 @@
 	let keyboard = $state(false);
 
 	const selected = $derived(items.find((item) => item.value === value));
+	// Runs of neighbouring items with the same group; items without one form ungrouped runs.
+	const runs = $derived(
+		items.reduce<{ group?: string; items: SelectItem[] }[]>((all, item) => {
+			const last = all[all.length - 1];
+			if (last && last.group === item.group) last.items.push(item);
+			else all.push({ group: item.group, items: [item] });
+			return all;
+		}, [])
+	);
 	// The list is portalled to <body>; it takes the theme of a dark band along.
 	const theme = $derived(
 		open ? (trigger?.closest('[data-theme]')?.getAttribute('data-theme') ?? undefined) : undefined
@@ -73,6 +88,24 @@
 		onValueChange?.(value);
 	}
 </script>
+
+{#snippet options(list: SelectItem[])}
+	{#each list as item (item.value)}
+		<Select.Item
+			class="cui-menu-item"
+			value={item.value}
+			label={item.label}
+			disabled={item.disabled}
+		>
+			{#snippet children({ selected: isSelected })}
+				<span class="cui-menu-item-icon">
+					{#if isSelected}<Icon name="check" />{/if}
+				</span>
+				<span class="cui-menu-item-label">{item.label}</span>
+			{/snippet}
+		</Select.Item>
+	{/each}
+{/snippet}
 
 <div
 	class="cui-select"
@@ -117,20 +150,15 @@
 				onpointermove={() => (keyboard = false)}
 			>
 				<Select.Viewport class="cui-listbox-viewport">
-					{#each items as item (item.value)}
-						<Select.Item
-							class="cui-menu-item"
-							value={item.value}
-							label={item.label}
-							disabled={item.disabled}
-						>
-							{#snippet children({ selected: isSelected })}
-								<span class="cui-menu-item-icon">
-									{#if isSelected}<Icon name="check" />{/if}
-								</span>
-								<span class="cui-menu-item-label">{item.label}</span>
-							{/snippet}
-						</Select.Item>
+					{#each runs as run, i (i)}
+						{#if run.group}
+							<Select.Group class="cui-menu-group">
+								<Select.GroupHeading class="cui-menu-heading">{run.group}</Select.GroupHeading>
+								{@render options(run.items)}
+							</Select.Group>
+						{:else}
+							{@render options(run.items)}
+						{/if}
 					{/each}
 				</Select.Viewport>
 			</Select.Content>
