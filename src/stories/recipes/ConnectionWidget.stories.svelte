@@ -1,5 +1,6 @@
 <script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
+	import Banner from '../../lib/components/Banner/Banner.svelte';
 	import Button from '../../lib/components/Button/Button.svelte';
 	import ChoiceItem from '../../lib/components/ChoiceList/ChoiceItem.svelte';
 	import ChoiceList from '../../lib/components/ChoiceList/ChoiceList.svelte';
@@ -11,7 +12,6 @@
 	import StatusDot from '../../lib/components/StatusDot/StatusDot.svelte';
 	import TextField from '../../lib/components/TextField/TextField.svelte';
 	import ConnectionPanel from './connection/ConnectionPanel.svelte';
-	import ConnectionToast from './connection/ConnectionToast.svelte';
 
 	/*
 	 * The dialogs of mini-connection-widget (src/ui/*Modal.svelte, src/makecode/ui/) rebuilt from
@@ -22,6 +22,9 @@
 		title: 'Rezepte/Verbindungs-Widget',
 		parameters: { layout: 'fullscreen' }
 	});
+
+	/** The widget always offers a quiet way to hide its banner. */
+	const hint = { onDismiss: () => {}, dismissLabel: 'Ausblenden' };
 
 	const fileName = 'blinken.hex';
 	const shareUrl = 'https://makecode.calliope.cc/_hK7c3PxR0aWv';
@@ -252,40 +255,41 @@
 				ConnectionBanner zeigt, was mit der Verbindung los ist. In der Überschriftenzeile stehen ein
 				optionales Status-Icon, die Überschrift und das X; darunter der Text mit seinen Buttons,
 				mittig dazu ausgerichtet. Kein Farbstreifen und kein getönter Hintergrund: Die Statusfarbe
-				steckt nur im Icon. USB und Bluetooth haben keine eigene Farbe, nur ihr Icon.
+				steckt nur im Icon. USB und Bluetooth haben keine eigene Farbe, nur ihr Icon. Gebaut aus
+				<code>Banner floating</code>; die feste Position oben in der Mitte setzt das Widget.
 			</p>
 		</header>
 		<div class="banners">
-			<ConnectionToast title="Kein Calliope mini verbunden.">
+			<Banner floating title="Kein Calliope mini verbunden." {...hint}>
 				Verbinde deinen Calliope mini per USB-Kabel oder Bluetooth, um zu starten.
 				{#snippet actions()}
 					<Button size="s" variant="secondary" icon="usb">USB verbinden</Button>
 					<Button size="s" variant="secondary" icon="bluetooth">Bluetooth verbinden</Button>
 				{/snippet}
-			</ConnectionToast>
-			<ConnectionToast title="Verbinde per Bluetooth…" busy>
+			</Banner>
+			<Banner floating title="Verbinde per Bluetooth…" busy {...hint}>
 				Calliope mini zuvig
 				{#snippet actions()}
 					<Button size="s" variant="secondary">Abbrechen</Button>
 				{/snippet}
-			</ConnectionToast>
-			<ConnectionToast title="Calliope mini neu verbinden." tone="warning">
+			</Banner>
+			<Banner floating title="Calliope mini neu verbinden." tone="warning" {...hint}>
 				Zieh den Calliope mini einmal vom USB-Kabel ab und steck ihn wieder ein. Klicke dann auf
 				„Erneut verbinden“.
 				{#snippet actions()}
 					<Button size="s" variant="secondary" icon="retry">Erneut verbinden</Button>
 				{/snippet}
-			</ConnectionToast>
-			<ConnectionToast title="Das hat nicht geholfen." tone="error">
+			</Banner>
+			<Banner floating title="Das hat nicht geholfen." tone="error" {...hint}>
 				Lade die Seite neu, um die USB-Verbindung zurückzusetzen.
 				{#snippet actions()}
 					<Button size="s" variant="secondary" icon="retry">Seite neu laden</Button>
 				{/snippet}
-			</ConnectionToast>
-			<ConnectionToast title="Programm wird übertragen…">
+			</Banner>
+			<Banner floating title="Programm wird übertragen…" {...hint}>
 				<ProgressBar label="Übertragung" value={42} />
-			</ConnectionToast>
-			<ConnectionToast title="USB verbunden" tone="success" />
+			</Banner>
+			<Banner floating title="USB verbunden" tone="success" {...hint} />
 		</div>
 	</div>
 </Story>

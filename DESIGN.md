@@ -516,10 +516,16 @@ without a label it is decorative (inside a busy button). No track ring (it would
 shade).
 
 - Banner (built): `tone` info · success · warning · error, `title`, message as children,
-  `actions` snippet, `onDismiss` + `dismissLabel`. `role="alert"` for errors, `role="status"`
-  otherwise, `live="none"` for a banner present from page load. Neutral surface with a 1px
-  `border.subtle` frame, a 4px status stripe on the left and a 24px status icon disc with the
-  paired mark colour; text stays `text.default`.
+  `actions` snippet, `onDismiss` + `dismissLabel`, `busy`, `floating`. `role="alert"` for errors,
+  `role="status"` otherwise, `live="none"` for a banner present from page load. The look of the
+  connection widget's banner: a heading row with an optional status icon, the semibold title and
+  the X (as tall as the 32px X); below it the message in `text.muted` with its buttons centred on
+  it, wrapping below when narrow. Without a title the message (in `text.default`) takes the
+  title's place. Status colour only in a 20px icon disc with the paired mark colour; info has no
+  icon. No side stripe and no tinted background. `busy` puts a decorative Spinner s in the icon's
+  place and sets `aria-busy`. Neutral surface with a 1px `border.subtle` frame, label size text;
+  `floating` makes it `surface.raised` with `shadow.menu` and content width (max 45rem) for a
+  banner over the page, positioned by the app.
 - EmptyState (built): `title` (heading of `level` 2–4), `description`, `icon` on a neutral
   `surface.subtle` disc, `actions` snippet, `compact` (left-aligned, no icon) for tables and small
   panels. No status colour: an empty list is not an error.
