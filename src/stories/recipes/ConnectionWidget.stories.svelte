@@ -1,13 +1,17 @@
 <script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import Banner from '../../lib/components/Banner/Banner.svelte';
 	import Button from '../../lib/components/Button/Button.svelte';
 	import ChoiceItem from '../../lib/components/ChoiceList/ChoiceItem.svelte';
 	import ChoiceList from '../../lib/components/ChoiceList/ChoiceList.svelte';
 	import Dialog from '../../lib/components/Dialog/Dialog.svelte';
 	import IconButton from '../../lib/components/IconButton/IconButton.svelte';
+	import Popover from '../../lib/components/Popover/Popover.svelte';
+	import ProgressBar from '../../lib/components/ProgressBar/ProgressBar.svelte';
 	import Spinner from '../../lib/components/Spinner/Spinner.svelte';
+	import StatusDot from '../../lib/components/StatusDot/StatusDot.svelte';
 	import TextField from '../../lib/components/TextField/TextField.svelte';
+	import ConnectionPanel from './connection/ConnectionPanel.svelte';
+	import ConnectionToast from './connection/ConnectionToast.svelte';
 
 	/*
 	 * The dialogs of mini-connection-widget (src/ui/*Modal.svelte, src/makecode/ui/) rebuilt from
@@ -21,6 +25,10 @@
 
 	const fileName = 'blinken.hex';
 	const shareUrl = 'https://makecode.calliope.cc/_hK7c3PxR0aWv';
+
+	// The name pattern of a Calliope "zuvig": one bar per letter, as after a USB connect.
+	const heights = [2, 4, 1, 5, 3];
+	const zuvig = [0, 1, 2, 3, 4].map((r) => heights.map((h) => r >= 5 - h));
 </script>
 
 <script lang="ts">
@@ -31,6 +39,7 @@
 	let shareOpen = $state(false);
 	let shareLoading = $state(true);
 	let last = $state('');
+	let panelOpen = $state(false);
 
 	function choose(dialog: string, way: string) {
 		last = `${dialog}: ${way}`;
@@ -186,30 +195,97 @@
 	</Dialog>
 </Story>
 
+<Story name="Verbindungs-Panel" asChild>
+	<div class="page wide">
+		<header>
+			<p class="eyebrow">Rezept</p>
+			<h1>Verbindungs-Panel</h1>
+			<p class="lead">
+				Das Dropdown des ConnectButton: ein dunkles Panel mit einer gefüllten Karte je
+				Übertragungsweg. Jede Karte trägt Icon und Namen, einen StatusDot mit Wort und genau eine
+				Aktion. Verbinden ist der grüne Button (<code>tone="positive"</code>), Trennen und Abbrechen
+				sind sekundär. In der Bluetooth-Karte zeichnet man das Muster des Calliope; erst dann geht
+				Verbinden.
+			</p>
+		</header>
+
+		<div class="bar">
+			<span class="bar-name">Calliope Campus</span>
+			<Popover bind:open={panelOpen} side="bottom" align="end" size="m">
+				{#snippet trigger({ props })}
+					<Button {...props} variant="secondary" size="s">
+						<StatusDot status="neutral" label="Nicht verbunden" />
+					</Button>
+				{/snippet}
+				<ConnectionPanel embedded />
+			</Popover>
+		</div>
+
+		<h2>Zustände</h2>
+		<div class="panels">
+			<figure>
+				<ConnectionPanel />
+				<figcaption>Nichts verbunden: Verbinden wartet auf das Muster.</figcaption>
+			</figure>
+			<figure>
+				<ConnectionPanel usb="connected" pattern={zuvig} />
+				<figcaption>USB verbunden: Muster schon gezeichnet, Programm übertragen.</figcaption>
+			</figure>
+			<figure>
+				<ConnectionPanel ble="connecting" pattern={zuvig} />
+				<figcaption>Bluetooth verbindet: Abbrechen statt Verbinden.</figcaption>
+			</figure>
+			<figure>
+				<ConnectionPanel usb="connected" ble="connected" pattern={zuvig} flashing={64} />
+				<figcaption>Beide verbunden, Übertragung läuft.</figcaption>
+			</figure>
+		</div>
+	</div>
+</Story>
+
 <Story name="Verbindungshinweis" asChild>
 	<div class="page">
 		<header>
 			<p class="eyebrow">Rezept</p>
 			<h1>Hinweis im Kopf der Seite</h1>
 			<p class="lead">
-				ConnectionBanner zeigt, was mit der Verbindung los ist. Die Statusfarbe steht als Streifen
-				und Icon, die Aktion als kleiner Button daneben.
+				ConnectionBanner zeigt, was mit der Verbindung los ist. In der Überschriftenzeile stehen ein
+				optionales Status-Icon, die Überschrift und das X; darunter der Text mit seinen Buttons,
+				mittig dazu ausgerichtet. Kein Farbstreifen und kein getönter Hintergrund: Die Statusfarbe
+				steckt nur im Icon. USB und Bluetooth haben keine eigene Farbe, nur ihr Icon.
 			</p>
 		</header>
 		<div class="banners">
-			<Banner tone="warning" title="USB-Verbindung unterbrochen." live="none">
-				Steck den Calliope wieder ein, dann geht es weiter.
+			<ConnectionToast title="Kein Calliope mini verbunden.">
+				Verbinde deinen Calliope mini per USB-Kabel oder Bluetooth, um zu starten.
 				{#snippet actions()}
-					<Button size="s" variant="secondary">Neu verbinden</Button>
+					<Button size="s" variant="secondary" icon="usb">USB verbinden</Button>
+					<Button size="s" variant="secondary" icon="bluetooth">Bluetooth verbinden</Button>
 				{/snippet}
-			</Banner>
-			<Banner tone="error" title="Bluetooth nicht erreichbar." live="none">
-				Drücke A + B, halte sie gedrückt und tippe kurz auf Reset.
+			</ConnectionToast>
+			<ConnectionToast title="Verbinde per Bluetooth…" busy>
+				Calliope mini zuvig
 				{#snippet actions()}
-					<Button size="s" variant="secondary" icon="usb">USB verwenden</Button>
+					<Button size="s" variant="secondary">Abbrechen</Button>
 				{/snippet}
-			</Banner>
-			<Banner tone="success" title="Übertragen." live="none">„blinken.hex“ läuft jetzt.</Banner>
+			</ConnectionToast>
+			<ConnectionToast title="Calliope mini neu verbinden." tone="warning">
+				Zieh den Calliope mini einmal vom USB-Kabel ab und steck ihn wieder ein. Klicke dann auf
+				„Erneut verbinden“.
+				{#snippet actions()}
+					<Button size="s" variant="secondary" icon="retry">Erneut verbinden</Button>
+				{/snippet}
+			</ConnectionToast>
+			<ConnectionToast title="Das hat nicht geholfen." tone="error">
+				Lade die Seite neu, um die USB-Verbindung zurückzusetzen.
+				{#snippet actions()}
+					<Button size="s" variant="secondary" icon="retry">Seite neu laden</Button>
+				{/snippet}
+			</ConnectionToast>
+			<ConnectionToast title="Programm wird übertragen…">
+				<ProgressBar label="Übertragung" value={42} />
+			</ConnectionToast>
+			<ConnectionToast title="USB verbunden" tone="success" />
 		</div>
 	</div>
 </Story>
@@ -260,7 +336,53 @@
 	.banners {
 		display: flex;
 		flex-direction: column;
-		gap: var(--cui-space-3);
+		align-items: flex-start;
+		gap: var(--cui-space-4);
+	}
+
+	.page.wide {
+		max-width: 92rem;
+	}
+
+	h2 {
+		margin: var(--cui-space-8) 0 var(--cui-space-4);
+		font-size: var(--cui-typography-h3-font-size);
+	}
+
+	/* A stand-in for the host's header, where the trigger sits. */
+	.bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		max-width: 40rem;
+		padding: var(--cui-space-2) var(--cui-space-4);
+		border: var(--cui-border-width-hairline) solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-lg);
+		background-color: var(--cui-surface-default);
+	}
+
+	.bar-name {
+		font-weight: var(--cui-font-weight-bold);
+	}
+
+	.panels {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: var(--cui-space-6);
+	}
+
+	figure {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-2);
+		width: 20rem;
+		margin: 0;
+	}
+
+	figcaption {
+		color: var(--cui-text-muted);
+		font-size: var(--cui-typography-caption-font-size);
 	}
 
 	.detail {

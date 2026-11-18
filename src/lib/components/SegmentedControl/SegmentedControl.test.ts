@@ -69,4 +69,19 @@ describe('SegmentedControl', () => {
 		});
 		expect(container.querySelector('input[name="mode"]')).toHaveValue('code');
 	});
+
+	it('draws the frame by default and the pill on request, with the same radiogroup', () => {
+		const { container, unmount } = render(SegmentedControl, { label: 'Modus', options });
+		expect(container.querySelector('.cui-segmented-control')).toHaveAttribute(
+			'data-variant',
+			'frame'
+		);
+		unmount();
+		const pill = render(SegmentedControl, { label: 'Ansicht', options, variant: 'pill' });
+		expect(pill.container.querySelector('.cui-segmented-control')).toHaveAttribute(
+			'data-variant',
+			'pill'
+		);
+		expect(screen.getByRole('radiogroup', { name: 'Ansicht' })).toBeInTheDocument();
+	});
 });

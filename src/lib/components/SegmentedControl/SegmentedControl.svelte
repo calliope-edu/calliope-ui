@@ -11,6 +11,13 @@
 
 	export type SegmentedControlSize = 's' | 'm' | 'l';
 
+	/**
+	 * frame: the rounded rectangle with a 1px border (the default).
+	 * pill: a filled pill track with the chosen segment flipped out of it, the view switch of
+	 * Campus (EditorHeader, IoT dashboard, MakeCode bar, Live Wall). Both stay for now.
+	 */
+	export type SegmentedControlVariant = 'frame' | 'pill';
+
 	export type SegmentedControlProps = {
 		/** Accessible name of the radiogroup ("Ansicht"). Hidden unless `labelVisible`. */
 		label: string;
@@ -22,6 +29,8 @@
 		onValueChange?: (value: string) => void;
 		/** s / m / l = 32 / 36 / 40px. Pupil-facing views use l (D6). */
 		size?: SegmentedControlSize;
+		/** frame (default) or pill: see SegmentedControlVariant. */
+		variant?: SegmentedControlVariant;
 		/** Stretches the control and shares the width equally between the segments. */
 		fullWidth?: boolean;
 		disabled?: boolean;
@@ -43,6 +52,7 @@
 		value = $bindable(''),
 		onValueChange,
 		size = 'l',
+		variant = 'frame',
 		fullWidth = false,
 		disabled = false,
 		name,
@@ -58,6 +68,7 @@
 <div
 	class="cui-segmented-control"
 	data-size={size}
+	data-variant={variant}
 	data-full-width={fullWidth || undefined}
 	data-disabled={disabled || undefined}
 >
@@ -185,6 +196,46 @@
 
 		:global(.cui-segment[data-disabled]) {
 			cursor: not-allowed;
+		}
+
+		/* Pill: the track is filled with control.on and the chosen segment flips to control.on-mark,
+		   the same pair as a checked switch, so it inverts with the theme (ink track and white
+		   segment on light, white track and ink segment on dark). Same 1px + 2px inset as the
+		   frame, here in the track colour, so both variants share their heights. */
+		[data-variant='pill'] :global(.cui-segmented-group) {
+			border-color: var(--cui-control-on);
+			border-radius: var(--cui-radius-full);
+			background-color: var(--cui-control-on);
+		}
+
+		[data-variant='pill'] :global(.cui-segment) {
+			border-radius: var(--cui-radius-full);
+			color: var(--cui-control-on-mark);
+			font-weight: var(--cui-font-weight-semibold);
+		}
+
+		[data-variant='pill'] :global(.cui-segment[data-state='checked']) {
+			background-color: var(--cui-control-on-mark);
+			color: var(--cui-control-on);
+		}
+
+		@media (hover: hover) {
+			[data-variant='pill']
+				:global(.cui-segment[data-state='unchecked']:not([data-disabled]):hover) {
+				background-color: var(--cui-surface-inverse-hover);
+			}
+		}
+
+		/* The ring goes around the whole track, on the page surface: around a segment it would sit
+		   on the track colour, where the focus ring lacks contrast. Focus is always on the chosen
+		   segment (arrows move and select), so the ring still says where the focus is. */
+		[data-variant='pill'] :global(.cui-segment:focus-visible) {
+			outline: none;
+		}
+
+		[data-variant='pill'] :global(.cui-segmented-group:has(.cui-segment:focus-visible)) {
+			outline: var(--cui-border-width-focus) solid var(--cui-focus-ring);
+			outline-offset: var(--cui-focus-offset);
 		}
 
 		/* A disabled option fades on its own; a disabled control fades as a whole. */
