@@ -21,7 +21,8 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
   ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` (order changed by D5).
   Library in #14, Campus pilot in calliope-campus#135
 - [ ] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
-  Bibliothekskomponenten
+  Bibliothekskomponenten. Library in #16, gaps for the dashboard closed after it (breakdown in
+  section 4.3); open: the Campus migration
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
   (breakdown in section 4.1)
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable
@@ -291,6 +292,53 @@ Still open, each a card in its repository:
    `size="xl"`/`"full"` and `fill` to `Dialog`.
 5. ml-machine (gesture training, Svelte 4 + WindiCSS) is a separate app, not Teachable. It keeps
    running and is to be lifted to Svelte 5 later; only then does it become a consumer.
+
+### 4.3 W3 breakdown (2026-11-18)
+
+State: the Wave 2 components are on `main` (#16), with `Rezepte/IoT-Dashboard` as the target
+picture. Campus pins calliope-ui at `9e5abc4` (LineChart) and uses it in the IoT dashboard only for
+Button, IconButton, Menu, Dialog and `confirmDialog`. The eleven IoT files (`IotDashboard`,
+`IotWidget`, `IotWidgetEditor`, `IotFeedsTab`, `IotDevices`, `IotUnknownFeeds`, `IotChart`,
+`IotProgramChip`, `IotProjectButton`, `SegmentedSwitch`, `room/IotWifiPanel`) hold about 64 hex
+values, 127 literal `hsl()` and no `--cui-*` colour token; each file has its own SCSS palette.
+
+**Gaps closed in calliope-ui for the dashboard**
+
+- `LineChart`: `height="fill"` (fills the tile, legend included), `xMode="index"` (nth reading,
+  evenly spaced), `xLabel`/`yLabel` axis captions. Replaces Campus' `IotChart` and its
+  `svelte-portal` tooltip.
+- `Select`: item `group` (headings like `<optgroup>`) for the widget editor's feed picker.
+- Icons `fullscreen-exit`, `send` (text entry of a widget) and `drag` (tile grip).
+
+**Campus file → calliope-ui**
+
+| Campus | calliope-ui |
+|---|---|
+| `SegmentedSwitch` (also in `EditorHeader`, `MakeCodeToolbar`, `WallFocusView`) | `SegmentedControl` |
+| `IotChart` | `LineChart` (`height="fill"`, `xMode`, `xLabel`/`yLabel`, `yMin`/`yMax`) |
+| Dashboard: token button, program split button, edit/fullscreen tools | `Popover` + `Button` (copy), `Button` + `Menu`, `IconButton` (pressed) in a `Toolbar` |
+| Dashboard: hint bars, error line, "wird vorbereitet", empty board | `Banner` (actions, dismiss), `Banner tone="error"`, `Spinner`, `EmptyState` with `ChoiceList` start choices |
+| Device chips, who-pills, status dots (`--ink`) | `Badge` with `swatch`; `StatusDot` + word for device status; filter chips `Chip` |
+| Widget: switch, slider, text entry, "noch keine Werte" | `Switch`, `Slider` (`onValueCommit`), `TextField` + `IconButton send`, `EmptyState compact` |
+| Widget editor: kind picker, fields, feed/device pickers, x-axis, columns, colour swatches | `ChoiceList`, `TextField`, `Select` (groups), `SegmentedControl`, `Checkbox` group, `RadioGroup variant="swatch"` |
+| Feeds tab: new feed, view switch, merge bar, `title` hints, mini buttons | `TextField`, `SegmentedControl`, `Banner`, `Tooltip`, `Button size="s"` |
+| `IotDevices`: native `<dialog>` block confirm, rename, mini buttons | `confirmDialog`, `TextField`, `Button size="s"` |
+| `IotProgramChip`, `IotUnknownFeeds`, `IotProjectButton`, `IotWifiPanel` | `Badge tone="warning"`, `Button`, `Menu`/`MenuGroup`/`MenuItem` + `Icon wifi`, `TextField` (password stays `type="text"`) |
+| Local SCSS palettes, `#9af406` focus outline | `--cui-*` tokens, `--cui-focus-ring`; widget tiles are dark areas (`data-theme="dark"`) |
+
+**Stays in Campus, on tokens:** the tile grid with drag and resize, the per-device bar chart, the
+lamp grid with its own on/off colours, the auto-fitting big readout, and the feed and device
+tables (the library has no Table and no Disclosure yet; the `<details>` of the feeds tab stays
+native). They are styled with `--cui-*` tokens only.
+
+**Device colours (D4):** Campus' eight device colours (`deviceColors.ts`) and the free colour per
+widget become the six series slots: `assignSeriesSlots` by serial, the widget colour picker a
+swatch RadioGroup over `--cui-data-series-1…6` (plus "auto"). Badge swatches, tables and charts
+then show a device in the same colour.
+
+**Steps:** one Campus card: bump the pin to the current calliope-ui `main`, migrate the files as
+in the table, delete `SegmentedSwitch` and `IotChart`, drop `svelte-portal` if nothing else uses
+it. W3 is ticked once it has landed.
 
 ## 5. Einsatz von Design-Tools (impeccable / intent-Familie)
 

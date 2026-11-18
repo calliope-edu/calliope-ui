@@ -83,7 +83,11 @@ export const icons = {
 	login:
 		'<path fill="currentColor" d="M18 20.75h-3a.75.75 0 0 1 0-1.5h3a1.16 1.16 0 0 0 1.25-1V5.78a1.16 1.16 0 0 0-1.25-1h-3a.75.75 0 0 1 0-1.5h3a2.64 2.64 0 0 1 2.75 2.53v12.41A2.64 2.64 0 0 1 18 20.75"/><path fill="currentColor" d="M11 16.75a.74.74 0 0 1-.53-.22a.75.75 0 0 1 0-1.06L13.94 12l-3.47-3.47a.75.75 0 0 1 1.06-1.06l4 4a.75.75 0 0 1 0 1.06l-4 4a.74.74 0 0 1-.53.22"/><path fill="currentColor" d="M15 12.75H4a.75.75 0 0 1 0-1.5h11a.75.75 0 0 1 0 1.5"/>',
 	logout:
-		'<path fill="currentColor" d="M9 20.75H6a2.64 2.64 0 0 1-2.75-2.53V5.78A2.64 2.64 0 0 1 6 3.25h3a.75.75 0 0 1 0 1.5H6a1.16 1.16 0 0 0-1.25 1v12.47a1.16 1.16 0 0 0 1.25 1h3a.75.75 0 0 1 0 1.5Zm7-4a.74.74 0 0 1-.53-.22a.75.75 0 0 1 0-1.06L18.94 12l-3.47-3.47a.75.75 0 1 1 1.06-1.06l4 4a.75.75 0 0 1 0 1.06l-4 4a.74.74 0 0 1-.53.22"/><path fill="currentColor" d="M20 12.75H9a.75.75 0 0 1 0-1.5h11a.75.75 0 0 1 0 1.5"/>'
+		'<path fill="currentColor" d="M9 20.75H6a2.64 2.64 0 0 1-2.75-2.53V5.78A2.64 2.64 0 0 1 6 3.25h3a.75.75 0 0 1 0 1.5H6a1.16 1.16 0 0 0-1.25 1v12.47a1.16 1.16 0 0 0 1.25 1h3a.75.75 0 0 1 0 1.5Zm7-4a.74.74 0 0 1-.53-.22a.75.75 0 0 1 0-1.06L18.94 12l-3.47-3.47a.75.75 0 1 1 1.06-1.06l4 4a.75.75 0 0 1 0 1.06l-4 4a.74.74 0 0 1-.53.22"/><path fill="currentColor" d="M20 12.75H9a.75.75 0 0 1 0-1.5h11a.75.75 0 0 1 0 1.5"/>',
+	'fullscreen-exit':
+		'<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 4v2.75A2.25 2.25 0 0 1 6.75 9H4M15 4v2.75A2.25 2.25 0 0 0 17.25 9H20M9 20v-2.75A2.25 2.25 0 0 0 6.75 15H4M15 20v-2.75A2.25 2.25 0 0 1 17.25 15H20"/>',
+	send: '<path fill="currentColor" d="M20.33 3.67a1.45 1.45 0 0 0-1.47-.35L4.23 8.2A1.44 1.44 0 0 0 4 10.85l6.07 3l3 6.09a1.44 1.44 0 0 0 1.29.79h.1a1.43 1.43 0 0 0 1.26-1l4.95-14.59a1.41 1.41 0 0 0-.34-1.47M4.85 9.58l12.77-4.26l-7.09 7.09Zm9.58 9.57l-2.84-5.68l7.09-7.09Z"/>',
+	drag: '<circle cx="9" cy="5" r="1.75" fill="currentColor"/><circle cx="9" cy="12" r="1.75" fill="currentColor"/><circle cx="9" cy="19" r="1.75" fill="currentColor"/><circle cx="15" cy="5" r="1.75" fill="currentColor"/><circle cx="15" cy="12" r="1.75" fill="currentColor"/><circle cx="15" cy="19" r="1.75" fill="currentColor"/>'
 } as const;
 
 export type IconName = keyof typeof icons;

@@ -28,6 +28,15 @@
 		{ value: 'mini-4', label: 'Calliope mini „Schulgarten“' }
 	];
 
+	// The feed picker of the IoT widget editor: feeds of the program first, then ones seen so far.
+	const feeds = [
+		{ value: 'temperatur', label: 'temperatur', group: 'Aus dem Programm' },
+		{ value: 'licht', label: 'licht', group: 'Aus dem Programm' },
+		{ value: 'lautstaerke', label: 'lautstaerke', group: 'Aus dem Programm' },
+		{ value: 'test', label: 'test', group: 'Schon empfangen' },
+		{ value: 'wert2', label: 'wert2', group: 'Schon empfangen' }
+	];
+
 	const { Story } = defineMeta({
 		title: 'Primitives/Select',
 		component: Select,
@@ -92,6 +101,18 @@
 				<div class="field"><Select label="Messwert" items={metrics} bind:value={metric} /></div>
 				<span class="muted">value = {metric ?? '–'}</span>
 			</Row>
+		</section>
+
+		<section>
+			<h2>Gruppen</h2>
+			<p class="section-intro">
+				Einträge mit derselben <code>group</code> stehen unter einer gemeinsamen Überschrift, wie
+				<code>&lt;optgroup&gt;</code>. Nur, wenn die Gruppen beim Finden helfen; sonst eine flache
+				Liste.
+			</p>
+			<div class="field">
+				<Select label="Messwert" items={feeds} placeholder="Messwert wählen" />
+			</div>
 		</section>
 
 		<section data-theme="dark" class="dark-band">

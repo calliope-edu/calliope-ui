@@ -318,7 +318,8 @@ apps need no icon plugin. The set is **PrimeIcons** (decided by the owner on 202
 the comparison with Material Symbols in Storybook, Foundations/Icons): one line weight (1.5px,
 round ends), unfilled, from the design draft. PrimeIcons has no Bluetooth and no USB glyph
 (`null` in the map); both are drawn in its style in the script (`DRAWN`), so the connection
-widget keeps them. The map still names the Material Symbols equivalent of every semantic name,
+widget keeps them. The same goes for `fullscreen-exit` (the corners of `fullscreen` turned inward)
+and `drag` (a grip of six dots for the IoT dashboard tiles). The map still names the Material Symbols equivalent of every semantic name,
 so switching back stays one constant and a rerun.
 
 Icons beside a text label are the exception. Menu items and buttons carry their text alone;
@@ -453,7 +454,10 @@ field, so it stays dark inside a dark area.
 
 - Select: bits-ui Select, `items` (`{ value, label, disabled? }`), `value` (bindable,
   undefined until chosen), `placeholder`, `hint`, `error`, `required` (`aria-required` on the
-  trigger), `name` (hidden input). For about 4–15 fixed options.
+  trigger), `name` (hidden input). For about 4–15 fixed options. An item's `group` puts
+  neighbouring items with the same group under one heading (`.cui-menu-heading`, like
+  `<optgroup>`; the group is named by it), e.g. the IoT feed picker: "Aus dem Programm", "Schon
+  empfangen".
 - Combobox: bits-ui Combobox for long lists picked by typing (room-code words). The default
   filter is case-insensitive "contains" with start-of-word matches first; `filter` replaces it.
   `emptyLabel` ("Keine Treffer") shows in the list and is announced by a polite live region.
@@ -611,6 +615,12 @@ previous)`, which keeps every known serial's slot and gives a new one the next f
   on 1/2/5 steps, time ticks on round steps (minutes, quarter hours, hours) in local time. Grid
   `border.subtle`, tick text caption `text.muted` tabular. `yMin`/`yMax` fix the range; values
   outside are drawn at the edge. The legend (shape + name, label type) wraps long names.
+- Axis and size: `xMode="time"` (default) places readings at their time, so gaps show;
+  `xMode="index"` places the nth reading of each series at n, evenly spaced, with whole-number
+  ticks (`labels.reading`), and Up/Down then keep the reading number. `xLabel` captions the x
+  axis at its right end, `yLabel` the value axis above it (caption type, semibold, `text.muted`).
+  `height` is px (default 240) or `"fill"`: the chart, legend included, fills the height its
+  container gives it (at least 6rem of plot), so a taller dashboard tile is a taller chart.
 - Accessible pattern: the plot is one tab stop, `role="application"` with
   `aria-roledescription="Diagramm"`, named by `label` and described by a text summary (time span;
   per series lowest, highest and last value; `summary` replaces it, `showSummary` shows it) plus

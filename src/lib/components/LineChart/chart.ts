@@ -97,6 +97,15 @@ export function valueTicks(lo: number, hi: number, count = 4): number[] {
 	return ticks;
 }
 
+/** Ticks for the reading-number axis (xMode "index"): whole numbers on round steps, at most `max`. */
+export function indexTicks(lo: number, hi: number, max: number): number[] {
+	if (!(hi > lo) || max < 1) return [Math.round(lo)];
+	const step = Math.max(1, niceStep((hi - lo) / max));
+	const ticks: number[] = [];
+	for (let i = Math.ceil(lo / step) * step; i <= hi; i += step) ticks.push(i);
+	return ticks;
+}
+
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 const HOUR = 60 * MINUTE;

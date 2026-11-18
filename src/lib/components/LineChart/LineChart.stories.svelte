@@ -138,6 +138,36 @@
 		</section>
 
 		<section>
+			<h2>In der Dashboard-Kachel</h2>
+			<p class="section-intro">
+				Mit <code>height="fill"</code> füllt das Diagramm samt Legende die Höhe, die die Kachel ihm
+				lässt: eine höhere Kachel ist ein höheres Diagramm, nichts scrollt. Die linke Kachel lässt
+				sich an der Ecke unten rechts größer ziehen. Rechts zählt die x-Achse nach Messung statt
+				nach Uhrzeit (<code>xMode="index"</code>): die n-te Messung jedes Geräts steht bei n,
+				gleichmäßig verteilt. <code>xLabel</code> und <code>yLabel</code> beschriften die Achsen.
+			</p>
+			<div class="tiles">
+				<article class="widget tile resizable" data-theme="dark">
+					<header><h3>Temperatur</h3></header>
+					<LineChart label="Temperatur" series={four.slice(0, 2)} unit="°C" height="fill" />
+				</article>
+				<article class="widget tile" data-theme="dark">
+					<header><h3>Temperatur nach Messung</h3></header>
+					<LineChart
+						label="Temperatur nach Messung"
+						series={withSlots(
+							devices.slice(0, 2).map((d) => ({ ...d, points: d.points.slice(0, 12) }))
+						)}
+						height="fill"
+						xMode="index"
+						xLabel="Messung"
+						yLabel="°C"
+					/>
+				</article>
+			</div>
+		</section>
+
+		<section>
 			<h2>Lange deutsche Namen</h2>
 			<p class="section-intro">
 				Namen in der Legende brechen um statt abgeschnitten zu werden; auch eine schmale Kachel
@@ -212,6 +242,27 @@
 		border-radius: var(--cui-radius-lg);
 		background-color: var(--cui-surface-default);
 		color: var(--cui-text-default);
+	}
+
+	/* Side by side; a tile pulled larger pushes its neighbour instead of covering it. */
+	.tiles {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: var(--cui-space-4);
+	}
+
+	.widget.tile {
+		box-sizing: border-box;
+		width: 22rem;
+		height: 18rem;
+	}
+
+	.widget.resizable {
+		min-width: 14rem;
+		min-height: 10rem;
+		overflow: hidden;
+		resize: both;
 	}
 
 	.widget.wide {

@@ -6,7 +6,7 @@
 
 	const shippedNames = Object.keys(shipped) as IconName[];
 	// PrimeIcons has no glyph for these; they are drawn in its style (scripts/build-icons.js).
-	const drawn: IconName[] = ['bluetooth', 'usb'];
+	const drawn: IconName[] = ['bluetooth', 'usb', 'fullscreen-exit', 'drag'];
 
 	type SetId = 'prime' | 'material';
 	type Theme = 'light' | 'dark';
