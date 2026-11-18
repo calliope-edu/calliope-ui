@@ -31,6 +31,42 @@
 	function saveLater() {
 		return new Promise<void>((resolve) => setTimeout(resolve, 1500));
 	}
+
+	/** Clears the toasts of a story when it is left; they live in svelte-sonner's global state. */
+	function clearToasts() {
+		return () => {
+			toast.dismiss();
+		};
+	}
+
+	/** One toast of each kind that stays. Raised after the Toaster is on the page, so it measures them. */
+	async function raiseAll() {
+		const next = () => new Promise((resolve) => setTimeout(resolve, 150));
+		toast.loading('Wird gespeichert …', { duration: Infinity });
+		await next();
+		toast('Feed „licht“ gelöscht', {
+			duration: Infinity,
+			action: { label: 'Rückgängig', onClick: () => {} }
+		});
+		await next();
+		toast.info('Ein neues Gerät ist im Raum', { duration: Infinity });
+		await next();
+		toast.success('Dashboard gespeichert', {
+			description: 'Alle Kacheln sind gesichert.',
+			duration: Infinity
+		});
+		await next();
+		toast.warning('Raum pausiert', {
+			description: 'Geräte senden nichts.',
+			duration: Infinity,
+			action: { label: 'Fortsetzen', onClick: () => {} }
+		});
+		await next();
+		toast.error('Feed konnte nicht gelöscht werden', {
+			description: 'Prüfe die Verbindung und versuche es noch einmal.',
+			duration: Infinity
+		});
+	}
 </script>
 
 <Story name="Spielwiese">
@@ -40,13 +76,26 @@
 	{/snippet}
 </Story>
 
+<Story
+	name="Alle Arten"
+	tags={['!autodocs']}
+	args={{ position: 'top-left', expand: true, visibleToasts: 6 }}
+	beforeEach={clearToasts}
+	play={raiseAll}
+>
+	{#snippet template(args)}
+		<Toaster {...args} />
+	{/snippet}
+</Story>
+
 <Story name="Übersicht" asChild parameters={{ layout: 'fullscreen' }}>
 	<ComponentPage eyebrow="Patterns" title="Toast">
 		{#snippet lead()}
 			Kurze Rückmeldung auf eine Aktion, die gerade passiert ist. Dünne Hülle um svelte-sonner:
 			<code>&lt;Toaster /&gt;</code> einmal im Layout, dann <code>toast()</code>,
-			<code>toast.success()</code> usw. Aussehen wie der Banner: Streifen und Icon-Scheibe, kein eingefärbter
-			Hintergrund.
+			<code>toast.success()</code> usw. Aussehen wie der schwebende Banner: Kopfzeile mit Status-Scheibe
+			(nur Erfolg, Warnung, Fehler), Titel und X, darunter die Beschreibung mit den Buttons. Kein Farbstreifen,
+			kein eingefärbter Hintergrund; beim Laden dreht ein Spinner.
 		{/snippet}
 
 		<Toaster />
@@ -86,6 +135,16 @@
 						toast('Feed „licht“ gelöscht', {
 							action: { label: 'Rückgängig', onClick: () => toast.success('Wiederhergestellt') }
 						})}>Löschen mit Rückgängig</Button
+				>
+			</Row>
+			<Row label="Mit Beschreibung und Aktion">
+				<Button
+					variant="secondary"
+					onclick={() =>
+						toast.warning('Raum pausiert', {
+							description: 'Geräte senden nichts.',
+							action: { label: 'Fortsetzen', onClick: () => toast.success('Raum läuft wieder') }
+						})}>Pausieren</Button
 				>
 			</Row>
 			<Row label="Mit Promise">

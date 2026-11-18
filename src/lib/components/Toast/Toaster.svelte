@@ -13,6 +13,10 @@
 		closeLabel?: string;
 		/** Name of the toast region for screen readers ("Benachrichtigungen"). */
 		label?: string;
+		/** Show the stacked toasts one below the other instead of only on hover. */
+		expand?: boolean;
+		/** How many toasts show at once; older ones wait. */
+		visibleToasts?: number;
 	};
 </script>
 
@@ -28,7 +32,9 @@
 		duration = 5000,
 		closeButton = true,
 		closeLabel = 'Schließen',
-		label = 'Benachrichtigungen'
+		label = 'Benachrichtigungen',
+		expand = false,
+		visibleToasts = 4
 	}: ToasterProps = $props();
 </script>
 
@@ -38,25 +44,26 @@
 	<span class="cui-toast-disc"><Icon {name} size="s" /></span>
 {/snippet}
 
+<!-- Like the Banner: a disc for success, warning and error, no icon for info, a spinner while loading. -->
 {#snippet successIcon()}{@render disc('check')}{/snippet}
-{#snippet infoIcon()}{@render disc('info')}{/snippet}
 {#snippet warningIcon()}{@render disc('warning')}{/snippet}
 {#snippet errorIcon()}{@render disc('error')}{/snippet}
-{#snippet loadingIcon()}<Spinner size="m" />{/snippet}
+{#snippet loadingIcon()}<Spinner size="s" />{/snippet}
 {#snippet closeIcon()}<Icon name="close" size="s" />{/snippet}
 
 <Toaster
 	{position}
 	{duration}
+	{expand}
 	{closeButton}
 	closeButtonAriaLabel={closeLabel}
 	containerAriaLabel={label}
 	gap={8}
-	visibleToasts={4}
+	{visibleToasts}
 	class="cui-toaster"
 	style="z-index: var(--cui-z-index-toast)"
 	{successIcon}
-	{infoIcon}
+	infoIcon={null}
 	{warningIcon}
 	{errorIcon}
 	{loadingIcon}
@@ -66,6 +73,7 @@
 		classes: {
 			toast: 'cui-toast',
 			icon: 'cui-toast-icon',
+			loader: 'cui-toast-loader',
 			content: 'cui-toast-content',
 			title: 'cui-toast-title',
 			description: 'cui-toast-description',
