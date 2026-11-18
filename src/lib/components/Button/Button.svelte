@@ -3,14 +3,17 @@
 	import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 	import type { IconName } from '../../icons/icons.js';
 
-	export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link';
+	export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'link' | 'bar';
 	export type ButtonTone = 'neutral' | 'positive' | 'negative' | 'identity';
 	export type ButtonSize = 's' | 'm' | 'l';
 	export type Identity =
 		'ki-training' | 'teachable' | 'iot' | 'robotik' | 'makecode' | 'python' | 'blocks' | 'markdown';
 
 	type CommonProps = {
-		/** primary = ink fill · secondary = 2px outline · ghost = no border · link = text link. */
+		/**
+		 * primary = ink fill · secondary = 2px outline · ghost = no border · link = text link ·
+		 * bar = the editor bar's button (ink fill in both themes, normal case, 8px corners).
+		 */
 		variant?: ButtonVariant;
 		/** Colours the fill of a primary button only; other variants stay neutral (no coloured text). */
 		tone?: ButtonTone;
@@ -224,6 +227,27 @@
 			text-transform: none;
 		}
 
+		/* Bar: the button of an editor bar (Campus' EditorHeader `.bar-button`: Share, extensions,
+		   Calliope mini version). Ink fill and white label in both themes, so it reads the same on
+		   a dark and a light bar; no frame, radius.lg, semibold label in normal case. Hover layers
+		   a white tint; pressed flips to a white fill. */
+		.cui-button[data-variant='bar'] {
+			--_bg: var(--cui-action-bar-bg);
+			--_fg: var(--cui-action-bar-fg);
+			--_hover: var(--cui-action-bar-hover);
+			--_pad: var(--cui-space-3);
+			border-width: 0;
+			border-radius: var(--cui-radius-lg);
+			font-family: var(--cui-typography-label-font-family);
+			font-weight: var(--cui-font-weight-semibold);
+			letter-spacing: normal;
+			text-transform: none;
+		}
+
+		.cui-button[data-variant='bar'][data-size='s'] {
+			--_pad: var(--cui-space-2);
+		}
+
 		/* Tones fill a primary button with the paired text colour; nothing else is coloured. */
 		.cui-button[data-tone='positive'] {
 			--_bg: var(--cui-status-success-fill);
@@ -302,6 +326,13 @@
 			--_fg: var(--cui-text-inverse);
 			--_line: var(--cui-surface-inverse);
 			--_hover: transparent;
+		}
+
+		/* Pressed: white fill with an ink ring, so it stays a button on a white page too. */
+		.cui-button[data-variant='bar'][aria-pressed='true'] {
+			--_bg: var(--cui-action-bar-fg);
+			--_fg: var(--cui-action-bar-bg);
+			box-shadow: inset 0 0 0 var(--cui-border-width-button) var(--cui-action-bar-bg);
 		}
 
 		.cui-button:disabled,

@@ -14,7 +14,7 @@
 		args: { icon: 'settings', label: 'Einstellungen', variant: 'ghost', size: 'm', tooltip: true },
 		argTypes: {
 			icon: { control: 'select', options: Object.keys(icons) },
-			variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary'] },
+			variant: { control: 'inline-radio', options: ['ghost', 'secondary', 'primary', 'bar'] },
 			size: { control: 'inline-radio', options: ['s', 'm', 'l'] },
 			pressed: { control: 'boolean' }
 		}
@@ -47,8 +47,13 @@
 					<IconButton {size} icon="settings" label="Einstellungen" />
 					<IconButton {size} icon="edit" label="Umbenennen" variant="secondary" />
 					<IconButton {size} icon="add" label="Programm hinzufügen" variant="primary" />
+					<IconButton {size} icon="share" label="Teilen" variant="bar" />
 				</Row>
 			{/each}
+			<p class="section-intro">
+				<code>bar</code> ist der Leisten-Button ohne Beschriftung, etwa Teilen in der MakeCode-Leiste:
+				schwarze Fläche in beiden Themes, 8 px Ecken statt Kreis (siehe Button, Leisten-Button).
+			</p>
 		</section>
 
 		<section>

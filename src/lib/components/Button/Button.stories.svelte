@@ -4,6 +4,7 @@
 	import ComponentPage from '../../../stories/components/ComponentPage.svelte';
 	import Guidelines from '../../../stories/components/Guidelines.svelte';
 	import Row from '../../../stories/components/Row.svelte';
+	import IconButton from '../IconButton/IconButton.svelte';
 	import Button from './Button.svelte';
 
 	const iconOptions = [undefined, ...Object.keys(icons)];
@@ -15,7 +16,10 @@
 		parameters: { layout: 'padded' },
 		args: { variant: 'primary', tone: 'neutral', size: 'm', loading: false, disabled: false },
 		argTypes: {
-			variant: { control: 'inline-radio', options: ['primary', 'secondary', 'ghost', 'link'] },
+			variant: {
+				control: 'inline-radio',
+				options: ['primary', 'secondary', 'ghost', 'link', 'bar']
+			},
 			tone: { control: 'inline-radio', options: ['neutral', 'positive', 'negative', 'identity'] },
 			identity: {
 				control: 'select',
@@ -52,6 +56,7 @@
 
 <script lang="ts">
 	let paused = $state(false);
+	let barPressed = $state(false);
 </script>
 
 <Story name="Spielwiese">
@@ -138,6 +143,47 @@
 		</section>
 
 		<section>
+			<h2>Leisten-Button</h2>
+			<p class="section-intro">
+				<code>variant="bar"</code> ist der Button der Editor-Leiste aus Campus (Teilen, Erweiterungen,
+				Calliope mini rechts in der MakeCode- und IoT-Leiste): schwarze Fläche, weiße Schrift in normaler
+				Schreibweise, halbfett, 8 px Ecken, kein Rahmen. Er sieht in beiden Themes gleich aus und steht
+				so auf einer hellen wie auf einer dunklen Leiste. Beim Überfahren legt sich ein weißer Schleier
+				darüber, gedrückt wird er weiß mit schwarzem Rand. Vorläufig eine Variante neben den anderen,
+				bis entschieden ist, welcher Weg bleibt.
+			</p>
+			{#each sizes as size (size)}
+				<Row label="Größe {size}">
+					<IconButton {size} variant="bar" icon="share" label="Teilen" />
+					<Button {size} variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
+					<Button {size} variant="bar" iconEnd="chevron-down">Calliope mini 3</Button>
+				</Row>
+			{/each}
+			<Row label="Zustände">
+				<Button variant="bar" pressed={barPressed} onclick={() => (barPressed = !barPressed)}>
+					Simulator
+				</Button>
+				<Button variant="bar" loading>Teilen</Button>
+				<Button variant="bar" disabled>Calliope mini 3</Button>
+				<IconButton variant="bar" icon="share" label="Teilen" disabled />
+			</Row>
+			<div class="bars">
+				<div class="editor-bar" data-theme="light">
+					<span>Helle Leiste</span>
+					<IconButton variant="bar" icon="share" label="Teilen" />
+					<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
+					<Button variant="bar" iconEnd="chevron-down">Calliope mini 3</Button>
+				</div>
+				<div class="editor-bar" data-theme="dark">
+					<span>Dunkle Leiste</span>
+					<IconButton variant="bar" icon="share" label="Teilen" />
+					<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
+					<Button variant="bar" iconEnd="chevron-down">Calliope mini 3</Button>
+				</div>
+			</div>
+		</section>
+
+		<section>
 			<h2>Breite</h2>
 			<p class="section-intro">
 				Ein Button ist so breit wie seine Beschriftung, auch in Spalten (Karten, Dialoge), die ihre
@@ -204,6 +250,7 @@
 				]}
 				notFor={[
 					'Nur ein Icon: IconButton.',
+					'Aktionen rechts in einer Editor-Leiste: variant="bar", nicht primary oder secondary.',
 					'Navigation zu einer anderen Seite im Fließtext: ein normaler Link.',
 					'Ein Zustand an/aus, der sofort gilt: Switch.'
 				]}
@@ -227,6 +274,31 @@
 		--cui-button-border-width-s: var(--cui-border-width-button-scaled-s);
 		--cui-button-border-width-m: var(--cui-border-width-button-scaled-m);
 		--cui-button-border-width-l: var(--cui-border-width-button-scaled-l);
+	}
+
+	.bars {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-3);
+		margin-top: var(--cui-space-4);
+	}
+
+	/* A stand-in for the editor bar: surface.subtle is mist on light, graphite on dark. */
+	.editor-bar {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: var(--cui-space-2);
+		padding: var(--cui-space-2) var(--cui-space-4);
+		border-radius: var(--cui-radius-lg);
+		background-color: var(--cui-surface-subtle);
+		color: var(--cui-text-default);
+	}
+
+	.editor-bar span {
+		margin-right: auto;
+		color: var(--cui-text-muted);
+		font-size: var(--cui-font-size-sm);
 	}
 
 	.dark-band {

@@ -208,6 +208,7 @@
 		--cui-surface-scrim: #1b1c1d99; /** Backdrop behind dialogs */
 		--cui-text-muted: #1b1c1db3; /** Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist) */
 		--cui-border-control: #1b1c1d99; /** Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist) */
+		--cui-action-bar-hover: #ffffff1f; /** Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D) */
 		--cui-action-hover: #1b1c1d14; /** Hover tint for ghost buttons and menu items */
 		--cui-surface-page: var(--cui-palette-white); /** Page background */
 		--cui-surface-default: var(
@@ -301,6 +302,12 @@
 		--cui-action-primary-bg: var(--cui-surface-inverse); /** Primary button fill */
 		--cui-action-primary-bg-hover: var(--cui-surface-inverse-hover); /** Primary button hover */
 		--cui-action-primary-fg: var(--cui-text-inverse); /** Primary button label */
+		--cui-action-bar-bg: var(
+			--cui-surface-inverse
+		); /** Bar button fill (editor bar): ink in both themes */
+		--cui-action-bar-fg: var(
+			--cui-text-inverse
+		); /** Bar button label: white in both themes (17.1:1 on ink) */
 	}
 
 	[data-theme='dark'] {
@@ -308,6 +315,7 @@
 		--cui-surface-scrim: #000000b3; /** Backdrop behind dialogs */
 		--cui-text-muted: #ffffffb3; /** Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist) */
 		--cui-border-control: #ffffff99; /** Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist) */
+		--cui-action-bar-hover: #ffffff1f; /** Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D) */
 		--cui-action-hover: #ffffff1f; /** Hover tint for ghost buttons and menu items */
 		--cui-surface-page: var(--cui-palette-black); /** Page background */
 		--cui-surface-default: var(
@@ -403,5 +411,11 @@
 		--cui-action-primary-bg: var(--cui-surface-inverse); /** Primary button fill */
 		--cui-action-primary-bg-hover: var(--cui-surface-inverse-hover); /** Primary button hover */
 		--cui-action-primary-fg: var(--cui-text-inverse); /** Primary button label */
+		--cui-action-bar-bg: var(
+			--cui-surface-default
+		); /** Bar button fill (editor bar): ink in both themes */
+		--cui-action-bar-fg: var(
+			--cui-text-default
+		); /** Bar button label: white in both themes (17.1:1 on ink) */
 	}
 }
