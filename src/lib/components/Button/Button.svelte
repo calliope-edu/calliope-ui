@@ -12,7 +12,8 @@
 	type CommonProps = {
 		/**
 		 * primary = ink fill · secondary = 2px outline · ghost = no border · link = text link ·
-		 * bar = the editor bar's button (ink fill in both themes, normal case, 8px corners).
+		 * bar = the editor bar's button (filled with the other neutral of its surface, normal case,
+		 * 8px corners; a container's data-surface tells it the surface).
 		 */
 		variant?: ButtonVariant;
 		/** Colours the fill of a primary button only; other variants stay neutral (no coloured text). */
@@ -228,9 +229,10 @@
 		}
 
 		/* Bar: the button of an editor bar (Campus' EditorHeader `.bar-button`: Share, extensions,
-		   Calliope mini version). Ink fill and white label in both themes, so it reads the same on
-		   a dark and a light bar; no frame, radius.lg, semibold label in normal case. Hover layers
-		   a white tint; pressed flips to a white fill. */
+		   Calliope mini version). Its fill is the other neutral of the surface it stands on
+		   (data-surface on a container picks it, see styles.css), so it stands off the bar;
+		   no frame, radius.lg, semibold label in normal case. Hover layers the usual tint
+		   (an edge on a grey bar); pressed flips to the inverse fill like the other toggles. */
 		.cui-button[data-variant='bar'] {
 			--_bg: var(--cui-action-bar-bg);
 			--_fg: var(--cui-action-bar-fg);
@@ -308,6 +310,17 @@
 				background-image: none;
 			}
 
+			/* On a grey bar the tint is off and an edge marks hover instead (styles.css). */
+			.cui-button[data-variant='bar']:not(
+					[aria-disabled='true'],
+					:disabled,
+					[data-loading],
+					[aria-pressed='true']
+				):hover {
+				box-shadow: inset 0 0 0 var(--cui-border-width-button)
+					var(--cui-action-bar-hover-line, transparent);
+			}
+
 			.cui-button[data-variant='link']:not([aria-disabled='true']):hover {
 				background-image: none;
 				text-decoration: underline;
@@ -326,13 +339,6 @@
 			--_fg: var(--cui-text-inverse);
 			--_line: var(--cui-surface-inverse);
 			--_hover: transparent;
-		}
-
-		/* Pressed: white fill with an ink ring, so it stays a button on a white page too. */
-		.cui-button[data-variant='bar'][aria-pressed='true'] {
-			--_bg: var(--cui-action-bar-fg);
-			--_fg: var(--cui-action-bar-bg);
-			box-shadow: inset 0 0 0 var(--cui-border-width-button) var(--cui-action-bar-bg);
 		}
 
 		.cui-button:disabled,

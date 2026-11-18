@@ -46,8 +46,12 @@
 	}
 </script>
 
-{#snippet makecodeBar(theme?: 'light' | 'dark', live = false)}
-	<div class="editor-bar" data-theme={theme}>
+{#snippet makecodeBar(
+	theme?: 'light' | 'dark',
+	live = false,
+	surface: 'subtle' | 'default' | 'page' = 'subtle'
+)}
+	<div class="editor-bar" data-theme={theme} data-surface={surface}>
 		<div class="bar-start"></div>
 		<SegmentedControl
 			label="Programmiersprache"
@@ -109,9 +113,11 @@
 				Die Leiste über einem eingebetteten Editor: in der Mitte der Umschalter als Pille (<code
 					>SegmentedControl variant="pill"</code
 				>), rechts die Leisten-Buttons (<code>Button variant="bar"</code>, Teilen als
-				<code>IconButton variant="bar"</code>). Die Leiste selbst ist <code>surface.subtle</code>;
-				sie folgt dem Theme der Seite. Die Leisten-Buttons bleiben in beiden Themes schwarz mit
-				weißer Schrift, wie in Campus.
+				<code>IconButton variant="bar"</code>). Die Leiste selbst ist <code>surface.subtle</code>
+				und folgt dem Theme der Seite; <code>data-surface="subtle"</code> malt sie und sagt den Leisten-Buttons,
+				dass sie auf Grau stehen. Die Buttons nehmen das jeweils andere Neutral: weiß auf der grauen,
+				schwarz auf der dunkelgrauen Leiste. Steht die Leiste auf der Seite oder einer Karte (ohne Attribut),
+				werden sie grau auf Weiß und dunkelgrau auf Schwarz.
 			</p>
 		</header>
 
@@ -119,16 +125,29 @@
 		<p class="note">Folgt dem Theme der Seite (Umschalter oben in der Werkzeugleiste).</p>
 		{@render makecodeBar(undefined, true)}
 
-		<h2>Hell und dunkel</h2>
+		<h2>Auf grauer Leiste</h2>
+		<p class="note">
+			<code>data-surface="subtle"</code>: weiß auf Grau (hell), schwarz auf Dunkelgrau (dunkel).
+		</p>
 		<div class="stack">
 			{@render makecodeBar('light')}
 			{@render makecodeBar('dark')}
 		</div>
 
+		<h2>Auf weißer und schwarzer Fläche</h2>
+		<p class="note">
+			Ohne Attribut oder mit <code>data-surface="default"</code> / <code>"page"</code>: grau auf
+			Weiß (hell), dunkelgrau auf Schwarz (dunkel).
+		</p>
+		<div class="stack">
+			<div class="frame" data-theme="light">{@render makecodeBar('light', false, 'default')}</div>
+			<div class="frame" data-theme="dark">{@render makecodeBar('dark', false, 'page')}</div>
+		</div>
+
 		<h2>IoT-Dashboard</h2>
 		<div class="stack">
 			{#each ['light', 'dark'] as const as theme (theme)}
-				<div class="editor-bar" data-theme={theme}>
+				<div class="editor-bar" data-theme={theme} data-surface="subtle">
 					<div class="bar-start"><span class="bar-title">Klimaprojekt 7b</span></div>
 					<SegmentedControl
 						label="Ansicht"
@@ -204,8 +223,12 @@
 		min-height: 3.5rem;
 		padding: var(--cui-space-2) var(--cui-space-4);
 		box-sizing: border-box;
-		background-color: var(--cui-surface-subtle);
 		color: var(--cui-text-default);
+	}
+
+	/* Marks the edge of a white or black bar against the page around it. */
+	.frame {
+		border: 1px solid var(--cui-border-subtle);
 	}
 
 	.bar-end {
