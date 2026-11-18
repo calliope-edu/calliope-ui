@@ -149,8 +149,8 @@
 				Calliope mini rechts in der MakeCode- und IoT-Leiste): schwarze Fläche, weiße Schrift in normaler
 				Schreibweise, halbfett, 8 px Ecken, kein Rahmen. Er sieht in beiden Themes gleich aus und steht
 				so auf einer hellen wie auf einer dunklen Leiste. Beim Überfahren legt sich ein weißer Schleier
-				darüber, gedrückt wird er weiß. Vorläufig eine Variante neben den anderen, bis entschieden ist,
-				welcher Weg bleibt.
+				darüber, gedrückt wird er weiß mit schwarzem Rand. Vorläufig eine Variante neben den anderen,
+				bis entschieden ist, welcher Weg bleibt.
 			</p>
 			{#each sizes as size (size)}
 				<Row label="Größe {size}">

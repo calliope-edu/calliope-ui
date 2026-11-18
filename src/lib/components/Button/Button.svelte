@@ -328,9 +328,11 @@
 			--_hover: transparent;
 		}
 
+		/* Pressed: white fill with an ink ring, so it stays a button on a white page too. */
 		.cui-button[data-variant='bar'][aria-pressed='true'] {
 			--_bg: var(--cui-action-bar-fg);
 			--_fg: var(--cui-action-bar-bg);
+			box-shadow: inset 0 0 0 var(--cui-border-width-button) var(--cui-action-bar-bg);
 		}
 
 		.cui-button:disabled,

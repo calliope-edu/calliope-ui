@@ -359,7 +359,7 @@ negative · identity. `size`: s / m / l = 32 / 36 / 40px high, action text 12 / 
   and `action.bar.fg` label, ink and white in both themes, so it reads the same on a light and a
   dark bar; no frame, `radius.lg`, label type at semibold in normal case (no uppercase, no
   tracking). Hover layers `action.bar.hover` (white 12 %, ink becomes about #3B3C3D); pressed flips
-  to a white fill with ink text. A second look kept beside the pill rule for now (owner,
+  to a white fill with ink text and a 2px ink ring. A second look kept beside the pill rule for now (owner,
   2026-11-18), like SegmentedControl's pill.
 
 ### IconButton
