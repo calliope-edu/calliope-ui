@@ -1,46 +1,57 @@
 /*
  * Toast look. svelte-sonner renders the elements and keeps the stacking and swipe layout;
- * it runs unstyled, so everything visible comes from here (same anatomy as Banner).
+ * it runs unstyled, so everything visible comes from here. Same anatomy as the floating Banner:
+ * a heading row with the optional status disc, the title and the X; the description with the
+ * buttons, centred on it, below. The status colour lives in the disc alone: no stripe, no tint.
+ *
+ * sonner's markup is flat (X, icon, content with title and description, cancel, action), so the
+ * rows come from a grid: the content box steps aside (display: contents) and its title and
+ * description take their own areas. The X sits on the heading row, positioned absolutely.
  */
 
 @layer calliope.components {
 	.cui-toast {
 		--_fill: transparent;
 		--_on: var(--cui-text-default);
+		--_x: var(--cui-size-control-s);
 
 		box-sizing: border-box;
-		display: flex;
-		align-items: flex-start;
-		gap: var(--cui-space-3);
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr) auto auto;
+		grid-template-rows: minmax(var(--_x), auto);
+		grid-template-areas: 'icon title cancel action';
+		align-items: center;
 		width: var(--width);
 		max-width: calc(100vw - 2 * var(--cui-space-4));
-		padding: var(--cui-space-3) var(--cui-space-10) var(--cui-space-3) var(--cui-space-4);
+		padding: var(--cui-space-2) var(--cui-space-4);
 		border: var(--cui-border-width-hairline) solid var(--cui-border-subtle);
-		border-left: 4px solid var(--_fill);
 		border-radius: var(--cui-radius-lg);
 		background-color: var(--cui-surface-raised);
 		box-shadow: var(--cui-shadow-menu);
 		color: var(--cui-text-default);
 		font-family: var(--cui-typography-body-font-family);
-		font-size: var(--cui-typography-body-font-size);
+		font-size: var(--cui-typography-label-font-size);
 		line-height: var(--cui-typography-body-line-height);
 	}
 
-	/* A neutral toast has no status, so no stripe colour either. */
-	.cui-toast[data-type='default'],
-	.cui-toast[data-type='normal'],
-	.cui-toast[data-type='loading'],
-	.cui-toast[data-type='action'] {
-		border-left-color: var(--cui-border-subtle);
+	/* With a description the buttons move down beside it, and the row gets a little more room. */
+	.cui-toast:has(.cui-toast-description) {
+		grid-template-rows: minmax(var(--_x), auto) auto;
+		grid-template-areas:
+			'icon title title title'
+			'desc desc cancel action';
+		row-gap: var(--cui-space-1);
+		padding-bottom: var(--cui-space-3);
+	}
+
+	/* The X takes the right end of the heading row; the edge then gets the X's own margin. */
+	.cui-toast:has(> .cui-toast-close) {
+		padding-right: var(--cui-space-2);
 	}
 
 	.cui-toast[data-type='success'] {
 		--_fill: var(--cui-status-success-fill);
 		--_on: var(--cui-status-success-on);
-	}
-	.cui-toast[data-type='info'] {
-		--_fill: var(--cui-status-info-fill);
-		--_on: var(--cui-status-info-on);
 	}
 	.cui-toast[data-type='warning'] {
 		--_fill: var(--cui-status-warning-fill);
@@ -51,46 +62,71 @@
 		--_on: var(--cui-status-error-on);
 	}
 
+	/* 20px slot for the disc or the spinner; sonner centres its loader in it while it fades. */
 	.cui-toast-icon {
-		display: flex;
-		flex: none;
-		align-items: center;
-		height: 1.4em;
+		grid-area: icon;
+		position: relative;
+		display: inline-grid;
+		place-items: center;
+		width: var(--cui-size-icon-m);
+		height: var(--cui-size-icon-m);
+		margin-right: var(--cui-space-2);
+	}
+
+	/* Info has no icon: sonner still renders the empty slot. */
+	.cui-toast-icon:not(:has(*)) {
+		display: none;
 	}
 
 	.cui-toast-disc {
 		display: inline-grid;
 		place-items: center;
-		width: var(--cui-size-icon-l);
-		height: var(--cui-size-icon-l);
+		width: var(--cui-size-icon-m);
+		height: var(--cui-size-icon-m);
 		border-radius: var(--cui-radius-full);
 		background-color: var(--_fill);
 		color: var(--_on);
 	}
 
+	.cui-toast-loader {
+		display: inline-grid;
+		place-items: center;
+	}
+
 	.cui-toast-content {
-		flex: 1;
-		min-width: 0;
+		display: contents;
 	}
 
 	.cui-toast-title {
+		grid-area: title;
+		min-width: 0;
 		font-weight: var(--cui-font-weight-semibold);
 	}
 
 	.cui-toast-description {
+		grid-area: desc;
+		min-width: 0;
 		color: var(--cui-text-muted);
-		font-size: var(--cui-typography-label-font-size);
-		line-height: var(--cui-typography-label-line-height);
+	}
+
+	/* Keep the heading row's last item clear of the X: the title, or the buttons beside it. */
+	.cui-toast:has(> .cui-toast-close):has(.cui-toast-description) .cui-toast-title,
+	.cui-toast:has(> .cui-toast-close):not(:has(> [data-button])) .cui-toast-title,
+	.cui-toast:has(> .cui-toast-close):not(:has(.cui-toast-description)) > [data-button]:last-child {
+		margin-right: calc(var(--_x) + var(--cui-space-2));
+	}
+
+	/* Under a description the buttons end where the banner's do, a step in from the X's edge. */
+	.cui-toast:has(> .cui-toast-close):has(.cui-toast-description) > [data-button]:last-child {
+		margin-right: var(--cui-space-2);
 	}
 
 	/* Action and cancel follow Button size s: secondary and ghost. */
 	.cui-toast-action,
 	.cui-toast-cancel {
-		flex: none;
-		align-self: center;
 		box-sizing: border-box;
 		height: var(--cui-size-control-s);
-		margin: 0;
+		margin: 0 0 0 var(--cui-space-2);
 		padding: 0 var(--cui-space-3);
 		border: var(--cui-border-width-button) solid var(--cui-border-strong);
 		border-radius: var(--cui-radius-full);
@@ -106,7 +142,17 @@
 	}
 
 	.cui-toast-cancel {
+		grid-area: cancel;
 		border-color: transparent;
+	}
+
+	.cui-toast-action {
+		grid-area: action;
+	}
+
+	/* The first button keeps a wider gap to the text, as in the banner. */
+	.cui-toast-content + [data-button] {
+		margin-left: var(--cui-space-3);
 	}
 
 	.cui-toast-close {
@@ -115,8 +161,8 @@
 		right: var(--cui-space-2);
 		display: grid;
 		place-items: center;
-		width: var(--cui-size-control-s);
-		height: var(--cui-size-control-s);
+		width: var(--_x);
+		height: var(--_x);
 		margin: 0;
 		padding: 0;
 		border: 0;

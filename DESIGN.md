@@ -530,10 +530,16 @@ shade).
   `surface.subtle` disc, `actions` snippet, `compact` (left-aligned, no icon) for tables and small
   panels. No status colour: an empty list is not an error.
 - Toast (built): `<Toaster />` once in the layout wraps svelte-sonner unstyled; `toast()` and
-  `toast.success/info/warning/error/promise` are re-exported. Same anatomy as the Banner on
-  `surface.raised` with `shadow.menu`; neutral toasts have no stripe colour. Action and cancel
-  look like Button s secondary / ghost. Errors should pass `duration: Infinity`. Props:
-  `position` (bottom-right), `duration` (5s), `closeButton`, `closeLabel`, `label` (region name).
+  `toast.success/info/warning/error/promise` are re-exported. Looks like the floating Banner
+  (`surface.raised`, `shadow.menu`, label size text, fixed toast width): a heading row with the
+  20px status disc (success, warning, error only; info and neutral toasts have no icon), the
+  semibold title and the X; below it the description in `text.muted` with the buttons centred on
+  it. Without a description the buttons sit in the heading row. A loading toast shows a
+  decorative Spinner s in the disc's place; a promise toast swaps it for the disc when it settles.
+  No side stripe and no tinted background. Action and cancel look like Button s secondary /
+  ghost. Errors should pass `duration: Infinity`. Props: `position` (bottom-right), `duration`
+  (5s), `closeButton`, `closeLabel`, `label` (region name), `expand` (stack shown open),
+  `visibleToasts` (4).
 
 ### Popover
 
