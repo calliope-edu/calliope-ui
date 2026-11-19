@@ -91,14 +91,38 @@ describe.each(['light', 'dark'] as const)('colour roles (%s)', (theme) => {
 		expect(
 			contrastRatio(role(theme, 'action-primary-fg'), role(theme, 'action-primary-bg'))
 		).toBeGreaterThanOrEqual(4.5);
-		expect(
-			contrastRatio(role(theme, 'action-bar-fg'), role(theme, 'action-bar-bg'))
-		).toBeGreaterThanOrEqual(4.5);
 	});
 
-	it('keep the bar button ink with white text, as on the Campus editor bar', () => {
-		expect(role(theme, 'action-bar-bg')).toBe(hex.get('ink'));
-		expect(role(theme, 'action-bar-fg')).toBe(hex.get('white'));
+	it('fill the bar button with the other neutral of its surface, readable and focusable', () => {
+		const cases = [
+			['surface-page', 'action-bar-bg'],
+			['surface-default', 'action-bar-bg'],
+			['surface-subtle', 'action-bar-bg-on-subtle']
+		] as const;
+		for (const [surface, fill] of cases) {
+			const bg = role(theme, surface);
+			const button = role(theme, fill);
+			const fg = role(theme, 'action-bar-fg');
+			expect(button, `${fill} on ${surface}`).not.toBe(bg);
+			expect(contrastRatio(fg, button), `label on ${fill}`).toBeGreaterThanOrEqual(4.5);
+			expect(Math.abs(apcaContrast(fg, button)), `label on ${fill}`).toBeGreaterThanOrEqual(
+				APCA_MIN
+			);
+			expect(
+				contrastRatio(role(theme, 'focus-ring'), bg),
+				`focus on ${surface}`
+			).toBeGreaterThanOrEqual(3);
+		}
+	});
+
+	it('follow the owner rule of 2026-11-18: grey on white, white on grey, and so on', () => {
+		const expected =
+			theme === 'light'
+				? { bar: 'mist', onSubtle: 'white', fg: 'ink' }
+				: { bar: 'graphite', onSubtle: 'ink', fg: 'white' };
+		expect(role(theme, 'action-bar-bg')).toBe(hex.get(expected.bar));
+		expect(role(theme, 'action-bar-bg-on-subtle')).toBe(hex.get(expected.onSubtle));
+		expect(role(theme, 'action-bar-fg')).toBe(hex.get(expected.fg));
 	});
 });
 

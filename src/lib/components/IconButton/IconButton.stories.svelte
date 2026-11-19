@@ -52,7 +52,8 @@
 			{/each}
 			<p class="section-intro">
 				<code>bar</code> ist der Leisten-Button ohne Beschriftung, etwa Teilen in der MakeCode-Leiste:
-				schwarze Fläche in beiden Themes, 8 px Ecken statt Kreis (siehe Button, Leisten-Button).
+				gefüllt mit dem jeweils anderen Neutral seines Untergrunds, 8 px Ecken statt Kreis (siehe Button,
+				Leisten-Button).
 			</p>
 		</section>
 

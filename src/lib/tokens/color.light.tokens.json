@@ -184,24 +184,23 @@
 			"bar": {
 				"bg": {
 					"$type": "color",
-					"$value": "{color.surface.inverse}",
-					"$description": "Bar button fill (editor bar): ink in both themes"
+					"$value": "{color.surface.subtle}",
+					"$description": "Bar button fill on surface.page and surface.default: the other neutral, so it stands off the bar (mist on white)"
+				},
+				"bg-on-subtle": {
+					"$type": "color",
+					"$value": "{color.surface.default}",
+					"$description": "Bar button fill on surface.subtle, picked up under data-surface=\"subtle\" (white on mist)"
 				},
 				"fg": {
 					"$type": "color",
-					"$value": "{color.text.inverse}",
-					"$description": "Bar button label: white in both themes (17.1:1 on ink)"
+					"$value": "{color.text.default}",
+					"$description": "Bar button label (ink: 15.0:1 on mist, 17.1:1 on white)"
 				},
 				"hover": {
 					"$type": "color",
-					"$value": "#FFFFFF1F",
-					"$extensions": {
-						"calliope": {
-							"base": "palette.white",
-							"alpha": 0.12
-						}
-					},
-					"$description": "Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D)"
+					"$value": "{color.action.hover}",
+					"$description": "Hover tint layered on the bar button fill (ink 8 %)"
 				}
 			},
 			"hover": {

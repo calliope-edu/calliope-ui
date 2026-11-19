@@ -355,19 +355,34 @@ negative · identity. `size`: s / m / l = 32 / 36 / 40px high, action text 12 / 
   `tone="identity"`, `identity` picks the fill. Hover on tone fills layers the fixed
   `action.hover` tint instead of a lighter shade.
 - `variant="bar"` is Campus' `.bar-button` (EditorHeader): the actions on the right of the
-  MakeCode and IoT editor bars (Share, "n Erweiterungen", "Calliope mini n"). `action.bar.bg` fill
-  and `action.bar.fg` label, ink and white in both themes, so it reads the same on a light and a
-  dark bar; no frame, `radius.lg`, label type at semibold in normal case (no uppercase, no
-  tracking). Hover layers `action.bar.hover` (white 12 %, ink becomes about #3B3C3D); pressed flips
-  to a white fill with ink text and a 2px ink ring. A second look kept beside the pill rule for now (owner,
-  2026-11-18), like SegmentedControl's pill.
+  MakeCode and IoT editor bars (Share, "n Erweiterungen", "Calliope mini n"). No frame,
+  `radius.lg`, label type at semibold in normal case (no uppercase, no tracking), `action.bar.fg`
+  label (`text.default`). Its fill is the other neutral of the surface it stands on, so it stands
+  off the bar (owner, 2026-11-18):
+
+  | Surface                           | Light         | Dark                  | Token                     |
+  | --------------------------------- | ------------- | --------------------- | ------------------------- |
+  | `surface.page`, `surface.default` | mist on white | graphite on black/ink | `action.bar.bg`           |
+  | `surface.subtle`                  | white on mist | ink on graphite       | `action.bar.bg-on-subtle` |
+
+  The button cannot see its background, so the container says it: `data-surface="subtle"`
+  (`styles.css`, base layer) paints `surface.subtle` and switches `--cui-action-bar-bg` to the
+  on-subtle fill for everything inside; `data-surface="page"` / `"default"` paint those and switch
+  back for a nested area. Without the attribute a container counts as page or default. A nested
+  `data-theme` subtree starts again from default. Hover layers `action.bar.hover` (the usual
+  `action.hover` tint) on page and default. On subtle that tint would melt the button into the bar
+  (white + ink 8 % is about mist, ink + white 12 % about graphite), so there hover draws a 2px
+  `border.control` edge inside the button instead (`--cui-action-bar-hover-line`, set by
+  `data-surface`). Pressed flips to the inverse fill like the other toggles. Label contrast:
+  15.0:1 ink on mist, 12.7:1 white on graphite, 17.1:1 on white and ink. A second look kept beside
+  the pill rule for now (owner, 2026-11-18), like SegmentedControl's pill.
 
 ### IconButton
 
 Required `label` (becomes `aria-label` and the optional Tooltip). Icon is `aria-hidden`. Same
 sizes as Button, circular, hit area never below 24px. Variants ghost (default), secondary,
 primary, and bar (Button's bar look without a label, `radius.lg` instead of a circle; Share on
-the MakeCode bar). `tooltip` defaults to true and shows the label; turn it off where the meaning is
+the MakeCode bar; follows `data-surface` the same way). `tooltip` defaults to true and shows the label; turn it off where the meaning is
 obvious in context (the dialog's close button). Works as a Menu trigger with its tooltip.
 
 ### Dialog, ConfirmDialog (pilot)
@@ -502,6 +517,11 @@ and changes the view at once.
   in `control.on-mark` with `control.on` text, semibold labels, hover `surface.inverse-hover`;
   the focus ring goes around the whole track. Both variants are kept for now (owner,
   2026-11-18); the pill is the exception to "rounded rectangle means read me".
+  `variant="bar"` is a third look for comparison beside the pill (owner, 2026-11-19): the pill
+  shape in the bar buttons' fill (`action.bar.bg`, switched by `data-surface` as for Button:
+  white on a grey bar, mist on white, ink on graphite, graphite on black), `action.bar.fg`
+  labels, the chosen segment in `control.on` with `control.on-mark` text, hover the usual tint;
+  the focus ring goes around the whole track as with the pill.
 
 ### Badge, Chip, StatusDot
 

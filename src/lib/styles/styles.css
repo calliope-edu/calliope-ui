@@ -14,6 +14,37 @@
 		color: var(--cui-text-default);
 	}
 
+	/* data-surface names the surface a container paints, so the bar buttons inside stand off it:
+	   the other neutral of the theme (DESIGN.md, Button). Without it a container counts as
+	   surface.page or surface.default. A nested data-theme subtree starts again from there.
+	   On subtle the hover tint would melt the button into the bar (white + ink 8 % is about
+	   mist), so there hover draws an edge instead (--cui-action-bar-hover-line). */
+	[data-theme] {
+		--cui-action-bar-hover-line: transparent;
+	}
+
+	[data-surface='page'],
+	[data-surface='default'] {
+		--cui-action-bar-bg: var(--cui-surface-subtle);
+		--cui-action-bar-hover: var(--cui-action-hover);
+		--cui-action-bar-hover-line: transparent;
+	}
+
+	[data-surface='page'] {
+		background-color: var(--cui-surface-page);
+	}
+
+	[data-surface='default'] {
+		background-color: var(--cui-surface-default);
+	}
+
+	[data-surface='subtle'] {
+		--cui-action-bar-bg: var(--cui-action-bar-bg-on-subtle);
+		--cui-action-bar-hover: transparent;
+		--cui-action-bar-hover-line: var(--cui-border-control);
+		background-color: var(--cui-surface-subtle);
+	}
+
 	:root {
 		font-family: var(--cui-font-family-sans);
 		font-size: 100%;

@@ -11,7 +11,7 @@
 		label: string;
 		/**
 		 * ghost (default) · secondary (2px outline) · primary (ink fill) · bar (the editor bar's
-		 * button: ink fill in both themes, 8px corners instead of a circle).
+		 * button: filled with the other neutral of its surface, 8px corners instead of a circle).
 		 */
 		variant?: IconButtonVariant;
 		/** s / m / l = 32 / 36 / 40px circle. The hit area never drops below 24px. */
@@ -149,8 +149,18 @@
 				background-image: none;
 			}
 
+			/* On a grey bar the tint is off and an edge marks hover instead (styles.css). */
 			.cui-icon-button[data-variant='bar']:not(:disabled, [aria-busy='true']):hover {
 				background-image: linear-gradient(var(--cui-action-bar-hover), var(--cui-action-bar-hover));
+			}
+
+			.cui-icon-button[data-variant='bar']:not(
+					:disabled,
+					[aria-busy='true'],
+					[aria-pressed='true']
+				):hover {
+				box-shadow: inset 0 0 0 var(--cui-border-width-button)
+					var(--cui-action-bar-hover-line, transparent);
 			}
 		}
 
@@ -159,13 +169,6 @@
 			--_fg: var(--cui-text-inverse);
 			--_line: var(--cui-surface-inverse);
 			background-image: none;
-		}
-
-		/* Pressed: white fill with an ink ring, so it stays a button on a white page too. */
-		.cui-icon-button[data-variant='bar'][aria-pressed='true'] {
-			--_bg: var(--cui-action-bar-fg);
-			--_fg: var(--cui-action-bar-bg);
-			box-shadow: inset 0 0 0 var(--cui-border-width-button) var(--cui-action-bar-bg);
 		}
 
 		.cui-icon-button:disabled {

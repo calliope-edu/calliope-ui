@@ -145,12 +145,16 @@
 		<section>
 			<h2>Leisten-Button</h2>
 			<p class="section-intro">
-				<code>variant="bar"</code> ist der Button der Editor-Leiste aus Campus (Teilen, Erweiterungen,
-				Calliope mini rechts in der MakeCode- und IoT-Leiste): schwarze Fläche, weiße Schrift in normaler
-				Schreibweise, halbfett, 8 px Ecken, kein Rahmen. Er sieht in beiden Themes gleich aus und steht
-				so auf einer hellen wie auf einer dunklen Leiste. Beim Überfahren legt sich ein weißer Schleier
-				darüber, gedrückt wird er weiß mit schwarzem Rand. Vorläufig eine Variante neben den anderen,
-				bis entschieden ist, welcher Weg bleibt.
+				<code>variant="bar"</code> ist der Button der Editor-Leiste aus Campus (Teilen,
+				Erweiterungen, Calliope mini rechts in der MakeCode- und IoT-Leiste): Schrift in normaler
+				Schreibweise, halbfett, 8 px Ecken, kein Rahmen. Seine Fläche ist das jeweils andere Neutral
+				seines Untergrunds, damit er sich abhebt: grau auf Weiß, weiß auf Grau, dunkelgrau auf
+				Schwarz, schwarz auf Dunkelgrau. Auf einer grauen Fläche (<code>surface.subtle</code>) sagt
+				ihm
+				<code>data-surface="subtle"</code> am Container Bescheid; ohne Attribut gilt Seite oder Karte.
+				Beim Überfahren legt sich der übliche Schleier darüber, auf der grauen Leiste ein Rand (der Schleier
+				ließe ihn dort mit der Leiste verschmelzen); gedrückt wird er wie die anderen Umschalter invers.
+				Vorläufig eine Variante neben den anderen, bis entschieden ist, welcher Weg bleibt.
 			</p>
 			{#each sizes as size (size)}
 				<Row label="Größe {size}">
@@ -168,18 +172,25 @@
 				<IconButton variant="bar" icon="share" label="Teilen" disabled />
 			</Row>
 			<div class="bars">
-				<div class="editor-bar" data-theme="light">
-					<span>Helle Leiste</span>
-					<IconButton variant="bar" icon="share" label="Teilen" />
-					<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
-					<Button variant="bar" iconEnd="chevron-down">Calliope mini 3</Button>
-				</div>
-				<div class="editor-bar" data-theme="dark">
-					<span>Dunkle Leiste</span>
-					<IconButton variant="bar" icon="share" label="Teilen" />
-					<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
-					<Button variant="bar" iconEnd="chevron-down">Calliope mini 3</Button>
-				</div>
+				{#each ['light', 'dark'] as const as theme (theme)}
+					<div class="bar-pair" data-theme={theme}>
+						<div class="editor-bar" data-surface="subtle">
+							<span
+								>{theme === 'light' ? 'Graue Leiste' : 'Dunkelgraue Leiste'}
+								<code>data-surface="subtle"</code></span
+							>
+							<IconButton variant="bar" icon="share" label="Teilen" />
+							<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
+							<Button variant="bar" pressed>Simulator</Button>
+						</div>
+						<div class="editor-bar" data-surface={theme === 'light' ? 'default' : 'page'}>
+							<span>{theme === 'light' ? 'Weiße Fläche' : 'Schwarze Fläche'}</span>
+							<IconButton variant="bar" icon="share" label="Teilen" />
+							<Button variant="bar" iconEnd="chevron-down">2 Erweiterungen</Button>
+							<Button variant="bar" pressed>Simulator</Button>
+						</div>
+					</div>
+				{/each}
 			</div>
 		</section>
 
@@ -283,7 +294,17 @@
 		margin-top: var(--cui-space-4);
 	}
 
-	/* A stand-in for the editor bar: surface.subtle is mist on light, graphite on dark. */
+	/* One theme: a grey bar (surface.subtle) above a white or black one (page). */
+	.bar-pair {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-2);
+		padding: var(--cui-space-2);
+		border: 1px solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-xl);
+	}
+
+	/* A stand-in for the editor bar; data-surface paints it and tells the bar buttons. */
 	.editor-bar {
 		display: flex;
 		align-items: center;
@@ -291,7 +312,6 @@
 		gap: var(--cui-space-2);
 		padding: var(--cui-space-2) var(--cui-space-4);
 		border-radius: var(--cui-radius-lg);
-		background-color: var(--cui-surface-subtle);
 		color: var(--cui-text-default);
 	}
 

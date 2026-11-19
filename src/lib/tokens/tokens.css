@@ -208,7 +208,6 @@
 		--cui-surface-scrim: #1b1c1d99; /** Backdrop behind dialogs */
 		--cui-text-muted: #1b1c1db3; /** Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist) */
 		--cui-border-control: #1b1c1d99; /** Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist) */
-		--cui-action-bar-hover: #ffffff1f; /** Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D) */
 		--cui-action-hover: #1b1c1d14; /** Hover tint for ghost buttons and menu items */
 		--cui-surface-page: var(--cui-palette-white); /** Page background */
 		--cui-surface-default: var(
@@ -259,6 +258,9 @@
 			--cui-palette-ink
 		); /** On / checked / filled state of switch, checkbox, radio, slider, progress (D2) */
 		--cui-control-on-mark: var(--cui-palette-white); /** Check mark and switch knob on control.on */
+		--cui-action-bar-hover: var(
+			--cui-action-hover
+		); /** Hover tint layered on the bar button fill (ink 8 %) */
 		--cui-status-success-fill: var(--cui-palette-green); /** Success / online / connected */
 		--cui-status-success-on: var(
 			--cui-palette-black
@@ -303,11 +305,14 @@
 		--cui-action-primary-bg-hover: var(--cui-surface-inverse-hover); /** Primary button hover */
 		--cui-action-primary-fg: var(--cui-text-inverse); /** Primary button label */
 		--cui-action-bar-bg: var(
-			--cui-surface-inverse
-		); /** Bar button fill (editor bar): ink in both themes */
+			--cui-surface-subtle
+		); /** Bar button fill on surface.page and surface.default: the other neutral, so it stands off the bar (mist on white) */
+		--cui-action-bar-bg-on-subtle: var(
+			--cui-surface-default
+		); /** Bar button fill on surface.subtle, picked up under data-surface="subtle" (white on mist) */
 		--cui-action-bar-fg: var(
-			--cui-text-inverse
-		); /** Bar button label: white in both themes (17.1:1 on ink) */
+			--cui-text-default
+		); /** Bar button label (ink: 15.0:1 on mist, 17.1:1 on white) */
 	}
 
 	[data-theme='dark'] {
@@ -315,7 +320,6 @@
 		--cui-surface-scrim: #000000b3; /** Backdrop behind dialogs */
 		--cui-text-muted: #ffffffb3; /** Secondary text, metadata, placeholder (6.3:1 on white, 5.3:1 on mist) */
 		--cui-border-control: #ffffff99; /** Boundary of inputs, checkboxes, radios, switches (WCAG 1.4.11, 4.5:1 on white, 3.8:1 on mist) */
-		--cui-action-bar-hover: #ffffff1f; /** Hover tint layered on the bar button fill (ink + white 12 % ≈ #3B3C3D) */
 		--cui-action-hover: #ffffff1f; /** Hover tint for ghost buttons and menu items */
 		--cui-surface-page: var(--cui-palette-black); /** Page background */
 		--cui-surface-default: var(
@@ -368,6 +372,9 @@
 			--cui-palette-white
 		); /** On / checked / filled state of switch, checkbox, radio, slider, progress (D2) */
 		--cui-control-on-mark: var(--cui-palette-ink); /** Check mark and switch knob on control.on */
+		--cui-action-bar-hover: var(
+			--cui-action-hover
+		); /** Hover tint layered on the bar button fill (white 12 %) */
 		--cui-status-success-fill: var(--cui-palette-green); /** Success / online / connected */
 		--cui-status-success-on: var(
 			--cui-palette-black
@@ -412,10 +419,13 @@
 		--cui-action-primary-bg-hover: var(--cui-surface-inverse-hover); /** Primary button hover */
 		--cui-action-primary-fg: var(--cui-text-inverse); /** Primary button label */
 		--cui-action-bar-bg: var(
+			--cui-surface-subtle
+		); /** Bar button fill on surface.page and surface.default: the other neutral, so it stands off the bar (graphite on black and ink) */
+		--cui-action-bar-bg-on-subtle: var(
 			--cui-surface-default
-		); /** Bar button fill (editor bar): ink in both themes */
+		); /** Bar button fill on surface.subtle, picked up under data-surface="subtle" (ink on graphite) */
 		--cui-action-bar-fg: var(
 			--cui-text-default
-		); /** Bar button label: white in both themes (17.1:1 on ink) */
+		); /** Bar button label (white: 12.7:1 on graphite, 17.1:1 on ink) */
 	}
 }
