@@ -44,7 +44,7 @@
 		},
 		argTypes: {
 			size: { control: 'inline-radio', options: ['s', 'm', 'l'] },
-			variant: { control: 'inline-radio', options: ['frame', 'pill'] }
+			variant: { control: 'inline-radio', options: ['frame', 'pill', 'bar'] }
 		}
 	});
 </script>
@@ -71,7 +71,8 @@
 				Zwei Varianten, vorerst beide: <code>frame</code> (Standard) ist das Rechteck mit Rahmen,
 				<code>pill</code> die schwarze Pille mit weißer Wahl, der Ansichts-Umschalter aus Campus
 				(Editor-Kopf, IoT-Dashboard, MakeCode-Leiste, Live Wall). Beide sind dieselbe
-				<code>radiogroup</code> mit denselben Größen; die Pille kehrt sich im dunklen Theme um.
+				<code>radiogroup</code> mit denselben Größen; die Pille kehrt sich im dunklen Theme um. Dazu
+				kommt zum Vergleich <code>bar</code>.
 			</p>
 			<Row label="frame (Standard)">
 				<SegmentedControl label="Ansicht" options={views} bind:value={view} />
@@ -79,6 +80,36 @@
 			<Row label="pill">
 				<SegmentedControl label="Ansicht" variant="pill" options={views} bind:value={view} />
 			</Row>
+			<Row label="bar">
+				<SegmentedControl label="Ansicht" variant="bar" options={views} bind:value={view} />
+				<span class="muted"
+					>Die Pille in der Fläche der Leisten-Buttons (siehe Button, Leisten-Button), zum Vergleich
+					mit <code>pill</code>; auf einer grauen Leiste mit <code>data-surface="subtle"</code> weiß bzw.
+					schwarz.</span
+				>
+			</Row>
+			<div class="bars">
+				{#each ['light', 'dark'] as const as theme (theme)}
+					{#each ['subtle', theme === 'light' ? 'default' : 'page'] as surface (surface)}
+						<div class="bar" data-theme={theme} data-surface={surface}>
+							<SegmentedControl
+								label="Ansicht"
+								variant="bar"
+								size="s"
+								options={views}
+								value="feeds"
+							/>
+							<SegmentedControl
+								label="Ansicht"
+								variant="pill"
+								size="s"
+								options={views}
+								value="feeds"
+							/>
+						</div>
+					{/each}
+				{/each}
+			</div>
 		</section>
 
 		<section>
@@ -236,6 +267,29 @@
 </Story>
 
 <style>
+	.muted {
+		max-width: 28rem;
+		color: var(--cui-text-muted);
+		font-size: var(--cui-font-size-sm);
+	}
+
+	/* bar beside pill on the four surfaces: grey and white (light), dark grey and black (dark). */
+	.bars {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--cui-space-2);
+		margin: var(--cui-space-3) 0;
+	}
+
+	.bar {
+		display: flex;
+		justify-content: center;
+		gap: var(--cui-space-3);
+		padding: var(--cui-space-3);
+		border: 1px solid var(--cui-border-subtle);
+		border-radius: var(--cui-radius-lg);
+	}
+
 	.dark-band {
 		padding: var(--cui-space-6);
 		border-radius: var(--cui-radius-xl);

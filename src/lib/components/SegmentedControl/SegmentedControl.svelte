@@ -15,8 +15,11 @@
 	 * frame: the rounded rectangle with a 1px border (the default).
 	 * pill: a filled pill track with the chosen segment flipped out of it, the view switch of
 	 * Campus (EditorHeader, IoT dashboard, MakeCode bar, Live Wall). Both stay for now.
+	 * bar: the pill in the bar buttons' fill, the other neutral of the surface it stands on
+	 * (data-surface on a container tells it, like Button variant="bar"); the chosen segment is
+	 * control.on. A comparison beside pill (owner, 2026-11-19).
 	 */
-	export type SegmentedControlVariant = 'frame' | 'pill';
+	export type SegmentedControlVariant = 'frame' | 'pill' | 'bar';
 
 	export type SegmentedControlProps = {
 		/** Accessible name of the radiogroup ("Ansicht"). Hidden unless `labelVisible`. */
@@ -29,7 +32,7 @@
 		onValueChange?: (value: string) => void;
 		/** s / m / l = 32 / 36 / 40px. Pupil-facing views use l (D6). */
 		size?: SegmentedControlSize;
-		/** frame (default) or pill: see SegmentedControlVariant. */
+		/** frame (default), pill or bar: see SegmentedControlVariant. */
 		variant?: SegmentedControlVariant;
 		/** Stretches the control and shares the width equally between the segments. */
 		fullWidth?: boolean;
@@ -226,14 +229,35 @@
 			}
 		}
 
+		/* Bar: the pill shape in the bar buttons' fill (action.bar.bg, switched by data-surface:
+		   white on a grey bar, mist on white, ink on graphite, graphite on black), text.default
+		   labels, and the chosen segment in control.on with its mark colour, as in frame. */
+		[data-variant='bar'] :global(.cui-segmented-group) {
+			border-color: var(--cui-action-bar-bg);
+			border-radius: var(--cui-radius-full);
+			background-color: var(--cui-action-bar-bg);
+		}
+
+		[data-variant='bar'] :global(.cui-segment) {
+			border-radius: var(--cui-radius-full);
+			color: var(--cui-action-bar-fg);
+			font-weight: var(--cui-font-weight-semibold);
+		}
+
+		[data-variant='bar'] :global(.cui-segment[data-state='checked']) {
+			color: var(--cui-control-on-mark);
+		}
+
 		/* The ring goes around the whole track, on the page surface: around a segment it would sit
 		   on the track colour, where the focus ring lacks contrast. Focus is always on the chosen
 		   segment (arrows move and select), so the ring still says where the focus is. */
-		[data-variant='pill'] :global(.cui-segment:focus-visible) {
+		[data-variant='pill'] :global(.cui-segment:focus-visible),
+		[data-variant='bar'] :global(.cui-segment:focus-visible) {
 			outline: none;
 		}
 
-		[data-variant='pill'] :global(.cui-segmented-group:has(.cui-segment:focus-visible)) {
+		[data-variant='pill'] :global(.cui-segmented-group:has(.cui-segment:focus-visible)),
+		[data-variant='bar'] :global(.cui-segmented-group:has(.cui-segment:focus-visible)) {
 			outline: var(--cui-border-width-focus) solid var(--cui-focus-ring);
 			outline-offset: var(--cui-focus-offset);
 		}

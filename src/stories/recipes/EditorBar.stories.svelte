@@ -53,14 +53,18 @@
 )}
 	<div class="editor-bar" data-theme={theme} data-surface={surface}>
 		<div class="bar-start"></div>
-		<SegmentedControl
-			label="Programmiersprache"
-			variant="pill"
-			size="s"
-			options={languages}
-			value={live ? language : 'blocks'}
-			onValueChange={(v) => live && (language = v)}
-		/>
+		<div class="switches">
+			{#each ['bar', 'pill'] as const as variant (variant)}
+				<SegmentedControl
+					label="Programmiersprache"
+					{variant}
+					size="s"
+					options={languages}
+					value={live ? language : 'blocks'}
+					onValueChange={(v) => live && (language = v)}
+				/>
+			{/each}
+		</div>
 		<div class="bar-end">
 			<IconButton
 				variant="bar"
@@ -119,6 +123,10 @@
 				schwarz auf der dunkelgrauen Leiste. Steht die Leiste auf der Seite oder einer Karte (ohne Attribut),
 				werden sie grau auf Weiß und dunkelgrau auf Schwarz.
 			</p>
+			<p class="lead">
+				Zum Vergleich steht links neben der Pille <code>SegmentedControl variant="bar"</code>: die
+				Pille in der Fläche der Leisten-Buttons, die Wahl schwarz (hell) bzw. weiß (dunkel).
+			</p>
 		</header>
 
 		<h2>MakeCode</h2>
@@ -149,13 +157,22 @@
 			{#each ['light', 'dark'] as const as theme (theme)}
 				<div class="editor-bar" data-theme={theme} data-surface="subtle">
 					<div class="bar-start"><span class="bar-title">Klimaprojekt 7b</span></div>
-					<SegmentedControl
-						label="Ansicht"
-						variant="pill"
-						size="s"
-						options={views}
-						bind:value={view}
-					/>
+					<div class="switches">
+						<SegmentedControl
+							label="Ansicht"
+							variant="bar"
+							size="s"
+							options={views}
+							bind:value={view}
+						/>
+						<SegmentedControl
+							label="Ansicht"
+							variant="pill"
+							size="s"
+							options={views}
+							bind:value={view}
+						/>
+					</div>
 					<div class="bar-end">
 						<Button variant="bar" icon="add">Neues Programm</Button>
 						<Button variant="bar" iconEnd="chevron-down">Token</Button>
@@ -229,6 +246,13 @@
 	/* Marks the edge of a white or black bar against the page around it. */
 	.frame {
 		border: 1px solid var(--cui-border-subtle);
+	}
+
+	/* For comparison: the switch in the bar buttons' fill (bar) left of the ink pill (pill). */
+	.switches {
+		display: flex;
+		align-items: center;
+		gap: var(--cui-space-3);
 	}
 
 	.bar-end {

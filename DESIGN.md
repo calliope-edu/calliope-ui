@@ -517,6 +517,11 @@ and changes the view at once.
   in `control.on-mark` with `control.on` text, semibold labels, hover `surface.inverse-hover`;
   the focus ring goes around the whole track. Both variants are kept for now (owner,
   2026-11-18); the pill is the exception to "rounded rectangle means read me".
+  `variant="bar"` is a third look for comparison beside the pill (owner, 2026-11-19): the pill
+  shape in the bar buttons' fill (`action.bar.bg`, switched by `data-surface` as for Button:
+  white on a grey bar, mist on white, ink on graphite, graphite on black), `action.bar.fg`
+  labels, the chosen segment in `control.on` with `control.on-mark` text, hover the usual tint;
+  the focus ring goes around the whole track as with the pill.
 
 ### Badge, Chip, StatusDot
 
