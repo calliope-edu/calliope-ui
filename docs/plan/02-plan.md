@@ -20,9 +20,9 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 - [x] **W2:** Welle 1. Primitives, Dialog, Menu, Tooltip inkl. Stories und Tests. Pilot: Campus
   ersetzt `ui/Button`, die `.btn`-Klassen, `Modal` und `Dropdown` (order changed by D5).
   Library in #14, Campus pilot in calliope-campus#135
-- [ ] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
-  Bibliothekskomponenten. Library in #16, gaps for the dashboard closed after it (breakdown in
-  section 4.3); open: the Campus migration
+- [x] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
+  Bibliothekskomponenten. Library in #16, gaps for the dashboard closed in #29 (breakdown in
+  section 4.3), Campus migration landed 2026-11-19 (calliope-campus `88d0e85`)
 - [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
   (breakdown in section 4.1)
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable
@@ -339,6 +339,10 @@ then show a device in the same colour.
 **Steps:** one Campus card: bump the pin to the current calliope-ui `main`, migrate the files as
 in the table, delete `SegmentedSwitch` and `IotChart`, drop `svelte-portal` if nothing else uses
 it. W3 is ticked once it has landed.
+
+**Done 2026-11-19:** Campus `main` pins calliope-ui at `4f985ed`, the IoT dashboard runs on the
+library (`88d0e85`), device colours are series slots (`c131da4`), and `SegmentedSwitch`,
+`IotChart` and `svelte-portal` are gone.
 
 ## 5. Einsatz von Design-Tools (impeccable / intent-Familie)
 
