@@ -204,6 +204,11 @@ wrapper around svelte-sonner), `Banner`, `EmptyState`, `Tabs`, `SegmentedControl
 Chart-Basis, built 2026-11-03: `LineChart`, own SVG (decided 2026-11-03 over svelteplot), with the accessible
 chart pattern (summary, keyboard cursor with LiveRegion, hidden data table).
 
+`StartCard` + `StartCardGrid` (added 2026-11-20): the flat, square "start something new" card with
+a coloured plus field, so Campus (program creation, empty IoT dashboard), the KI-Training
+(`NewPageChoice`) and Teachable can drop their own copies; shown in `Rezepte/IoT-Dashboard`
+("Leeres Dashboard"). `ChoiceItem` stays as it is.
+
 Touch targets (D6, decided 2026-10-29): at least 24×24px everywhere (WCAG 2.5.8); pupil-facing
 views use size l (40px) as default.
 

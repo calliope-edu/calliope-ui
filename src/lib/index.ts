@@ -153,6 +153,15 @@ export {
 // Wave 3: patterns and chrome
 export { default as Card, type CardPadding, type CardProps } from './components/Card/Card.svelte';
 export {
+	default as StartCard,
+	type StartCardColor,
+	type StartCardProps
+} from './components/StartCard/StartCard.svelte';
+export {
+	default as StartCardGrid,
+	type StartCardGridProps
+} from './components/StartCard/StartCardGrid.svelte';
+export {
 	default as Avatar,
 	initials,
 	type AvatarProps,
