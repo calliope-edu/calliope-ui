@@ -309,6 +309,20 @@ Still open, each a card in its repository:
 5. ml-machine (gesture training, Svelte 4 + WindiCSS) is a separate app, not Teachable. It keeps
    running and is to be lifted to Svelte 5 later; only then does it become a consumer.
 
+State 2026-11-20:
+
+- Library side done: Wave 3 (#18), `LineChart` (#21), `Dialog` sizes for Teachable (#26),
+  `StartCard` (#36).
+- Teachable (step 4) landed in Teachable-Calliope-Svelte#1 (tokens, components, `AppHeader`). It
+  still pins the head of the merged #26 branch (`8a2aeb1`); Teachable-Calliope-Svelte#2 moves the
+  pin to the merge commit on `main`, same code, open.
+- Campus header (step 2): not started. Campus `main` still has `BrandedHeader`, `UserAvatar`, the
+  unused `ui/Card` and `LocaleSwitcher`, and pins calliope-ui at `e5c6cb8`. Proposed as its own
+  Campus card.
+- calliope-docs (step 3): its own card is open; calliope-docs has no calliope-ui dependency yet.
+
+W5 is ticked once steps 2 and 3 have landed.
+
 ### 4.3 W3 breakdown (2026-11-18)
 
 State: the Wave 2 components are on `main` (#16), with `Rezepte/IoT-Dashboard` as the target
