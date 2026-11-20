@@ -23,8 +23,9 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 - [x] **W3:** Welle 2. Formulare, Status, Navigation. IoT-Dashboard komplett auf Tokens und
   Bibliothekskomponenten. Library in #16, gaps for the dashboard closed in #29 (breakdown in
   section 4.3), Campus migration landed 2026-11-19 (calliope-campus `88d0e85`)
-- [ ] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
-  (breakdown in section 4.1)
+- [x] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
+  (breakdown in section 4.1). Library parts in #17, widget UI in mini-connection-widget#11, Campus
+  in calliope-campus `149e366`; open: one source for the MakeCode toolbar and share dialog
 - [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable
 - [x] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
   Chakra/LESS, nur bei konkretem Bedarf. **Deferred (2026-10-31), not built:** no React host
@@ -245,9 +246,9 @@ its own backdrop, card and buttons in every modal. Banner and the six modals har
 | Piece | Campus | Widget | Resolution |
 |---|---|---|---|
 | `ConnectionChoiceModal` | fork (2026-06) for Paraglide and the Campus modal look | original, German only | one source in the widget, on calliope-ui `Dialog` + `ChoiceList`, with a label hook; Campus deletes its fork |
-| `MakeCodeShareModal` | on Campus `Modal`, toast store | self-contained, `labels` prop, not used by Campus | owner decision (W4 widget card) |
-| `MakeCodeToolbar` | newer, built into Campus `EditorHeader` (shared with IoT) | older (2026-08), not used by Campus | owner decision (W4 widget card) |
-| MakeCode `driver.ts` | own copy | `/makecode` subpath, not used by Campus | resolved together with the toolbar |
+| `MakeCodeShareModal` | on calliope-ui `Dialog` + `Button` since the pilot | `labels` prop, used by Teachable (`tryout`) | both on calliope-ui `Dialog`; two sources remain for now (see below) |
+| `MakeCodeToolbar` | newer, built into Campus `EditorHeader` (shared with IoT) | used by Teachable; on calliope-ui since mini-connection-widget#11, with Campus' look as variants (`bar`/pill switch, `bar` buttons) | both on calliope-ui; two sources remain for now (see below) |
+| MakeCode `driver.ts` | own copy | `/makecode` subpath, used by Teachable | stays in both until the toolbar has one source |
 | `Popover` (makecode) / `Dropdown` | Campus `Dropdown` | own popover | calliope-ui `Menu` / `Popover` in both |
 
 **Widget component → calliope-ui**
@@ -268,9 +269,19 @@ its own backdrop, card and buttons in every modal. Banner and the six modals har
 1. Widget: a `setConnectLabels()` registry so banner and modals can be translated (needs no
    calliope-ui; README roadmap item 5).
 2. Widget: UI on calliope-ui as above; `@calliope-edu/ui` becomes a peer dependency, the host
-   loads `tokens.css` and `styles.css`. Teachable, the other host, must load them too.
-3. Campus: bump both pins, drop its `ConnectionChoiceModal` fork, pass Paraglide labels, resolve
-   the MakeCode toolbar/share/driver duplicates as decided in step 2.
+   loads `tokens.css` and `styles.css`. Teachable, the other host, already loads them (#26).
+3. Campus: bump both pins, drop its `ConnectionChoiceModal` fork, pass Paraglide labels.
+
+All three landed: mini-connection-widget#7 (labels), #8 (error codes), #11 (UI on calliope-ui;
+no hex values or own backdrops left), and calliope-campus `149e366` (pins the widget at
+`3b35bbc`, its `ConnectionChoiceModal` fork deleted, widget texts in de and en from Paraglide).
+
+**MakeCode toolbar and share dialog:** first decided to live in Campus only (2026-11-18). The
+widget card then found that Teachable imports both from the widget, so they stay in the widget
+and moved onto calliope-ui too, with Campus' switch and editor-bar buttons as variants (owner:
+keep every existing look as a variant for now, decide later). Campus keeps its own copies, so
+these two pieces still have two sources. Merging them (Campus takes the widget's toolbar, or
+the other way round) is a separate decision once the variants are settled.
 
 ---
 
