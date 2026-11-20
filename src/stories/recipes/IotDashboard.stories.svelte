@@ -15,6 +15,8 @@
 	import SegmentedControl from '../../lib/components/SegmentedControl/SegmentedControl.svelte';
 	import Select from '../../lib/components/Select/Select.svelte';
 	import Slider from '../../lib/components/Slider/Slider.svelte';
+	import StartCard from '../../lib/components/StartCard/StartCard.svelte';
+	import StartCardGrid from '../../lib/components/StartCard/StartCardGrid.svelte';
 	import StatusDot from '../../lib/components/StatusDot/StatusDot.svelte';
 	import Switch from '../../lib/components/Switch/Switch.svelte';
 	import Tab from '../../lib/components/Tabs/Tab.svelte';
@@ -294,6 +296,45 @@
 	</Dialog>
 </Story>
 
+<Story name="Leeres Dashboard" asChild>
+	<Toaster />
+	<div class="app">
+		<header class="bar">
+			<h1>Klimaprojekt 7b</h1>
+			<SegmentedControl
+				label="Ansicht"
+				size="m"
+				options={[
+					{ value: 'dashboard', label: 'Dashboard', icon: 'device' },
+					{ value: 'feeds', label: 'Feeds', icon: 'wifi' }
+				]}
+				value="dashboard"
+			/>
+		</header>
+
+		<div class="start">
+			<EmptyState
+				level={2}
+				title="Das Dashboard ist noch leer"
+				description="Hier erscheinen die Werte, die deine Calliope mini senden – sobald es Feeds gibt."
+			/>
+			<StartCardGrid label="So geht es los">
+				<StartCard
+					color="makecode"
+					title="Programmierung"
+					description="Erstelle ein neues MakeCode-Programm und sende Daten vom Calliope mini an das Dashboard."
+					onclick={() => toast.success('MakeCode-Programm angelegt')}
+				/>
+				<StartCard
+					title="Feed anlegen"
+					description="Wenn du das Dashboard schon einrichten willst, bevor ein Programm sendet. Sonst nicht nötig: Ein Programm legt seine Feeds selbst an."
+					onclick={() => toast.success('Feed angelegt')}
+				/>
+			</StartCardGrid>
+		</div>
+	</div>
+</Story>
+
 <style>
 	.app {
 		display: flex;
@@ -323,6 +364,16 @@
 		display: flex;
 		gap: var(--cui-space-2);
 		margin-left: auto;
+	}
+
+	/* Empty board: the start cards sit under the centred empty state, wider than its text. */
+	.start {
+		display: flex;
+		flex-direction: column;
+		gap: var(--cui-space-4);
+		width: 100%;
+		max-width: 52rem;
+		margin: 0 auto;
 	}
 
 	.grid {

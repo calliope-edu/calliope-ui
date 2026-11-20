@@ -599,6 +599,23 @@ its hit area stretches over the card (one tab stop, name = title); the focus rin
 card, hover darkens the border to `border.strong` over `action.hover`, actions stay clickable
 above the link. A card is never a button: a choice between ways is a ChoiceList.
 
+### StartCard (after W3)
+
+The large "start something new" card of Campus (program creation, empty IoT dashboard),
+KI-Training and Teachable. Flat and square (`radius` 0, no border, no shadow) on
+`surface.subtle`; `title` (h2 type, not a heading: the card is a button) and an optional
+`description` on the left in `text.default`, a square field on the right (160px, override with
+`--cui-start-card-field-size`) with a big plus drawn as two rounded bars. The field grows with
+the text so its colour runs the full height. `color` fills the field: an identity (`*-fill` with
+its `*-on` for the plus, so ink on light fills), `highlight` (`accent.highlight`) or `neutral`
+(`surface.inverse`, the default); text is never coloured. `icon` replaces the plus (continue,
+open file). The whole card is one button (name = title, description via
+`aria-describedby`); hover tints the surface with `action.hover` and darkens the field, focus
+draws `focus.ring` around the card, disabled is 40 % opacity. `StartCardGrid` (`role="group"`,
+optional `label`) sets cards side by side while each keeps 20rem. It is a second style beside
+ChoiceList, not a replacement: ChoiceList chooses a way inside a dialog, StartCard starts
+something on a page.
+
 ### Avatar, AccountMenu (Wave 3)
 
 Avatar: picture or up to two initials (first and last word), else the person icon. `size` s / m
