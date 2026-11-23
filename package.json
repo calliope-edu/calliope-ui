@@ -1,6 +1,6 @@
 {
 	"name": "@calliope-edu/ui",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Shared Svelte 5 component library for the Calliope editors and apps",
 	"private": true,
 	"type": "module",
