@@ -74,3 +74,15 @@ jobs:
           test "$COMMIT" = "$(git ls-remote https://github.com/calliope-edu/calliope-ui.git refs/heads/calliope-main | cut -f1)"
           grep -q "calliope-ui#$COMMIT" "$RUNNER_TEMP/package.json"
           echo "$JSON"
+
+  # The shared dispatch action on a dry run: builds.json is valid and every live build has a
+  # release tag to rebuild.
+  dispatch-calliope-builds:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/dispatch-calliope-builds
+        with:
+          channels: dev live
+          dry-run: 'true'

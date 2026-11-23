@@ -1,0 +1,21 @@
+{
+	"builds": [
+		{
+			"repo": "calliope-edu/ml-trainer",
+			"workflow": "calliope-build.yml",
+			"dev": { "ref": "calliope-main" },
+			"live": { "tagPrefix": "calliope-v" }
+		},
+		{
+			"repo": "calliope-edu/Teachable-Calliope-Svelte",
+			"workflow": "calliope-build.yml",
+			"dev": { "ref": "calliope-main" },
+			"live": { "tagPrefix": "v" }
+		},
+		{
+			"repo": "calliope-edu/calliope-campus",
+			"workflow": "campus-image.yml",
+			"dev": { "ref": "main", "inputs": { "ref": "main" } }
+		}
+	]
+}

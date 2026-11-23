@@ -14,6 +14,10 @@
 - `.github/actions/resolve-calliope-deps/` is used by the build workflows of other repos at
   `@calliope-main`: a change there reaches all of them at once, so keep its inputs and outputs
   compatible.
+- Every push to `calliope-main` and every release rebuilds the apps listed in
+  `.github/actions/dispatch-calliope-builds/builds.json` (the widget uses the same action and
+  list). An app that starts building with calliope-ui or the widget goes into that list, and the
+  GitHub App needs to be installed on its repository (the action's README).
 
 ## First check
 

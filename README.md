@@ -43,6 +43,8 @@ pnpm package          # library build into dist/ (pnpm tokens + svelte-package +
 - `scripts/release-version.mjs` – the next release version (used by the release workflow)
 - `.github/actions/resolve-calliope-deps/` – the shared action that sets calliope-ui and the
   widget in an app's build to its channel's state (see below)
+- `.github/actions/dispatch-calliope-builds/` – the shared action that rebuilds the apps after a
+  push or a release (see below)
 
 CI (`.github/workflows/ci.yml`) runs on every push to `calliope-main` and every pull request:
 generated tokens up to date, lint, svelte-check, tests, library build, Storybook build.
@@ -61,7 +63,8 @@ in calliope-campus) with two channels:
 A release is cut by the release workflow (`.github/workflows/release.yml`), never by hand: it
 runs the CI checks on the newest commit of `calliope-main`, sets `version` in `package.json`,
 commits it as `chore(release): vX.Y.Z`, tags it and publishes a GitHub release with generated
-notes.
+notes. Its last step rebuilds the apps' live builds on their newest tags and their dev builds
+(dispatch-calliope-builds below).
 
 ```sh
 gh workflow run release.yml -R calliope-edu/calliope-ui -f bump=minor   # or patch, major, X.Y.Z
@@ -79,6 +82,15 @@ the repos: calliope-ui → widget → editors → Campus.
 `@calliope-edu/mini-connection-widget` to the newest commit on `calliope-main` (dev) or the newest
 release tag within the pinned major (live) and returns the states for `BUILD.json`. Usage and
 inputs: [its README](.github/actions/resolve-calliope-deps/README.md).
+
+### dispatch-calliope-builds
+
+`.github/actions/dispatch-calliope-builds/` starts the build workflows of the apps listed in its
+`builds.json` (editors, Campus), so they take a new state without a commit of their own: every
+push to `calliope-main` (`.github/workflows/dispatch-builds.yml`) starts their dev builds, a
+release also their live builds on their newest tags. The widget runs the same action. It needs a
+GitHub App whose key is an org secret; setup and the list's format:
+[its README](.github/actions/dispatch-calliope-builds/README.md).
 
 ## Tokens
 
