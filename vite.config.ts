@@ -15,7 +15,7 @@ export default defineConfig({
 		svelteTesting()
 	],
 	test: {
-		include: ['src/**/*.test.ts'],
+		include: ['src/**/*.test.ts', 'scripts/**/*.test.ts'],
 		environment: 'happy-dom',
 		setupFiles: ['./vitest.setup.ts']
 	}

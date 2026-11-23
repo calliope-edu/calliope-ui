@@ -40,8 +40,45 @@ pnpm package          # library build into dist/ (pnpm tokens + svelte-package +
 - `scripts/build-tokens.js` – the token pipeline
 - `scripts/build-icons.js` – semantic icon names → SVG bodies from an Iconify set
 
-CI (`.github/workflows/ci.yml`) runs on every push to `main` and every pull request: generated
-tokens up to date, lint, svelte-check, tests, library build, Storybook build.
+- `scripts/release-version.mjs` – the next release version (used by the release workflow)
+- `.github/actions/resolve-calliope-deps/` – the shared action that sets calliope-ui and the
+  widget in an app's build to its channel's state (see below)
+
+CI (`.github/workflows/ci.yml`) runs on every push to `calliope-main` and every pull request:
+generated tokens up to date, lint, svelte-check, tests, library build, Storybook build.
+
+## Branches and releases
+
+calliope-ui follows the scheme of the Calliope editors (plan: `docs/design/2026-editor-channels.md`
+in calliope-campus) with two channels:
+
+- **dev**: every commit on `calliope-main`, the only long-lived branch. Work branches off
+  `calliope-main` and merges back into it. Dev builds of the editors and campus-dev take its
+  newest commit.
+- **live**: release tags `vX.Y.Z` (SemVer). Live builds of the editors take the newest tag within
+  the major version they pin; a Campus release sets the newest tag.
+
+A release is cut by the release workflow (`.github/workflows/release.yml`), never by hand: it
+runs the CI checks on the newest commit of `calliope-main`, sets `version` in `package.json`,
+commits it as `chore(release): vX.Y.Z`, tags it and publishes a GitHub release with generated
+notes.
+
+```sh
+gh workflow run release.yml -R calliope-edu/calliope-ui -f bump=minor   # or patch, major, X.Y.Z
+```
+
+Bump `major` for breaking changes (a removed or renamed component, prop, token or export),
+`minor` for new components, props or tokens, `patch` for fixes. While the major is 0 every
+release counts as compatible, so a `0.x` pin takes every `v0.*.*` release. Release order across
+the repos: calliope-ui → widget → editors → Campus.
+
+### resolve-calliope-deps
+
+`.github/actions/resolve-calliope-deps/` is the one copy of the script that every build workflow
+(editors, Campus) runs before its install: it rewrites the pins of `@calliope-edu/ui` and
+`@calliope-edu/mini-connection-widget` to the newest commit on `calliope-main` (dev) or the newest
+release tag within the pinned major (live) and returns the states for `BUILD.json`. Usage and
+inputs: [its README](.github/actions/resolve-calliope-deps/README.md).
 
 ## Tokens
 
@@ -116,8 +153,9 @@ back to Roboto.
 has no visual effect until something uses them. `styles.css` adds base styles (page colours,
 font, focus ring) and is meant for the step where an app actually switches over.
 
-The repository is private: installing the git dependency needs read access to it (an SSH key
-locally; in CI a token, e.g. via `git config url."https://x-access-token:$TOKEN@github.com/".insteadOf "https://github.com/"`).
+The repository is public, so installing the git dependency needs no credentials. In a build
+workflow, run `resolve-calliope-deps` before the install (see Branches and releases): the pin in
+the app's `package.json` then only serves local development.
 
 Later the package goes to GitHub Packages with semver; `publishConfig` already switches the
 exports to the `dist/` build for that.
@@ -135,7 +173,7 @@ The Pages project is connected to the GitHub repo (Git integration) with these b
 - Build command: `pnpm build-storybook` (must be set: without it nothing is built and there is no
   `storybook-static/` to publish)
 - Build output directory: `storybook-static`
-- Production branch: `main`; other branches and pull requests get a preview URL
+- Production branch: `calliope-main`; other branches and pull requests get a preview URL
 
 The build image takes the pnpm version from the `packageManager` field in `package.json`
 (`pnpm@10.11.1`; `engines` requires pnpm >= 10). Without it the image may pick pnpm 9 and

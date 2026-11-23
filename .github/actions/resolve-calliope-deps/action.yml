@@ -1,0 +1,58 @@
+name: Resolve Calliope dependencies
+description: >-
+  Points @calliope-edu/ui and the connection widget in package.json at the state the build's
+  channel asks for: dev = newest commit on calliope-main, live = newest release tag within the
+  pinned major. Run it before installing; the lockfile is then out of date on purpose.
+
+inputs:
+  channel:
+    description: dev, live, or auto (live when the workflow runs for a tag, else dev)
+    default: auto
+  package-json:
+    description: Path of the app's package.json
+    default: package.json
+  packages:
+    description: Packages to resolve, separated by spaces; those the app lacks are skipped
+    default: '@calliope-edu/ui @calliope-edu/mini-connection-widget'
+  branch:
+    description: Branch whose newest commit a dev build takes
+    default: calliope-main
+  token:
+    description: Token for the GitHub API (reading package.json at a pinned commit)
+    default: ${{ github.token }}
+
+outputs:
+  channel:
+    description: The channel resolved for (dev or live)
+    value: ${{ steps.resolve.outputs.channel }}
+  json:
+    description: 'BUILD.json fragment: {"ui":{"tag","commit"}|null,"widget":{"tag","commit"}|null}'
+    value: ${{ steps.resolve.outputs.json }}
+  ui-tag:
+    description: Release tag of calliope-ui (empty on dev or when the app lacks it)
+    value: ${{ steps.resolve.outputs.ui-tag }}
+  ui-commit:
+    description: Commit of calliope-ui (empty when the app lacks it)
+    value: ${{ steps.resolve.outputs.ui-commit }}
+  widget-tag:
+    description: Release tag of the widget (empty on dev or when the app lacks it)
+    value: ${{ steps.resolve.outputs.widget-tag }}
+  widget-commit:
+    description: Commit of the widget (empty when the app lacks it)
+    value: ${{ steps.resolve.outputs.widget-commit }}
+
+runs:
+  using: composite
+  steps:
+    - id: resolve
+      shell: bash
+      env:
+        CHANNEL: ${{ inputs.channel }}
+        PACKAGE_JSON: ${{ inputs.package-json }}
+        PACKAGES: ${{ inputs.packages }}
+        BRANCH: ${{ inputs.branch }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: >-
+        node "$GITHUB_ACTION_PATH/resolve-calliope-deps.mjs"
+        --channel "$CHANNEL" --package-json "$PACKAGE_JSON"
+        --packages "$PACKAGES" --branch "$BRANCH"
