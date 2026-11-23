@@ -1,0 +1,84 @@
+name: Release
+
+# Cuts a release from the newest commit on calliope-main: runs the checks, sets the version in
+# package.json, commits it, tags it vX.Y.Z and publishes a GitHub release. Live builds of the
+# editors take the newest such tag within the major they pin (resolve-calliope-deps).
+#
+#   gh workflow run release.yml -R calliope-edu/calliope-ui -f bump=minor
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'patch (fixes), minor (new features), major (breaking changes), or an explicit X.Y.Z'
+        required: true
+        default: minor
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Only from calliope-main
+        if: github.ref != 'refs/heads/calliope-main'
+        run: |
+          echo "::error::Releases are cut from calliope-main, not ${GITHUB_REF}"
+          exit 1
+
+      - uses: actions/checkout@v4
+        with:
+          ref: calliope-main
+          fetch-depth: 0
+
+      # Version from the packageManager field in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Generated tokens are up to date
+        run: pnpm tokens:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm check
+
+      - name: Test
+        run: pnpm test
+
+      - name: Library build
+        run: pnpm package
+
+      - name: Version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: echo "version=$(node scripts/release-version.mjs "$BUMP" --write)" >> "$GITHUB_OUTPUT"
+
+      - name: Commit, tag and push
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am "chore(release): v${VERSION}"
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push --atomic origin HEAD:refs/heads/calliope-main "refs/tags/v${VERSION}"
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes --verify-tag

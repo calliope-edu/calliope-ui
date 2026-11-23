@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [calliope-main]
   pull_request:
 
 concurrency:
@@ -42,3 +42,35 @@ jobs:
 
       - name: Storybook build
         run: pnpm build-storybook
+
+  # The shared action as the editors' build workflows use it, on a fixture app.
+  resolve-calliope-deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fixture app pinned to an old commit
+        run: |
+          cat > "$RUNNER_TEMP/package.json" <<'JSON'
+          {
+            "dependencies": {
+              "@calliope-edu/ui": "github:calliope-edu/calliope-ui#95bdd39cc2d506d23f2052621e1d1162ffcbe6ad"
+            }
+          }
+          JSON
+
+      - id: dev
+        uses: ./.github/actions/resolve-calliope-deps
+        with:
+          channel: dev
+          package-json: ${{ runner.temp }}/package.json
+          packages: '@calliope-edu/ui'
+
+      - name: Pin points at the newest commit on calliope-main
+        env:
+          COMMIT: ${{ steps.dev.outputs.ui-commit }}
+          JSON: ${{ steps.dev.outputs.json }}
+        run: |
+          test "$COMMIT" = "$(git ls-remote https://github.com/calliope-edu/calliope-ui.git refs/heads/calliope-main | cut -f1)"
+          grep -q "calliope-ui#$COMMIT" "$RUNNER_TEMP/package.json"
+          echo "$JSON"

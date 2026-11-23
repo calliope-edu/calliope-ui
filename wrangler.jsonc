@@ -1,7 +1,7 @@
 {
 	// Static Storybook on Cloudflare Pages (project `calliope-ui`).
 	// The Pages Git integration runs `pnpm build-storybook` and publishes
-	// `storybook-static/`: main to production, other branches as previews.
+	// `storybook-static/`: calliope-main to production, other branches as previews.
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "calliope-ui",
 	"compatibility_date": "2026-10-29",
