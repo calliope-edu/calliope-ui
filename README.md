@@ -174,25 +174,55 @@ exports to the `dist/` build for that.
 
 ### Deploying Storybook
 
-Storybook is published on Cloudflare Pages (project `calliope-ui`, config in `wrangler.jsonc`,
-output `storybook-static/`). Pages rather than Workers because a Pages project can get a custom
-subdomain through a CNAME record at any DNS provider, while a Worker custom domain needs the whole
-zone on Cloudflare.
+Storybook follows the two channels (see Branches and releases). The workflow
+`.github/workflows/storybook.yml` builds it and commits the static site to a build branch:
 
-The Pages project is connected to the GitHub repo (Git integration) with these build settings:
+| Source                        | Build branch | Channel |
+| ----------------------------- | ------------ | ------- |
+| every push to `calliope-main` | `build-dev`  | dev     |
+| every release tag `vX.Y.Z`    | `build-live` | live    |
 
-- Framework preset: none
-- Build command: `pnpm build-storybook` (must be set: without it nothing is built and there is no
-  `storybook-static/` to publish)
-- Build output directory: `storybook-static`
-- Production branch: `calliope-main`; other branches and pull requests get a preview URL
+The release workflow starts the build of its new tag (and of the release commit on
+`calliope-main`) itself, since its own push starts no workflow. Nobody commits to `build-dev` or
+`build-live` by hand; the branches only grow, one commit per build. Each build branch holds the
+site at its root (`index.html`, `iframe.html`, `assets/`, …) plus a `BUILD.json` with channel,
+version (`calliope-main` or the tag), source commit and build time.
 
-The build image takes the pnpm version from the `packageManager` field in `package.json`
-(`pnpm@10.11.1`; `engines` requires pnpm >= 10). Without it the image may pick pnpm 9 and
-`pnpm install --frozen-lockfile` fails with `ERR_PNPM_UNSUPPORTED_ENGINE`. If a build still picks
-the wrong version, set the environment variable `PNPM_VERSION=10.11.1` in the Pages build settings.
-Keep both in step when upgrading pnpm.
+Rebuild by hand:
 
 ```sh
-pnpm run deploy   # build and deploy manually (needs `wrangler login`; `pnpm deploy` is a pnpm built-in)
+gh workflow run storybook.yml -R calliope-edu/calliope-ui --ref calliope-main   # build-dev
+gh workflow run storybook.yml -R calliope-edu/calliope-ui --ref vX.Y.Z          # build-live
 ```
+
+A tag only builds if it contains `storybook.yml`, so the first `build-live` comes with the first
+release after the workflow was added. `pnpm build-storybook` builds the same site locally into `storybook-static/`.
+
+#### Cloudflare Pages
+
+Two Pages projects, each connected to this repository (Git integration) and serving one build
+branch as it is. Pages rather than Workers because a Pages project can get a custom subdomain
+through a CNAME record at any DNS provider, while a Worker custom domain needs the whole zone on
+Cloudflare.
+
+| Setting                | Live project  | Dev project       |
+| ---------------------- | ------------- | ----------------- |
+| Project name           | `calliope-ui` | `calliope-ui-dev` |
+| Production branch      | `build-live`  | `build-dev`       |
+| Framework preset       | None          | None              |
+| Build command          | _(empty)_     | _(empty)_         |
+| Build output directory | _(empty)_     | _(empty)_         |
+| Root directory         | _(empty)_     | _(empty)_         |
+| Preview deployments    | None          | None              |
+
+- Build command and output directory stay empty: the build branch is the finished site, and an
+  empty output directory means the branch root. No pnpm, no Node and no environment variables are
+  needed, since nothing is built on Cloudflare.
+- Preview deployments must be off (Settings → Builds & deployments → Branch control: "None"):
+  every other branch holds the sources, not a built site.
+- A custom domain is added per project under Custom domains and needs a CNAME record at the DNS
+  provider pointing at the project's `*.pages.dev` address.
+- The existing project `calliope-ui` used to build `calliope-main` itself (build command
+  `pnpm build-storybook`, output `storybook-static`). To switch it to the live project, set its
+  production branch to `build-live`, empty both fields and turn preview deployments off. Until
+  then it keeps building from the sources.

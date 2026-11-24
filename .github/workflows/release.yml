@@ -1,8 +1,9 @@
 name: Release
 
 # Cuts a release from the newest commit on calliope-main: runs the checks, sets the version in
-# package.json, commits it, tags it vX.Y.Z and publishes a GitHub release. Live builds of the
-# editors take the newest such tag within the major they pin (resolve-calliope-deps).
+# package.json, commits it, tags it vX.Y.Z, publishes a GitHub release and starts the Storybook
+# build of the tag (build-live, storybook.yml). Live builds of the editors take the newest such
+# tag within the major they pin (resolve-calliope-deps).
 #
 #   gh workflow run release.yml -R calliope-edu/calliope-ui -f bump=minor
 
@@ -16,6 +17,8 @@ on:
 
 permissions:
   contents: write
+  # gh workflow run storybook.yml (step "Storybook").
+  actions: write
 
 concurrency:
   group: release
@@ -82,6 +85,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
         run: gh release create "v${VERSION}" --title "v${VERSION}" --generate-notes --verify-tag
+
+      # Storybook of the new tag onto build-live, of the release commit onto build-dev. The push
+      # above starts no workflow (workflow token), a workflow_dispatch does.
+      - name: Storybook
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          gh workflow run storybook.yml --ref "v${VERSION}"
+          gh workflow run storybook.yml --ref calliope-main
 
       # The apps' live builds take the new tag, their dev builds the release commit. The push
       # above is made with the workflow token, so dispatch-builds.yml does not run for it.

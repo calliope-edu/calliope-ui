@@ -1,0 +1,123 @@
+name: Storybook
+
+# Builds the static Storybook and pushes it to a build branch, one commit per build:
+#
+#   push to calliope-main  → build-dev   (dev channel)
+#   tag vX.Y.Z             → build-live  (live channel)
+#
+# Each build branch is ready to serve as it is: a Cloudflare Pages project on it needs no build
+# command and no output directory (the branch root is the site). Each commit carries a BUILD.json
+# at the root naming channel, version and source commit (the shape of the editors' BUILD.json,
+# calliope-campus docs/design/2026-editor-channels.md). Setup of the Pages projects: README.md,
+# "Deploying Storybook".
+#
+# release.yml pushes its commit and tag with the workflow token, which starts no workflow, so it
+# starts this one itself with workflow_dispatch on the new tag and on calliope-main. By hand:
+#
+#   gh workflow run storybook.yml -R calliope-edu/calliope-ui --ref calliope-main   # build-dev
+#   gh workflow run storybook.yml -R calliope-edu/calliope-ui --ref vX.Y.Z          # build-live
+#
+# Nobody commits to build-dev or build-live by hand. The branches only ever grow, one commit per
+# build (BUILD.json differs in every one).
+
+on:
+  push:
+    branches: [calliope-main]
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+# One build after the other per build branch, so every build lands in order.
+concurrency:
+  group: storybook-${{ github.ref_type }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Channel
+        env:
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if [ "$REF_TYPE" = tag ]; then
+            if ! [[ "$REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::Live builds come from release tags vX.Y.Z, not ${REF_NAME}"
+              exit 1
+            fi
+            echo "BUILD_CHANNEL=live" >> "$GITHUB_ENV"
+            echo "TARGET_BRANCH=build-live" >> "$GITHUB_ENV"
+          elif [ "$REF_NAME" = calliope-main ]; then
+            echo "BUILD_CHANNEL=dev" >> "$GITHUB_ENV"
+            echo "TARGET_BRANCH=build-dev" >> "$GITHUB_ENV"
+          else
+            echo "::error::Storybook builds come from calliope-main or a tag vX.Y.Z, not ${REF_NAME}"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      # Version from the packageManager field in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build Storybook
+        run: pnpm build-storybook
+
+      - name: Build info
+        env:
+          VERSION: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          node -e '
+            const info = {
+              channel: process.env.BUILD_CHANNEL,
+              version: process.env.VERSION,
+              commit: process.env.COMMIT,
+              builtAt: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
+              ui: null,
+              widget: null,
+              libs: {}
+            };
+            process.stdout.write(JSON.stringify(info, null, 2) + "\n");
+          ' > storybook-static/BUILD.json
+          cat storybook-static/BUILD.json
+
+      - name: Push the build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SOURCE_SHA: ${{ github.sha }}
+          SOURCE_REF: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          short=${SOURCE_SHA:0:7}
+          out="$PWD/storybook-static"
+          mkdir "$RUNNER_TEMP/publish" && cd "$RUNNER_TEMP/publish"
+          git init -q
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git"
+          if git fetch -q --depth 1 origin "$TARGET_BRANCH"; then
+            git checkout -q -b "$TARGET_BRANCH" FETCH_HEAD
+          else
+            git checkout -q --orphan "$TARGET_BRANCH"
+          fi
+          git rm -rqf --ignore-unmatch .
+          cp -r "$out/." .
+          # Build output, kept byte for byte: no line-ending conversion on checkout.
+          printf '# Build output, kept byte for byte (no line-ending conversion on checkout).\n* -text\n' > .gitattributes
+          git add -A
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+            commit -q -m "storybook ${short} from ${SOURCE_REF}" -m "Source: https://github.com/${REPO}/commit/${SOURCE_SHA}"
+          git push -q origin "$TARGET_BRANCH"
+          echo "### ${TARGET_BRANCH}: Storybook ${short} from ${SOURCE_REF}" >> "$GITHUB_STEP_SUMMARY"
