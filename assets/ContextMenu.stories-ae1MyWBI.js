@@ -1,0 +1,72 @@
+import{n as e}from"./rolldown-runtime-sJBDdmOt.js";import{At as t,Dt as n,Gt as r,H as i,It as a,Nt as o,Pt as s,R as c,Vt as l,Xt as u,Zt as d,a as f,bt as p,cn as m,ct as h,et as g,fn as _,ht as v,i as y,jt as b,lt as x,mn as S,mt as C,n as w,o as T,pt as E,q as D,rt as O,sn as k,st as A,y as j,zt as M}from"./iframe-BsWRsydk.js";import{i as N,n as ee,r as te,t as ne}from"./create-runtime-stories-BWVMXit6.js";import{i as P,n as F,r as I,t as L}from"./Guidelines-B4Q9fRhg.js";import{E as R,T as z,h as B,m as re}from"./create-id-D9kfF9LZ.js";import{b as ie,i as ae,r as oe,v as se,x as ce,y as le}from"./scroll-lock-LEWRAx_Y.js";import{n as V}from"./noop-CBK7Ez3L.js";import{c as ue,d as de,i as fe,n as pe,p as H,r as me,t as he}from"./Menu-CTLJCgcZ.js";import{a as U,c as ge,i as _e,n as ve,o as ye,r as be,s as xe,t as Se}from"./popper-layer-force-mount-CszjtGvE.js";import"./menu-Btpr5dpg.js";import{n as Ce,t as we}from"./floating-layer-anchor-BUkxTKII.js";import{n as Te,t as W}from"./MenuItem-i0frKsX6.js";import{n as Ee,t as G}from"./MenuSeparator-C76u0ste.js";import{n as De,t as Oe}from"./IconButton-DZwsdOXG.js";function ke(e,t){d(t,!0);let n=y(t,`open`,15,!1),r=y(t,`dir`,3,`ltr`),i=y(t,`onOpenChange`,3,V),a=y(t,`onOpenChangeComplete`,3,V),o=de.create({variant:z(()=>`context-menu`),dir:z(()=>r()),onClose:()=>{n(!1),i()?.(!1)}});ue.create({open:z(()=>n(),e=>{n(e),i()(e)}),onOpenChangeComplete:z(()=>a())},o),xe(e,{children:(e,n)=>{var r=h(),i=b(r);g(i,()=>t.children??_),A(e,r)},$$slots:{default:!0}}),u()}function Ae(){return(Ae=e((()=>{S(),w(),R(),ge(),H()})))()}function je(e,n){d(n,!0);let i=y(n,`id`,19,ae),a=y(n,`ref`,15,null),o=y(n,`loop`,3,!0),s=y(n,`onInteractOutside`,3,V),c=y(n,`onCloseAutoFocus`,3,V),l=y(n,`onOpenAutoFocus`,3,V),v=y(n,`preventScroll`,3,!0),x=y(n,`side`,3,`right`),S=y(n,`sideOffset`,3,2),C=y(n,`align`,3,`start`),w=y(n,`onEscapeKeydown`,3,V),E=y(n,`forceMount`,3,!1),O=y(n,`trapFocus`,3,!1),k=f(n,Me),M=fe.create({id:z(()=>i()),loop:z(()=>o()),ref:z(()=>a(),e=>a(e)),onCloseAutoFocus:z(()=>c())}),N=r(()=>B(k,M.props,{side:x(),sideOffset:S(),align:C(),onOpenAutoFocus:l(),isValidEvent:ne,trapFocus:O(),loop:o(),id:i(),ref:M.opts.ref,preventScroll:v(),onInteractOutside:ee,onEscapeKeydown:te,shouldRender:M.shouldRender}));function ee(e){if(s()(e),!e.defaultPrevented){if(e.target&&e.target instanceof Element){let t=`[${M.parentMenu.root.getBitsAttr(`sub-content`)}]`;if(e.target.closest(t))return}M.parentMenu.onClose()}}function te(e){w()(e),!e.defaultPrevented&&M.parentMenu.onClose()}function ne(e){if(`button`in e&&e.button===2){let t=e.target;return t?t.closest(`[${se}]`)!==M.parentMenu.triggerNode:!1}return!1}var P=h(),F=b(P),I=e=>{Se(e,T(()=>p(N),()=>M.popperProps,{get enabled(){return M.parentMenu.opts.open.current},popper:(e,i)=>{let a=()=>(i?.()).props,o=()=>(i?.()).wrapperProps,s=r(()=>B(a(),{style:U(`context-menu`)},{style:n.style}));var c=h(),l=b(c),u=e=>{var t=h(),i=b(t);{let e=r(()=>({props:p(s),wrapperProps:o(),...M.snippetProps}));g(i,()=>n.child,()=>p(e))}A(e,t)},d=e=>{var r=K();j(r,()=>({...o()}));var i=t(r);j(i,()=>({...p(s)}));var a=t(i);g(a,()=>n.children??_),m(i),m(r),A(e,r)};D(l,e=>{n.child?e(u):e(d,-1)}),A(e,c)},$$slots:{popper:!0}}))},L=e=>{be(e,T(()=>p(N),()=>M.popperProps,{get open(){return M.parentMenu.opts.open.current},popper:(e,i)=>{let a=()=>(i?.()).props,o=()=>(i?.()).wrapperProps,s=r(()=>B(a(),{style:U(`context-menu`)},{style:n.style}));var c=h(),l=b(c),u=e=>{var t=h(),i=b(t);{let e=r(()=>({props:p(s),wrapperProps:o(),...M.snippetProps}));g(i,()=>n.child,()=>p(e))}A(e,t)},d=e=>{var r=K();j(r,()=>({...o()}));var i=t(r);j(i,()=>({...p(s)}));var a=t(i);g(a,()=>n.children??_),m(i),m(r),A(e,r)};D(l,e=>{n.child?e(u):e(d,-1)}),A(e,c)},$$slots:{popper:!0}}))};D(F,e=>{E()?e(I):E()||e(L,1)}),A(e,P),u()}var Me,K;function Ne(){return(Ne=e((()=>{S(),w(),R(),re(),H(),le(),oe(),_e(),ye(),ve(),Me=new Set([`$$slots`,`$$events`,`$$legacy`,`id`,`child`,`children`,`ref`,`loop`,`onInteractOutside`,`onCloseAutoFocus`,`onOpenAutoFocus`,`preventScroll`,`side`,`sideOffset`,`align`,`onEscapeKeydown`,`forceMount`,`trapFocus`,`style`]),K=x(`<div><div><!></div></div>`)})))()}function Pe(e,n){d(n,!0);let i=y(n,`id`,19,ae),a=y(n,`ref`,15,null),o=y(n,`disabled`,3,!1),s=f(n,Fe),l=me.create({id:z(()=>i()),disabled:z(()=>o()),ref:z(()=>a(),e=>a(e))}),v=r(()=>B(s,l.props,{style:{pointerEvents:`auto`}},{style:n.style,tabindex:n.tabindex}));var x=h(),S=b(x);c(S,()=>we,(e,r)=>{r(e,{get id(){return i()},get virtualEl(){return l.virtualElement},get ref(){return l.opts.ref},children:(e,r)=>{var i=h(),a=b(i),o=e=>{var t=h(),r=b(t);g(r,()=>n.child,()=>({props:p(v)})),A(e,t)},s=e=>{var r=Ie();j(r,()=>({...p(v)}));var i=t(r);g(i,()=>n.children??_),m(r),A(e,r)};D(a,e=>{n.child?e(o):e(s,-1)}),A(e,i)},$$slots:{default:!0}})}),A(e,x),u()}var Fe,Ie;function Le(){return(Le=e((()=>{S(),w(),R(),re(),H(),oe(),Ce(),Fe=new Set([`$$slots`,`$$events`,`$$legacy`,`id`,`ref`,`child`,`children`,`disabled`]),Ie=x(`<div><!></div>`)})))()}function q(e,t){d(t,!0);let n=y(t,`open`,15,!1),r=y(t,`disabled`,3,!1);var i=h(),a=b(i);c(a,()=>ke,(e,i)=>{i(e,{get onOpenChange(){return t.onOpenChange},get open(){return n()},set open(e){n(e)},children:(e,n)=>{var i=Re(),a=b(i);{let e=(e,n)=>{let r=()=>(n?.()).props;var i=h(),a=b(i);g(a,()=>t.trigger,()=>({props:r()})),A(e,i)};c(a,()=>Pe,(t,n)=>{n(t,{get disabled(){return r()},child:e,$$slots:{child:!0}})})}var o=s(a,2);c(o,()=>ie,(e,n)=>{n(e,{children:(e,n)=>{var r=h(),i=b(r);c(i,()=>je,(e,n)=>{n(e,{class:`cui-menu`,collisionPadding:8,children:(e,n)=>{var r=h(),i=b(r);g(i,()=>t.children),A(e,r)},$$slots:{default:!0}})}),A(e,r)},$$slots:{default:!0}})}),A(e,i)},$$slots:{default:!0}})}),A(e,i),u()}var Re;function ze(){return(ze=e((()=>{S(),w(),Ae(),Le(),ce(),Ne(),Re=x(`<!> <!>`,1),q.__docgen={data:[{name:`trigger`,visibility:`public`,description:"The area that opens the menu on right click (and long press on touch). Spread `props`\nonto your own element; for a list, wrap the whole list and note in the row's own\n`oncontextmenu` which row was hit (it runs before the menu opens).",keywords:[{name:`required`,description:``}],kind:`let`,type:{kind:`function`,text:`Snippet<[{ props: Record<string, unknown>; }]>`},static:!1,readonly:!1},{name:`open`,visibility:`public`,keywords:[],kind:`let`,type:{kind:`type`,type:`boolean`,text:`boolean`},static:!1,readonly:!1,defaultValue:`...`},{name:`onOpenChange`,visibility:`public`,keywords:[],kind:`let`,type:{kind:`function`,text:`(open: boolean) => void`},static:!1,readonly:!1},{name:`disabled`,visibility:`public`,description:`No menu opens; the browser's own context menu shows again.`,keywords:[],kind:`let`,type:{kind:`type`,type:`boolean`,text:`boolean`},static:!1,readonly:!1,defaultValue:`false`},{name:`children`,visibility:`public`,description:`MenuItem, MenuRadioGroup, MenuGroup, MenuSeparator: the same items as Menu.`,keywords:[{name:`required`,description:``}],kind:`let`,type:{kind:`function`,text:`Snippet<[]>`},static:!1,readonly:!1}],name:`ContextMenu.svelte`}})))()}function J(e,c){d(c,!0);let f=(e,t=_)=>{var i=Z(),a=b(i);W(a,{onSelect:()=>x(t()),children:(e,r)=>{k();var i=E();n(()=>O(i,t()?.blocked?`Entsperren`:`Sperren`)),A(e,i)},$$slots:{default:!0}});var o=s(a,2);{let e=r(()=>!t()?.anonymous);W(o,{get disabled(){return p(e)},onSelect:()=>M(y,`Passwort für ${t()?.name}`),children:(e,t)=>{k();var n=E(`Passwort setzen`);A(e,n)},$$slots:{default:!0}})}var c=s(o,2);G(c,{});var l=s(c,2);W(l,{icon:`delete`,tone:`negative`,onSelect:()=>M(y,`${t()?.name} entfernt`),children:(e,t)=>{k();var n=E(`Aus dem Raum entfernen`);A(e,n)},$$slots:{default:!0}}),A(e,i)},h=a([{name:`Ada`,blocked:!1,anonymous:!1},{name:`Grace`,blocked:!0,anonymous:!1},{name:`Linus`,blocked:!1,anonymous:!0}]),g=l(null),y=l(`–`);function x(e){e&&(e.blocked=!e.blocked,M(y,`${e.name} ${e.blocked?`gesperrt`:`entsperrt`}`))}var S=Ge(),C=b(S);X(C,{name:`Spielwiese`,template:(e,t=_)=>{q(e,{get disabled(){return t().disabled},trigger:(e,t)=>{let n=()=>t?.().props;var r=Be();j(r,()=>({...n(),class:`area`}),void 0,void 0,void 0,`svelte-10pvs78`),A(e,r)},children:(e,t)=>{var n=Z(),r=b(n);W(r,{icon:`edit`,children:(e,t)=>{k();var n=E(`Umbenennen`);A(e,n)},$$slots:{default:!0}});var i=s(r,2);W(i,{icon:`copy`,children:(e,t)=>{k();var n=E(`Duplizieren`);A(e,n)},$$slots:{default:!0}});var a=s(i,2);G(a,{});var o=s(a,2);W(o,{icon:`delete`,tone:`negative`,children:(e,t)=>{k();var n=E(`Löschen`);A(e,n)},$$slots:{default:!0}}),A(e,n)},$$slots:{trigger:!0,default:!0}})},$$slots:{template:!0},parameters:{__svelteCsf:{rawCode:`<ContextMenu disabled={args.disabled}>
+	{#snippet trigger({ props })}
+		<div {...props} class="area">Rechtsklick hier (auf Touch: lange drücken)</div>
+	{/snippet}
+	<MenuItem icon="edit">Umbenennen</MenuItem>
+	<MenuItem icon="copy">Duplizieren</MenuItem>
+	<MenuSeparator />
+	<MenuItem icon="delete" tone="negative">Löschen</MenuItem>
+</ContextMenu>`}}});var w=s(C,2);X(w,{name:`Übersicht`,asChild:!0,parameters:{layout:`fullscreen`,__svelteCsf:{rawCode:`<ComponentPage eyebrow="Overlays" title="ContextMenu">
+	{#snippet lead()}
+		Das Menu für den Rechtsklick: Es öffnet sich an der Mausposition, auf Touch-Geräten nach
+		langem Drücken. Einträge, Tastatur und Aussehen sind dieselben wie bei
+		<code>Menu</code>; es nimmt dieselben <code>MenuItem</code>, <code>MenuGroup</code> und
+		<code>MenuSeparator</code>.
+	{/snippet}
+
+	<section>
+		<h2>Liste mit Rechtsklick</h2>
+		<p class="section-intro">
+			Ein ContextMenu für die ganze Liste. Jede Zeile merkt sich in ihrem eigenen
+			<code>oncontextmenu</code>, wer gemeint ist; das läuft, bevor das Menü aufgeht. Dieselben
+			Aktionen stehen auch hinter dem ⋮-Button jeder Zeile, denn der Rechtsklick ist nur eine
+			Abkürzung.
+		</p>
+		<ContextMenu>
+			{#snippet trigger({ props })}
+				<ul {...props} class="list" aria-label="Teilnehmende">
+					{#each pupils as pupil (pupil.name)}
+						<li class="pupil" oncontextmenu={() => (selected = pupil)}>
+							<span class="name">{pupil.name}</span>
+							<span class="muted">
+								{pupil.blocked ? 'gesperrt' : pupil.anonymous ? 'ohne Passwort' : 'aktiv'}
+							</span>
+							<Menu align="end">
+								{#snippet trigger({ props })}
+									<IconButton
+										{...props}
+										icon="more-vertical"
+										label="Aktionen für {pupil.name}"
+										size="s"
+									/>
+								{/snippet}
+								{@render pupilItems(pupil)}
+							</Menu>
+						</li>
+					{/each}
+				</ul>
+			{/snippet}
+			{@render pupilItems(selected)}
+		</ContextMenu>
+		<p class="muted">zuletzt: {lastAction}</p>
+	</section>
+
+	<section>
+		<h2>Richtlinien</h2>
+		<Guidelines
+			dos={[
+				'Für Dinge, die es oft gibt (Zeilen, Karten, Dateien): ein ContextMenu um die ganze Liste.',
+				'Jede Aktion auch sichtbar anbieten, meist als Menu hinter einem ⋮-IconButton in der Zeile.',
+				'Dieselben Einträge in derselben Reihenfolge wie im sichtbaren Menu.'
+			]}
+			donts={[
+				'Keine Aktion, die es nur per Rechtsklick gibt: Tastatur, Touch und Neulinge finden sie nicht.',
+				'Kein ContextMenu auf Text, den man markieren oder kopieren will; dort bleibt das Browsermenü.'
+			]}
+			notFor={['Ein Menü hinter einem Button: Menu.']}
+		/>
+	</section>
+</ComponentPage>`}},children:(e,r)=>{I(e,{eyebrow:`Overlays`,title:`ContextMenu`,lead:e=>{k();var t=Ve();k(8),A(e,t)},children:(e,r)=>{var a=We(),c=b(a),l=s(t(c),4);q(l,{trigger:(e,r)=>{let a=()=>r?.().props;var c=Ue();j(c,()=>({...a(),class:`list`,"aria-label":`Teilnehmende`}),void 0,void 0,void 0,`svelte-10pvs78`),i(c,21,()=>h,e=>e.name,(e,r)=>{var i=He(),a=t(i),c=o(a,!0),l=s(a,2),u=o(l,!0),d=s(l,2);he(d,{align:`end`,trigger:(e,t)=>{Oe(e,T(()=>t?.().props,{icon:`more-vertical`,get label(){return`Aktionen für ${p(r).name??``}`},size:`s`}))},children:(e,t)=>{f(e,()=>p(r))},$$slots:{trigger:!0,default:!0}}),m(i),n(()=>{O(c,p(r).name),O(u,p(r).blocked?`gesperrt`:p(r).anonymous?`ohne Passwort`:`aktiv`)}),v(`contextmenu`,i,()=>M(g,p(r),!0)),A(e,i)}),m(c),A(e,c)},children:(e,t)=>{f(e,()=>p(g))},$$slots:{trigger:!0,default:!0}});var u=s(l,2),d=o(u);m(c);var _=s(c,2),x=s(t(_),2);L(x,{dos:[`Für Dinge, die es oft gibt (Zeilen, Karten, Dateien): ein ContextMenu um die ganze Liste.`,`Jede Aktion auch sichtbar anbieten, meist als Menu hinter einem ⋮-IconButton in der Zeile.`,`Dieselben Einträge in derselben Reihenfolge wie im sichtbaren Menu.`],donts:[`Keine Aktion, die es nur per Rechtsklick gibt: Tastatur, Touch und Neulinge finden sie nicht.`,`Kein ContextMenu auf Text, den man markieren oder kopieren will; dort bleibt das Browsermenü.`],notFor:[`Ein Menü hinter einem Button: Menu.`]}),m(_),n(()=>O(d,`zuletzt: ${p(y)??``}`)),A(e,a)},$$slots:{lead:!0,default:!0}})},$$slots:{default:!0}}),A(e,S),u()}var Y,X,Z,Be,Ve,He,Ue,We,Ge,Q,Ke,qe,Je;function $(){return($=e((()=>{S(),N(),P(),F(),De(),pe(),Te(),Ee(),ze(),w(),ee(),Y={title:`Overlays/ContextMenu`,component:q,tags:[`autodocs`],parameters:{layout:`padded`},args:{disabled:!1}},{Story:X}=te(Y),Z=x(`<!> <!> <!> <!>`,1),Be=x(`<div>Rechtsklick hier (auf Touch: lange drücken)</div>`),Ve=x(`Das Menu für den Rechtsklick: Es öffnet sich an der Mausposition, auf Touch-Geräten nach
+			langem Drücken. Einträge, Tastatur und Aussehen sind dieselben wie bei <code>Menu</code>; es nimmt dieselben <code>MenuItem</code>, <code>MenuGroup</code> und <code>MenuSeparator</code>.`,1),He=x(`<li class="pupil svelte-10pvs78"><span class="name svelte-10pvs78"> </span> <span class="muted svelte-10pvs78"> </span> <!></li>`),Ue=x(`<ul></ul>`),We=x(`<section><h2>Liste mit Rechtsklick</h2> <p class="section-intro">Ein ContextMenu für die ganze Liste. Jede Zeile merkt sich in ihrem eigenen <code>oncontextmenu</code>, wer gemeint ist; das läuft, bevor das Menü aufgeht. Dieselben
+				Aktionen stehen auch hinter dem ⋮-Button jeder Zeile, denn der Rechtsklick ist nur eine
+				Abkürzung.</p> <!> <p class="muted svelte-10pvs78"> </p></section> <section><h2>Richtlinien</h2> <!></section>`,1),Ge=x(`<!> <!>`,1),C([`contextmenu`]),J.__docgen={data:[],name:`ContextMenu.stories.svelte`},Q=ne(J,Y),Ke=[`Spielwiese`,`Übersicht`],qe={...Q.Spielwiese,tags:[`svelte-csf-v5`]},Je={...Q.Übersicht,tags:[`svelte-csf-v5`]}})))()}$();export{qe as Spielwiese,Ke as __namedExportsOrder,Y as default,Je as Übersicht};
