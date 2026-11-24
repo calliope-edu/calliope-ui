@@ -1,0 +1,60 @@
+name: Dispatch Calliope builds
+description: >-
+  Rebuilds every app that builds with calliope-ui and the connection widget (builds.json): dev
+  starts each app's dev build on its dev branch, live each app's live build on its newest release
+  tag. Uses the token of the GitHub App for the dispatches; without the App it only prints what it
+  would start.
+
+inputs:
+  channels:
+    description: dev, live, or "dev live"
+    required: true
+  app-id:
+    description: ID of the GitHub App that may start the apps' workflows (vars.CALLIOPE_BUILDS_APP_ID)
+    default: ''
+  private-key:
+    description: Private key of that App (secrets.CALLIOPE_BUILDS_APP_KEY)
+    default: ''
+  dry-run:
+    description: Only print what would be started
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - id: app
+      shell: bash
+      env:
+        APP_ID: ${{ inputs.app-id }}
+        PRIVATE_KEY: ${{ inputs.private-key }}
+        DRY_RUN: ${{ inputs.dry-run }}
+      run: |
+        if [ "$DRY_RUN" = true ]; then
+          echo "dry-run=true" >> "$GITHUB_OUTPUT"
+        elif [ -z "$APP_ID" ] || [ -z "$PRIVATE_KEY" ]; then
+          echo "::warning::No GitHub App for the dispatches (vars.CALLIOPE_BUILDS_APP_ID, secrets.CALLIOPE_BUILDS_APP_KEY): nothing is started, only listed. Setup: calliope-ui .github/actions/dispatch-calliope-builds/README.md"
+          echo "dry-run=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "dry-run=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - id: token
+      if: steps.app.outputs.dry-run != 'true'
+      uses: actions/create-github-app-token@v2
+      with:
+        app-id: ${{ inputs.app-id }}
+        private-key: ${{ inputs.private-key }}
+        owner: calliope-edu
+        permission-actions: write
+        permission-contents: read
+
+    - shell: bash
+      env:
+        CHANNELS: ${{ inputs.channels }}
+        DRY_RUN: ${{ steps.app.outputs.dry-run }}
+        # The App's token; on a dry run the workflow's own, which reads the public repositories.
+        GITHUB_TOKEN: ${{ steps.token.outputs.token || github.token }}
+      run: |
+        args=(--channels "$CHANNELS")
+        if [ "$DRY_RUN" = true ]; then args+=(--dry-run); fi
+        node "$GITHUB_ACTION_PATH/dispatch-calliope-builds.mjs" "${args[@]}"
