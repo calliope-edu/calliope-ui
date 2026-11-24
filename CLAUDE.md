@@ -11,6 +11,9 @@
   version in `package.json`. Bump `major` for breaking changes (removed or renamed components,
   props, tokens or exports), `minor` for additions, `patch` for fixes. Details: README.md,
   "Branches and releases".
+- Storybook goes out the same way (`.github/workflows/storybook.yml`): `calliope-main` onto the
+  `build-dev` branch, each tag `vX.Y.Z` onto `build-live`; Cloudflare Pages serves those branches
+  without building (README.md, "Deploying Storybook"). Never commit to them by hand.
 - `.github/actions/resolve-calliope-deps/` is used by the build workflows of other repos at
   `@calliope-main`: a change there reaches all of them at once, so keep its inputs and outputs
   compatible.

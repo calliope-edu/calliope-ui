@@ -13,7 +13,6 @@
 		"dev": "svelte-kit sync && storybook dev -p 6006",
 		"storybook": "svelte-kit sync && storybook dev -p 6006",
 		"build-storybook": "svelte-kit sync && storybook build",
-		"deploy": "pnpm build-storybook && wrangler pages deploy",
 		"tokens": "node scripts/build-tokens.js",
 		"tokens:check": "node scripts/build-tokens.js && git diff --exit-code -- src/lib/tokens",
 		"icons": "node scripts/build-icons.js",
@@ -99,8 +98,7 @@
 		"svelte-check": "^4.7.7",
 		"typescript": "^6.0.3",
 		"vite": "^8.3.5",
-		"vitest": "^5.0.5",
-		"wrangler": "^4.155.0"
+		"vitest": "^5.0.5"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
