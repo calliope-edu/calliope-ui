@@ -56,9 +56,9 @@ cannot. A GitHub App gives one for each run.
    - Variables → New organization variable `CALLIOPE_BUILDS_APP_ID` = the App ID;
    - Secrets → New organization secret `CALLIOPE_BUILDS_APP_KEY` = the whole `.pem` file;
    - both with repository access for `calliope-ui` and `mini-connection-widget`.
-   Repository variables and secrets of the same names in both repositories work as well (that
-   is how the App `calliope-builds`, ID 5904477, was set up on 2026-11-24:
-   `gh variable set` / `gh secret set -R calliope-edu/<repo>`).
+     Repository variables and secrets of the same names in both repositories work as well (that
+     is how the App `calliope-builds`, ID 5904477, was set up on 2026-11-24:
+     `gh variable set` / `gh secret set -R calliope-edu/<repo>`).
 5. Try it: `gh workflow run dispatch-builds.yml -R calliope-edu/calliope-ui -f channels=dev`;
    the run's summary lists the builds it started.
 
