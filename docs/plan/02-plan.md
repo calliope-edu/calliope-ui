@@ -26,7 +26,9 @@ Entsprechen den Phasen in Abschnitt 4. Ein Haken heißt: auf `main` gelandet.
 - [x] **W4:** Widget. mini-connection-widget nutzt calliope-ui, Dubletten mit Campus aufgelöst
   (breakdown in section 4.1). Library parts in #17, widget UI in mini-connection-widget#11, Campus
   in calliope-campus `149e366`; open: one source for the MakeCode toolbar and share dialog
-- [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable
+- [ ] **W5:** Welle 3 + Ausrollen. Patterns, Header, danach calliope-docs und Teachable.
+  Library part and Teachable landed; Campus header and calliope-docs remain, each on its own card
+  (state in section 4.2)
 - [x] **W6:** optional. Custom-Element-Build (`/elements`) für React-Hosts, Token-Export für
   Chakra/LESS, nur bei konkretem Bedarf. **Deferred (2026-10-31), not built:** no React host
   (Python editor, Blocks, ml-trainer) and not umo needs it yet. Reopen as a new card once one does
@@ -309,7 +311,7 @@ Still open, each a card in its repository:
 5. ml-machine (gesture training, Svelte 4 + WindiCSS) is a separate app, not Teachable. It keeps
    running and is to be lifted to Svelte 5 later; only then does it become a consumer.
 
-State 2026-11-20:
+State 2026-11-24:
 
 - Library side done: Wave 3 (#18), `LineChart` (#21), `Dialog` sizes for Teachable (#26),
   `StartCard` (#36).
@@ -317,11 +319,13 @@ State 2026-11-20:
   still pins the head of the merged #26 branch (`8a2aeb1`); Teachable-Calliope-Svelte#2 moves the
   pin to the merge commit on `main`, same code, open.
 - Campus header (step 2): not started. Campus `main` still has `BrandedHeader`, `UserAvatar`, the
-  unused `ui/Card` and `LocaleSwitcher`, and pins calliope-ui at `e5c6cb8`. Proposed as its own
-  Campus card.
-- calliope-docs (step 3): its own card is open; calliope-docs has no calliope-ui dependency yet.
+  unused `ui/Card` and `LocaleSwitcher`, and pins calliope-ui at `e5c6cb8`. Its own Campus card
+  ("Campus: Kopfzeile auf calliope-ui (AppHeader, AccountMenu, Avatar)").
+- calliope-docs (step 3): its own card ("calliope-docs auf calliope-ui umstellen"), no commit yet;
+  calliope-docs has no calliope-ui dependency yet.
 
-W5 is ticked once steps 2 and 3 have landed.
+The W5 card closed with this state (owner, 2026-11-24): the rest runs on those cards. W5 is ticked
+here once steps 2 and 3 have landed and Teachable pins a calliope-ui `main` commit.
 
 ### 4.3 W3 breakdown (2026-11-18)
 
